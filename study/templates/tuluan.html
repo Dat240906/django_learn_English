@@ -87,11 +87,13 @@
 <body>
     <div class="contain">
         <p class="title">Tự Luận</p>
-        <p>1/30</p>
-        <h4>Ha Noi là thủ đô của nước nào?</h4>
-        <form action="" class="item">
-            <input type="text" name="input" placeholder="Đáp án...">
-            <button type="submit">Next</button>
+        <p>{{used_question}}/{{total_questions}}</p>
+        <h4>{{question_main}}</h4>
+        <form action="{%url 'tuluan'%}" class="item" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="question_main" value="{{question_main}}">
+            <input type="text" name="result" placeholder="Đáp án...">
+            <button type="submit">Tiếp theo</button>
         </form>
     </div>
 

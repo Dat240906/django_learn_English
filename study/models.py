@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 
 
+
+
+
 class QuestionsModel(models.Model):
     question = models.CharField(max_length=255)
 

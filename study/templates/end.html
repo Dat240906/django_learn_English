@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoàn Thành</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            opacity: 0;
+            font-size: 36px;
+            font-family: Comic Sans;
+            font-weight: bold;
+            transition: opacity 1s ease;
+            margin: 0;
+            color: rgb(165, 74, 210);
+
+        }
+
+        p {
+            opacity: 0;
+            font-size: 20px;
+            transition: opacity 1s ease, transform 1s ease;
+            margin: 0;
+        }
+
+        .fade-in {
+            transform: translateY(20px);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            margin: 50px;
+
+        }
+
+        #button1 {
+            background-color: #04AA6D;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+            padding: 10px 20px;
+        }
+        #button2 {
+            background-color: #04AA6D;
+            color: white;
+            border-radius:8px;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Hoàn Thành</h1>
+    <p class="fade-in">Câu đúng: 29/30</p>
+    <p class="fade-in">Thời gian: time</p>
+    <p class="fade-in" >Mọi sự nỗ lực sẽ được đền đáp.</p>
+    <div class="buttons">
+        <button class="fade-in hidden" id="button1">Trở về</button>
+        <button class="fade-in hidden" id="button2">Tiếp Tục</button>
+    </div>
+    <script src="script.js"></script>
+    <script >
+document.addEventListener('DOMContentLoaded', function() {
+    const title = document.getElementById('title');
+    const elementsToFadeIn = document.querySelectorAll('.fade-in');
+
+    // Hiệu ứng thẻ h1 xuất hiện đậm đà
+    setTimeout(() => {
+        title.style.opacity = 1;
+    }, 1000);
+
+    // Hiệu ứng các thẻ p xuất hiện mờ dần từ dưới lên
+    elementsToFadeIn.forEach((element, index) => {
+        setTimeout(() => {
+            element.style.opacity = 1;
+            element.style.transform = 'translateY(0)';
+        }, 2000 + index * 1000); // Thời gian giữa mỗi phần tử (500ms trong ví dụ này)
+    });
+
+    // Hiệu ứng nút Button 1 và Button 2
+    const button1 = document.getElementById('button1');
+    const button2 = document.getElementById('button2');
+
+    setTimeout(() => {
+        button1.classList.remove('hidden');
+        setTimeout(() => {
+            button1.style.opacity = 1;
+            button1.style.transform = 'translateY(0)';
+        }, 0); // Hiệu ứng ngay lập tức khi nút Button 1 được hiển thị
+    }, 4500);
+
+    setTimeout(() => {
+        button2.classList.remove('hidden');
+        setTimeout(() => {
+            button2.style.opacity = 1;
+            button2.style.transform = 'translateY(0)';
+        }, 0); // Hiệu ứng ngay lập tức khi nút Button 2 được hiển thị
+    }, 5000);
+});
+
+    </script>
+</body>
+</html>

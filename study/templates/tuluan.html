@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tự Luận</title>
+    <style>
+       
+        .contain {
+            width: 250px;
+            height: 400px;
+            background-color: rgb(185, 224, 225);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0px 0px 70px rgb(255, 255, 255);
+            transform: translate(-50%, -50%);
+            border-radius: 30px;
+        }
+        body {
+            background-image: linear-gradient(45deg, #0a0e3f, rgb(133, 71, 71));
+        }
+        p {
+            margin-left: 20px;
+            font-size: 17px;
+
+        }
+
+        h4 {
+            font-family:monospace ;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 13px;
+
+        }
+
+
+        input[type='radio'] {
+            display: none;
+            
+        }
+
+        label {
+            display:block;
+            height: 20px;
+            padding:10px 15px;  
+            background-color: rgba(142, 41, 144, 0.7);
+            border-radius: 20px;
+            width: 65%;
+            text-align: center;
+            margin:10px 15px;
+            cursor: pointer;
+            color: aliceblue;
+            position: relative;
+            left: 50%;
+            transform: translate(-57%);
+            
+        }
+        
+        .item input[type="radio"]:checked + label {
+            background-color: #e04c8c; 
+        }
+        button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 40px;
+            border-radius:15px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        input {
+            border-radius: 10px;
+            margin: 30px 40px;
+            height: 30px;
+        }
+        .title {
+            position: absolute;
+            right: 10px;
+            color: #0455C6;
+         }
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <p class="title">Tự Luận</p>
+        <p>1/30</p>
+        <h4>Ha Noi là thủ đô của nước nào?</h4>
+        <form action="" class="item">
+            <input type="text" name="input" placeholder="Đáp án...">
+            <button type="submit">Next</button>
+        </form>
+    </div>
+
+</body>
+</html>

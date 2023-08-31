@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm</title>
+    <style>
+       
+        .contain {
+            width: 250px;
+            height: 400px;
+            background-color: rgb(185, 224, 225);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0px 0px 70px rgb(255, 255, 255);
+            transform: translate(-50%, -50%);
+            border-radius: 30px;
+        }
+        body {
+            background-image: linear-gradient(45deg, #0a0e3f, rgb(133, 71, 71));
+        }
+        p {
+            margin-left: 20px;
+            font-size: 17px;
+
+        }
+
+        h4 {
+            font-family:monospace ;
+            font-size: 18px;
+            text-align: center;
+            margin-top: -13px;
+
+        }
+
+
+        input[type='radio'] {
+            display: none;
+            
+        }
+
+        label {
+            display:block;
+            height: 20px;
+            padding:10px 15px;  
+            background-color: rgba(142, 41, 144, 0.7);
+            border-radius: 20px;
+            width: 65%;
+            text-align: center;
+            margin:10px 15px;
+            cursor: pointer;
+            color: aliceblue;
+            position: relative;
+            left: 50%;
+            transform: translate(-57%);
+            
+        }
+        
+        .item input[type="radio"]:checked + label {
+            background-color: #e04c8c; 
+        }
+        button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 40px;
+            border-radius:15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .title {
+            position: absolute;
+            color: #0455C6;
+            right: 10px;
+        }
+  
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <p class="title">Trắc Nghiệm</p>
+        <p>{{v.id}}</p>
+        <h4>{{v}}</h4>
+        <form action="" class="item">
+            <input type="radio" name="result" id="radio1" value="{{answer1.id}}">
+            <label for="radio1">{{answer}}</label>
+
+            <input type="radio" name="result" id="radio2" value="{{answer2.id}}">
+            <label for="radio2">{{answer2}}</label>
+
+            <input type="radio" name="result" id="radio3" value="{{answer3.id}}">
+            <label for="radio3">{{answer3}}</label>
+
+            <input type="radio" name="result" id="radio4" value="{{answer4.id}}">
+            <label for="radio4">{{answer4}}</label>
+            <button type="submit">Tiếp</button>
+        </form>
+    </div>
+
+</body>
+</html>

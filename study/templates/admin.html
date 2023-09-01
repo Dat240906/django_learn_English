@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .contain {
+            position: relative;
+            text-align: center;
+            width: 300px;
+            height: 300px;
+            border: 3px solid #918787;
+            margin: 30px;
+            border-radius: 30px;
+        }
+        h4 {
+            position: relative;
+            text-align: center;
+            top: -30px;
+            background-color: yellow;
+            border: 3px solid rgb(44, 35, 35);
+            width: 50%;
+            left: 20%;
+            color: rgb(60, 67, 72);
+            padding: 5px;
+            border-radius: 20px;
+        }
+        input {
+            position: relative;
+            border-radius: 10px;
+            width: 250px;
+            height: 30px;
+            border: 3px inset black ;
+            top: -30px;
+        }
+        .vd {
+            top: -35px;
+        }
+        .note {
+            margin-top: 10px;
+            border-radius: 10px;
+            position: relative;
+            left: 20px;
+            top: -30px;
+            border: 3px  solid red;
+            width: 250px;
+        }
+        button {
+            position: relative;
+            padding: 5px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: green;
+            color: aliceblue;
+            cursor: pointer;
+        }
+
+        #name_data {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <form action="{% url 'HandleAdmin' 'add' %}" method="post">
+            {% csrf_token %}
+            <h4>Thêm dữ liệu</h4>
+            <input type="text" name="name_data" placeholder="Tên dữ liệu">
+            <input type="text" name="data" placeholder="Dữ liệu:.. (eg: my:của tôi, he:anh ấy)">
+            <div class="note">
+                <p >Dữ liệu phải tuân theo nguyên tắc:</p>
+                <ul>
+                    <li>Từ tiếng anh viết trước dấu ":"</li>
+                    <li>Từ tiếng việt viết sau dấu ":"</li>
+                    <li>Ngăn cách cặp Anh:Việt với nhau bằng dấu "."</li>
+                </ul>
+            </div>
+            <button class="vd" type="submit">Thêm dữ liệu</button>
+        </form>
+    </div>
+
+
+    <div class="contain">
+        <form action="{% url 'HandleAdmin' 'update' %}" method="post">
+            {% csrf_token %}
+            <h4>Cập nhật dữ liệu</h4>
+            <label for="name_data"></label>
+            <select name="name_data" id="name_data">
+                <option value="None">Chọn dữ liệu...</option>
+                {% for item in data %}
+                <option value="{{item.name_data}}">{{item.name_data}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit">Cập nhật dữ liệu</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -217,7 +217,7 @@ class Tuluan(View):
         cache_data['used_question'] = list_
         cache.set(cache_key, cache_data, timeout=30 * 60)
         if str(AW)==str(result):
-
+#biết git là gì không
             cache_data['point'] += 10/cache_data['total_questions']
             cache_data['num_did_question'] += 1
             cache.set(cache_key, cache_data, timeout=30 * 60)
@@ -331,7 +331,7 @@ def return_dict(str):
     dictionary = {}
 
     for pair in pairs:
-        parts = pair.split(':', 1)
+        parts = pair.split(':')
         
         if len(parts) == 2:
             key, value = parts
@@ -372,8 +372,10 @@ class HandleAdmin(View):
         
         data_get = DB.data
         dict_data = return_dict(str(data_get))
-
+        
         for key, value in dict_data.items():
             question = QuestionsModel.objects.create(question=key)
             AnswersModel.objects.create(question=question, answer = value)
+        
+        cache.clear()
         return redirect('ptd_admin')

@@ -68,7 +68,7 @@ class ImageEditor:
                 max(self.start_y, current_y),
             )
             cropped_image = self.image.crop(square_region)
-            cropped_image.save("edited_image.png")
+            cropped_image.save("result.png")
 
 if __name__ == "__main__":
     root = tk.Tk()

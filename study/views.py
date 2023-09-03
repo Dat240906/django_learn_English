@@ -32,7 +32,7 @@ class Tracnghiem(View):
 
         ip_user = get_user_ip(request)
 
-        cache_key = f'ip_{ip_user}_data'
+        cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
         cache_data = cache.get(cache_key)
 
 
@@ -105,7 +105,7 @@ class Tracnghiem(View):
 
         ip_user = get_user_ip(request)
 
-        cache_key = f'ip_{ip_user}_data'
+        cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
         cache_data = cache.get(cache_key)
 
 
@@ -156,7 +156,7 @@ class Tuluan(View):
 
         ip_user = get_user_ip(request)
 
-        cache_key = f'ip_{ip_user}_data'
+        cache_key = f'ip_{ip_user}_data_cache_tuluan'
         cache_data = cache.get(cache_key)
         if cache_data is None:
             cache_data = {
@@ -204,7 +204,7 @@ class Tuluan(View):
 
         ip_user = get_user_ip(request)
 
-        cache_key = f'ip_{ip_user}_data'
+        cache_key = f'ip_{ip_user}_data_cache_tuluan'
         cache_data = cache.get(cache_key)
 
 
@@ -257,7 +257,8 @@ def reset(request):
     questions = QuestionsModel.objects.all()
     ip_user = get_user_ip(request)
 
-    cache_key = f'ip_{ip_user}_data'
+    cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
+    cache_key_ = f'ip_{ip_user}_data_cache_tuluan'
 
 
     dict_data = {
@@ -271,6 +272,7 @@ def reset(request):
 
         }
     cache.set(cache_key, dict_data, timeout=24*60*60)
+    cache.set(cache_key_, dict_data, timeout=24*60*60)
     
 
     return redirect('index')
@@ -279,7 +281,7 @@ def reset_TN(request):
     questions = QuestionsModel.objects.all()
     ip_user = get_user_ip(request)
 
-    cache_key = f'ip_{ip_user}_data'
+    cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
 
 
     dict_data = {
@@ -304,7 +306,7 @@ def reset_TL(request):
     questions = AnswersModel.objects.all()
     ip_user = get_user_ip(request)
 
-    cache_key = f'ip_{ip_user}_data'
+    cache_key = f'ip_{ip_user}_data_cache_tuluan'
 
 
     dict_data = {

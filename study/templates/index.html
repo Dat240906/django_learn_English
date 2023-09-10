@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,38 +8,101 @@
     <title>Trang chủ</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: linear-gradient(45deg, rgb(125, 35, 35), #bfc0d4);
+            background-color: rgb(175, 185, 185);
+        }
+        .container {
+            background-color: rgb(255, 255, 255);
+            position: relative;
+            display: flex;
+            width: 300px;
+            height: 300px;
+            box-shadow: 0px 0px 10px rgb(0, 0, 0);
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px 40px;
+            margin-top: 10%;            
+            /* overflow: auto; */
+        }
+  
+
+        select {
+            position: relative;
+            left: 10%;
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 30px;
+            border: 3px solid green;
+            border-radius: 30px
         }
 
-        .button-container {
-            text-align: center;
-        }
-        .button-container1 {
-            text-align: center;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #2980b9; /* Màu nền xanh đậm */
-            color: white;
-            text-decoration: none;
-            margin: 10px;
+        button {
+            position: relative;
+            left: 30%;
+            padding: 6px;
+            width: 40%;
             border-radius: 5px;
+            background-color: rgb(71, 207, 71);
+            color: whitesmoke;
+            margin-bottom: 10px;
+            cursor: pointer;
+
+
+        }
+        select:hover {
+            background-color: #e0e0e0;
+        }
+        select:focus {
+            outline: none; 
+            border-color: #007bff; 
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+        }
+
+        h4 {
+            position: absolute;
+            text-shadow: 0px 0px 6px red;
+            text-decoration:line-through;
+            bottom: 0px;
+
+        }
+        img {
+            /* position: abs/olute; */
+            width: 30px;
+            height: 25px;
+            /* top: 10px; */
+            
         }
     </style>
 </head>
 <body>
-    <div class="button-container">
-        <a href="{% url 'tracnghiem'%}" class="button">Trắc nghiệm</a>
-    </div>
-    <div class="button-container1">
-        <a href="{% url 'tuluan'%}" class="button">Tự luận</a>
+    <div class="container">
+        <h3 class="user">{{user.username}} |
+        {% if user_XH == 1%}
+           <img src="{% static 'study/img/first-rank.png'%}" alt="rank"> 
+        {% elif user_XH == 2 %}
+            <img src="{% static 'study/img/second-rank.png'%}" alt="rank"> 
+        {% elif user_XH == 3 %}
+            <img src="{% static 'study/img/third-rank.png'%}" alt="rank">
+        {% else %}
+            <p style="color: yellow;display: inline;text-shadow: 0px 0px 2px red;">{{user_XH}}</p>
+        {% endif %}
+        | Đã làm: {{user.count_pass}}</h3> 
+        <form class="items" action="{% url 'index'%}" method="post">
+            {%csrf_token%} 
+            <select name="unit" id="">
+                <option value="None">Chọn chương...</option>
+                {% for item in data_unit %}
+                    <option value="{{item.name_data}}">{{item.name_data}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" name="submit_button" value="tracnghiem">Trắc nghiệm</button><br>
+            <button type="submit" name="submit_button" value="tuluan">Tự luận</button>
+        
+        </form>
+        <h4>©</h4>
     </div>
 </body>
 </html>

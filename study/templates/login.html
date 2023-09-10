@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <style>
+        body {
+            display: flex;
+            position: relative;
+            justify-content: center;
+        }
+        .container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+        }
+
+    </style>
+</head>
+<body>
+    <form class="container" action="{% url 'login'%}" method="post">
+        {% csrf_token %}
+        <h3>Có vẻ là người mới, tôi cần biết thêm về bạn:</h4>
+        <input type="text" name="username" placeholder="Tên hiển thị...(max25 kí tự)">
+        <button type="submit">Xong</button>
+    </form>
+</body>
+</html>

@@ -4,6 +4,12 @@ from django.db import models
 
 
 
+class UserModel(models.Model):
+    ip_address = models.GenericIPAddressField()
+    username = models.CharField(max_length=25,unique=True)
+    count_pass = models.IntegerField(default=0)
+    def __str__(self) -> str:
+        return self.username
 
 class StorageDataModel(models.Model):
     name_data = models.CharField(max_length=40)

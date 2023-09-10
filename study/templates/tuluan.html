@@ -82,6 +82,14 @@
             right: 10px;
             color: #0455C6;
          }
+         a {
+            position: absolute;
+            color: white;
+            bottom: 30px;
+            left: 4%;
+            text-shadow: 0px 0px 4px red;
+            
+        }
     </style>
 </head>
 <body>
@@ -92,8 +100,9 @@
         <form action="{%url 'tuluan'%}" class="item" method="post">
             {% csrf_token %}
             <input type="hidden" name="question_main" value="{{question_main}}">
-            <input type="text" name="result" placeholder="Đáp án...">
+            <input type="text" name="result" placeholder="Đáp án..." autofocus autocomplete="off">
             <button type="submit">Tiếp theo</button>
+            <a href="{% url 'index'%}">Home</a>
         </form>
     </div>
 

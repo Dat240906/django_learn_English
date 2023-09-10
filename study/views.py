@@ -30,7 +30,8 @@ class Login(View):
 
         if username is None:
             return redirect('login')
-        
+        if len(username)>12:
+            return redirect('login')
         UserModel.objects.create(ip_address=ip_user, username=username)
         return redirect('index')    
 
@@ -70,16 +71,16 @@ class index(View):
                 list_XH.append(user_.count_pass)
                 list_user.append(user_)
             
+            sorted_list_user = sorted(list_user, key=lambda user: user.count_pass, reverse=True)
 
+            # # Kết hợp list_user và list_XH lại với nhau để sắp xếp cùng nhau
+            # combined_list = list(zip(list_XH, list_user))
 
-            # Kết hợp list_user và list_XH lại với nhau để sắp xếp cùng nhau
-            combined_list = list(zip(list_XH, list_user))
+            # # Sắp xếp combined_list theo giá trị của list_XH (giảm dần)
+            # sorted_combined_list = sorted(combined_list, reverse=True)
 
-            # Sắp xếp combined_list theo giá trị của list_XH (giảm dần)
-            sorted_combined_list = sorted(combined_list, reverse=True)
-
-            # Tách lại list_XH và list_user sau khi đã sắp xếp
-            sorted_list_XH, sorted_list_user = zip(*sorted_combined_list)
+            # # Tách lại list_XH và list_user sau khi đã sắp xếp
+            # sorted_list_XH, sorted_list_user = zip(*sorted_combined_list)
 
             user_XH = sorted_list_user.index(user) + 1
             context = {
@@ -477,5 +478,5 @@ class HandleAdmin(View):
             question = QuestionsModel.objects.create(question=key)
             AnswersModel.objects.create(question=question, answer = value)
         
-        cache.clear()
+        # cache.clear()
         return redirect('ptd_admin')

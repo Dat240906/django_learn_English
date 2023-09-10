@@ -87,7 +87,7 @@
         {% elif user_XH == 3 %}
             <img src="{% static 'study/img/third-rank.png'%}" alt="rank">
         {% else %}
-            <p style="color: yellow;display: inline;text-shadow: 0px 0px 2px red;">{{user_XH}}</p>
+            <p style="color: rgb(10, 245, 18);display: inline;text-shadow: 0px 0px 2px rgba(234, 255, 0, 0.615);">{{user_XH}}</p>
         {% endif %}
         | Đã làm: {{user.count_pass}}</h3> 
         <form class="items" action="{% url 'index'%}" method="post">

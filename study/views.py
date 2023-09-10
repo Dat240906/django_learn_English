@@ -379,24 +379,17 @@ def reset(request):
     return redirect('index')
 def reset_TN(request):
 
-    questions = QuestionsModel.objects.all()
     ip_user = get_user_ip(request)
+    cache_key = f'key_{ip_user}'
 
-    cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
-
-
-    dict_data = {
-        'total_questions':len(questions),
-        'user_question': list(questions),
-        'used_question': [],
-        'fail_question':{},
-        'num_did_question': 0,
-        'point': 0,
-        'sai':False
-
+    data = {
+            'data_unit':{},
+            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+            'tracnghiem':[[], {}, 0, 0],
+            'tuluan':[[], {}, 0, 0]
         }
-    cache.set(cache_key, dict_data, timeout=24*60*60)
-    
+
+    cache.set(cache_key, data, timeout=24*60*60)
 
     return redirect('tracnghiem')
 
@@ -404,30 +397,24 @@ def reset_TN(request):
 
 def reset_TL(request):
 
-    questions = AnswersModel.objects.all()
     ip_user = get_user_ip(request)
+    cache_key = f'key_{ip_user}'
 
-    cache_key = f'ip_{ip_user}_data_cache_tuluan'
-
-
-    dict_data = {
-        'total_questions':len(questions),
-        'user_question': list(questions),
-        'used_question': [],
-        'fail_question':{},
-        'num_did_question': 0,
-        'point': 0,
-        'sai':False
-
+    data = {
+            'data_unit':{},
+            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+            'tracnghiem':[[], {}, 0, 0],
+            'tuluan':[[], {}, 0, 0]
         }
-    cache.set(cache_key, dict_data, timeout=24*60*60)
-    
+
+    cache.set(cache_key, data, timeout=24*60*60)
+
 
     return redirect('tuluan')
 
 
 def return_dict(str):
-    pairs = str.split('.')
+    pairs = str.split('.')  
 
     dictionary = {}
 
@@ -464,19 +451,5 @@ class HandleAdmin(View):
             return redirect('ptd_admin')
         
 
-        
-
-        #update
-        QuestionsModel.objects.all().delete()
-        name_data = get.get('name_data')
-        DB = StorageDataModel.objects.get(name_data=name_data)
-        
-        data_get = DB.data
-        dict_data = return_dict(str(data_get))
-        
-        for key, value in dict_data.items():
-            question = QuestionsModel.objects.create(question=key)
-            AnswersModel.objects.create(question=question, answer = value)
-        
-        # cache.clear()
+           
         return redirect('ptd_admin')

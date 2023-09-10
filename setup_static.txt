@@ -1,0 +1,34 @@
+Khi bạn phát triển ứng dụng Django, trong môi trường phát triển (development environment), Django cung cấp một trình cung cấp tệp tĩnh (static files) để phục vụ các tệp CSS, JavaScript, hình ảnh, vv cho ứng dụng của bạn. Tuy nhiên, khi bạn triển khai ứng dụng của mình trên môi trường sản xuất (production environment), bạn cần thực hiện một số bước để đảm bảo rằng các tệp tĩnh được phục vụ đúng cách.
+
+Dưới đây là một số bước bạn cần kiểm tra để đảm bảo rằng tệp tĩnh của bạn được phục vụ đúng cách khi triển khai ứng dụng Django:
+
+Cài đặt whitenoise: Whitenoise là một middleware và bộ cung cấp tệp tĩnh cho Django, giúp bạn phục vụ các tệp tĩnh trong môi trường sản xuất. Đảm bảo rằng bạn đã cài đặt Whitenoise bằng cách thêm nó vào requirements.txt và chạy pip install -r requirements.txt.
+
+Cấu hình Whitenoise: Trong tệp cấu hình settings.py của ứng dụng Django, bạn cần thêm Whitenoise vào MIDDLEWARE và cấu hình các thiết lập cần thiết. Dưới đây là một ví dụ:
+
+python
+Copy code
+MIDDLEWARE = [
+    # ...
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # ...
+]
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, '/static/')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+Đảm bảo rằng STATIC_URL đã được cấu hình để trỏ đúng đến thư mục tĩnh trong ứng dụng của bạn.
+
+Chạy tập lệnh thu thập tệp tĩnh: Trước khi triển khai ứng dụng, chạy lệnh sau để thu thập tất cả các tệp tĩnh vào một vị trí cố định:
+
+Copy code
+python manage.py collectstatic
+Lệnh này sẽ thu thập tất cả các tệp tĩnh từ các ứng dụng Django của bạn và đặt chúng vào một thư mục tĩnh được cấu hình trong STATIC_ROOT.
+
+Cấu hình máy chủ web sản xuất: Đảm bảo máy chủ web bạn đang sử dụng để triển khai ứng dụng đã được cấu hình để phục vụ các tệp tĩnh từ thư mục STATIC_ROOT đã được thiết lập trong settings.py. Nếu bạn đang sử dụng Apache, bạn cần sử dụng mod_wsgi hoặc uWSGI để cấu hình máy chủ web phù hợp.
+
+Kiểm tra cài đặt: Khi bạn đã triển khai ứng dụng, hãy kiểm tra xem tệp tĩnh có được phục vụ đúng cách bằng cách truy cập vào các URL tĩnh. Điều này sẽ đảm bảo rằng cấu hình của bạn đã hoạt động đúng cách.
+
+Nếu sau khi thực hiện các bước trên mà các tệp tĩnh vẫn không được phục vụ đúng cách, hãy kiểm tra tệp nhật ký lỗi của máy chủ web và xem nếu có thông báo lỗi nào liên quan đến việc phục vụ tệp tĩnh.

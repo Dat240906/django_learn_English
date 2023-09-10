@@ -83,7 +83,7 @@
 
 
     <div class="contain">
-        <form action="{% url 'HandleAdmin' 'update' %}" method="post">
+        <form action="{% url 'HandleAdmin' 'remove' %}" method="post">
             {% csrf_token %}
             <h4>Cập nhật dữ liệu</h4>
             <label for="name_data"></label>

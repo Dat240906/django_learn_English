@@ -379,17 +379,15 @@ def reset(request):
     return redirect('index')
 def reset_TN(request):
 
+
     ip_user = get_user_ip(request)
     cache_key = f'key_{ip_user}'
 
-    data = {
-            'data_unit':{},
-            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-            'tracnghiem':[[], {}, 0, 0],
-            'tuluan':[[], {}, 0, 0]
-        }
+    cache_data = cache.get(cache_key)
 
-    cache.set(cache_key, data, timeout=24*60*60)
+    cache_data['tracnghiem'] = [[], {}, 0, 0]
+
+    cache.set(cache_key, cache_data, timeout=24*60*60)
 
     return redirect('tracnghiem')
 
@@ -400,14 +398,11 @@ def reset_TL(request):
     ip_user = get_user_ip(request)
     cache_key = f'key_{ip_user}'
 
-    data = {
-            'data_unit':{},
-            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-            'tracnghiem':[[], {}, 0, 0],
-            'tuluan':[[], {}, 0, 0]
-        }
+    cache_data = cache.get(cache_key)
 
-    cache.set(cache_key, data, timeout=24*60*60)
+    cache_data['tuluan'] = [[], {}, 0, 0]
+
+    cache.set(cache_key, cache_data, timeout=24*60*60)
 
 
     return redirect('tuluan')

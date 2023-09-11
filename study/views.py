@@ -29,6 +29,7 @@ class Login(View):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
     def post(self,request):
+        ip_user = get_user_ip(request)
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data['username']
@@ -37,6 +38,8 @@ class Login(View):
                 user = UserModel.objects.get(username=username)
                 password_db = user.password
                 if password == password_db:
+                    user.ip_address = ip_user
+                    user.save()
                     return redirect('index')
                 return render(request, 'login.html', context={"message":'*sai mật khẩu'})
             except UserModel.DoesNotExist:

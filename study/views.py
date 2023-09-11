@@ -9,11 +9,12 @@ from .forms import *
 
 
 # Create your views here.
-
 def get_user_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-
-    ip = request.META.get('REMOTE_ADDR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
     return ip
 
 def get_key_from_value(dictionary, value):
@@ -24,18 +25,50 @@ def get_key_from_value(dictionary, value):
 
 class Login(View):
     def get(self, request):
-        return render(request, 'login.html')        
+        cache.clear()
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+    def post(self,request):
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            try:
+                user = UserModel.objects.get(username=username)
+                password_db = user.password
+                if password == password_db:
+                    return redirect('index')
+                return render(request, 'login.html', context={"message":'*sai mật khẩu'})
+            except UserModel.DoesNotExist:
+                return render(request, 'login.html', context={"message":'*không tìm thấy tài khoản'})
+            
 
+        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
+
+class Register(View):
+    def get(self, request):
+        form = RegisterForm()
+        return render(request, 'register.html', {'form': form})
     def post(self, request):
         ip_user = get_user_ip(request)
-        username = request.POST.get('username', None)
 
-        if username is None:
-            return redirect('login')
-        if len(username)>12:
-            return redirect('login')
-        UserModel.objects.create(ip_address=ip_user, username=username)
-        return redirect('index')    
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
+            users = [user.username for user in UserModel.objects.all()]
+            username = register_form.cleaned_data['username']
+            if username in users:
+                return render(request, 'login.html', context={"message":'*tài khoản đã tồn tại'})
+            password = register_form.cleaned_data['password']
+            confirm_password = register_form.cleaned_data['confirm_password']
+
+            if password != confirm_password:
+                return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp'})
+            
+            UserModel.objects.create(username=username, password= confirm_password, ip_address = ip_user)
+            return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
+        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
+
 
 class index(View):
 

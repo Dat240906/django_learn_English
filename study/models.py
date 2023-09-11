@@ -7,6 +7,7 @@ from django.db import models
 class UserModel(models.Model):
     ip_address = models.GenericIPAddressField()
     username = models.CharField(max_length=12,unique=True)
+    password = models.CharField(max_length=12, default=1)
     count_pass = models.IntegerField(default=0)
     money = models.CharField(default=0, max_length=20)
     def __str__(self) -> str:

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng Ký</title>
+</head>
+<body>
+    {%if message%}
+    <p style="color: red;">{{message}}</p>
+    {%endif %}
+    <h3>Đăng Ký</h3>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <br>
+        {{ form }}
+        <br>
+        <button type="submit">Đăng Ký</button>
+        <a href="{%url 'login'%}">Đăng Nhập</a>
+    </form>
+</body>
+</html>

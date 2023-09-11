@@ -8,6 +8,7 @@ class UserModel(models.Model):
     ip_address = models.GenericIPAddressField()
     username = models.CharField(max_length=12,unique=True)
     count_pass = models.IntegerField(default=0)
+    money = models.CharField(default=0, max_length=20)
     def __str__(self) -> str:
         return self.username
 
@@ -15,9 +16,24 @@ class StorageDataModel(models.Model):
     name_data = models.CharField(max_length=40)
     data = models.CharField(max_length=5000) #dữ liệu dưới dạng str anh:viet, anh:viet
     
-    
     def __str__(self) -> str:
         return self.name_data
+
+class NotificationsModel(models.Model):
+    message = models.CharField(max_length=1500)
+
+class ContactModel(models.Model):
+    massage = models.CharField(max_length=255)
+    def __str__(self) -> str:
+        return self.massage
+
+class WithdrawMoneyModel(models.Model):
+    money = models.CharField(default=0, max_length=30)
+    stk = models.CharField(max_length=20)
+    ttk = models.CharField(max_length=20)
+    bank = models.CharField(max_length=20)
+    def __str__(self) -> str:
+        return self.money
 
 class QuestionsModel(models.Model):
     

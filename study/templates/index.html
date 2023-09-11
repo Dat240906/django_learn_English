@@ -29,7 +29,7 @@
         }
   
 
-        select {
+        select.mainc {
             position: relative;
             left: 10%;
             padding: 10px;
@@ -39,7 +39,7 @@
             border-radius: 30px
         }
 
-        button {
+        button.btsubmit {
             position: relative;
             left: 30%;
             padding: 6px;
@@ -49,13 +49,16 @@
             color: whitesmoke;
             margin-bottom: 10px;
             cursor: pointer;
-
+        }
+        button.btsubmit:hover {
+            background-color: rgb(48, 96, 48);
 
         }
-        select:hover {
+        
+        select.mainc:hover {
             background-color: #e0e0e0;
         }
-        select:focus {
+        select.mainc:focus {
             outline: none; 
             border-color: #007bff; 
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
@@ -68,41 +71,239 @@
             bottom: 0px;
 
         }
-        img {
+        .rankimg {
             /* position: abs/olute; */
             width: 30px;
             height: 25px;
             /* top: 10px; */
             
         }
+        .moneyimg {
+            width: 30px;
+            height: 25px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+        .valuemoney {
+            color: green;
+            position:absolute;
+            left: 45px;
+            top: -9;
+            font-family: fantasy;
+            border-bottom: solid;
+        }
+
+        .user { 
+            position: relative;
+            top: 20px;
+        }
+        /* CSS để tạo khung */
+        .custom-frame-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Lớp nền mờ */
+        z-index: 999;
+        overflow-y: auto; /* Cho phép cuộn khi nội dung tràn ra khung */
+        }
+
+        /* Tạo khung */
+        .custom-frame {
+            width: 300px; /* Điều chỉnh kích thước khung theo mong muốn */
+        max-height: 200px; /* Kích thước tối đa của khung */
+        background-color: white;
+        border: 2px solid black;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        padding: 20px;
+        overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá */
+        }
+
+        .custom-frame p {
+        margin: 0; /* Loại bỏ margin mặc định của thẻ <p> */
+        }
+
+        .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        }
+        #frameContainer1 p {
+            text-align: left;
+        }
+        .info {
+            margin-top: 30px;
+            margin-right: 10px;
+        }
+
+        .info button {
+            border-radius: 9px;
+            padding: 5px 10px;
+            color: aliceblue;
+            background-color: #007bff;
+        }
+        .info button:hover {
+            background-color: #0a2745;
+        }
     </style>
 </head>
+
+
 <body>
     <div class="container">
+
+        
+        <img class="moneyimg" src="{%static 'study/img/money.png' %}" alt="money">
+        <p class="valuemoney">{{money}}</p>
         <h3 class="user">{{user.username}} |
         {% if user_XH == 1%}
-           <img src="{% static 'study/img/first-rank.png'%}" alt="rank"> 
+           <img class="rankimg" src="{% static 'study/img/first-rank.png'%}" alt="rank"> 
         {% elif user_XH == 2 %}
-            <img src="{% static 'study/img/second-rank.png'%}" alt="rank"> 
+            <img class="rankimg"src="{% static 'study/img/second-rank.png'%}" alt="rank"> 
         {% elif user_XH == 3 %}
-            <img src="{% static 'study/img/third-rank.png'%}" alt="rank">
+            <img class="rankimg"src="{% static 'study/img/third-rank.png'%}" alt="rank">
         {% else %}
             <p style="color: rgb(10, 245, 18);display: inline;text-shadow: 0px 0px 2px rgba(234, 255, 0, 0.615);">{{user_XH}}</p>
         {% endif %}
-        | Đã làm: {{user.count_pass}}</h3> 
+        | Đã làm: {{user.count_pass}}</h3>
         <form class="items" action="{% url 'index'%}" method="post">
             {%csrf_token%} 
-            <select name="unit" id="">
+            <select name="unit" class="mainc">
                 <option value="None">Chọn chương...</option>
                 {% for item in data_unit %}
                     <option value="{{item.name_data}}">{{item.name_data}}</option>
                 {% endfor %}
             </select>
-            <button type="submit" name="submit_button" value="tracnghiem">Trắc nghiệm</button><br>
-            <button type="submit" name="submit_button" value="tuluan">Tự luận</button>
+            <button type="submit" name="submit_button" class='btsubmit' value="tracnghiem">Trắc nghiệm</button><br>
+            <button type="submit" name="submit_button" class='btsubmit'  value="tuluan">Tự luận</button>
         
         </form>
-        <h4>©</h4>
+    <div class="info">
+        <button id="createFrameElement1">Thông Báo</button>
+        <button id="createFrameElement2">Liên Hệ</button>
+        <button id="createFrameElement3">Rút Tiền</button>
+      
+        <!-- Bảng Thông Báo -->
+        <div id="frameContainer1" class="custom-frame-container">
+          <div class="custom-frame">
+            <span class="close-button" id="closeButton1">X</span>
+            <h3 style="color: green; text-shadow: 0px 0px 9px red;">Sau khi cập nhật:</h3><br>
+            <p>
+            - Thêm Money<br>
+            - Thêm chức năng liên hệ (nhắn nhủ lời yêu thương tới admin)<br>
+            - Thêm chức năng rút tiền<br>
+            - Thêm chức năng thông báo từ máy chủ(khi màu đỏ là có tin nhắn)<br>
+            <h3 style="color: green; text-shadow: 0px 0px 9px red;">Cách web hoạt động;</h3><br>
+            <p>
+            - Chọn chương, nhấp vào trắc nghiệm hoặc tự luận sẽ có test tương ứng<br>
+            - Khi tải lại trang trong khi làm sẽ chỉ đổi câu hỏi<br>
+            - Dữ liệu làm bài được lưu vào bộ nhớ tạm (xóa sau 1 day)<br>
+            - Bài làm dở sẽ được lưu, có thể làm lại<br>
+            - <br>
+            - Sau khi hoàn thành bài (trên 5 điểm) +1,000 vnđ<br>
+            - Min rút tiền hiện tại là: 10,000 vnđ (<p style="color: red;">chưa rút thì thử thì đừng bảo người ta BỊP hehee</p>)</p>
+              
+          </div>
+        </div>
+      
+        <!-- Bảng Liên Hệ -->
+        <div id="frameContainer2" class="custom-frame-container">
+          <div class="custom-frame">
+            <span class="close-button" id="closeButton2">X</span>
+            <form action="{%url 'contact'%}" method="post">
+                {% csrf_token %}
+                Nội dung:<input style="width: 70%;height: 40px;margin-bottom: 20px;" type="text" name="massage" placeholder="max 255 kí tự">
+              <br>
+              <button>Gửi</button>
+            </form>
+          </div>
+        </div>
+      
+        <!-- Bảng Rút Tiền -->
+        <div id="frameContainer3" class="custom-frame-container">
+          <div class="custom-frame">
+            <span class="close-button" id="closeButton3">X</span>
+            <form action="{%url 'pay'%}" method="post">
+                {%csrf_token%}
+                Số Tiền<input type="text" name="money">
+              <br>
+              <p style="color: red;">*Thông tin:</p><br>
+              STK <input type="text" name="stk" placeholder='123456789'><br>
+              TTK <input type="text" name="ttk" placeholder="PHUNG THANH DO"><br>
+              BANK <select name="bank" id="">
+                    <option value="mbb">MbBANK</option>
+                    <option value="vcb">Vietcombank</option>
+                    <option value="bidv">BIDV</option>
+                    <option value="tcb">Techcombank</option>
+                    <option value="vtb">VietinBank</option>
+                    <option value="tpb">TP Bank</option>
+              </select><br>
+              <button>Rút</button>
+            </form>
+          </div>
+        </div>
     </div>
+    <script>
+        // Xác định các phần tử và thêm sự kiện click
+        const createFrameElement1 = document.getElementById('createFrameElement1');
+        createFrameElement1.addEventListener('click', openFrame1);
+        const closeButton1 = document.getElementById('closeButton1');
+        closeButton1.addEventListener('click', closeFrame1);
+    
+        const createFrameElement2 = document.getElementById('createFrameElement2');
+        createFrameElement2.addEventListener('click', openFrame2);
+        const closeButton2 = document.getElementById('closeButton2');
+        closeButton2.addEventListener('click', closeFrame2);
+    
+        const createFrameElement3 = document.getElementById('createFrameElement3');
+        createFrameElement3.addEventListener('click', openFrame3);
+        const closeButton3 = document.getElementById('closeButton3');
+        closeButton3.addEventListener('click', closeFrame3);
+    
+        // Hàm xử lý sự kiện click để mở bảng Thông Báo
+        function openFrame1() {
+          const frameContainer1 = document.getElementById('frameContainer1');
+          frameContainer1.style.display = 'block';
+        }
+    
+        // Hàm xử lý sự kiện click để đóng bảng Thông Báo
+        function closeFrame1() {
+          const frameContainer1 = document.getElementById('frameContainer1');
+          frameContainer1.style.display = 'none';
+        }
+    
+        // Hàm xử lý sự kiện click để mở bảng Liên Hệ
+        function openFrame2() {
+          const frameContainer2 = document.getElementById('frameContainer2');
+          frameContainer2.style.display = 'block';
+        }
+    
+        // Hàm xử lý sự kiện click để đóng bảng Liên Hệ
+        function closeFrame2() {
+          const frameContainer2 = document.getElementById('frameContainer2');
+          frameContainer2.style.display = 'none';
+        }
+    
+        // Hàm xử lý sự kiện click để mở bảng Rút Tiền
+        function openFrame3() {
+          const frameContainer3 = document.getElementById('frameContainer3');
+          frameContainer3.style.display = 'block';
+        }
+    
+        // Hàm xử lý sự kiện click để đóng bảng Rút Tiền
+        function closeFrame3() {
+          const frameContainer3 = document.getElementById('frameContainer3');
+          frameContainer3.style.display = 'none';
+        }
+      </script>
 </body>
 </html>

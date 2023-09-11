@@ -4,6 +4,10 @@ from django.views import View
 from .models import *
 import random
 from django.core.cache import cache
+from .forms import *
+
+
+
 # Create your views here.
 
 def get_user_ip(request):
@@ -72,21 +76,25 @@ class index(View):
                 list_user.append(user_)
             
             sorted_list_user = sorted(list_user, key=lambda user: user.count_pass, reverse=True)
+            #hàm chuyển đổi str 
+            def format_currency(number):
+                try:
+                    number = int(number)  # Chuyển chuỗi số thành số nguyên (int)
+                    formatted_number = "{:,.0f}".format(number)  # Định dạng số và thêm dấu ',' ngăn cách hàng nghìn
+                    return formatted_number
+                except ValueError:
+                    return "Invalid input"  # Trả về thông báo lỗi nếu đầu vào không hợp lệ
 
-            # # Kết hợp list_user và list_XH lại với nhau để sắp xếp cùng nhau
-            # combined_list = list(zip(list_XH, list_user))
 
-            # # Sắp xếp combined_list theo giá trị của list_XH (giảm dần)
-            # sorted_combined_list = sorted(combined_list, reverse=True)
-
-            # # Tách lại list_XH và list_user sau khi đã sắp xếp
-            # sorted_list_XH, sorted_list_user = zip(*sorted_combined_list)
+            #lấy money trong db
+            money = format_currency(user.money)
 
             user_XH = sorted_list_user.index(user) + 1
             context = {
                 'user':user,
                 'data_unit':data_unit,
-                'user_XH':user_XH
+                'user_XH':user_XH, 
+                'money':money
             }
             return render(request, 'index.html', context)
         except UserModel.DoesNotExist:
@@ -246,6 +254,8 @@ class Tracnghiem(View):
              #cộng số lần thi trong DB
             data_user = UserModel.objects.get(ip_address=ip_user)
             data_user.count_pass +=1
+            a = int(data_user.money) + 1000
+            data_user.money = a
             data_user.save()
             return render(request, 'end2.html', context)
         
@@ -339,6 +349,8 @@ class Tuluan(View):
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(ip_address=ip_user)
             data_user.count_pass +=1
+            a = int(data_user.money) + 1000
+            data_user.money = a
             data_user.save()
             return render(request, 'end.html', context)
         
@@ -432,6 +444,39 @@ class Admin(View):
         }
         return render(request, 'admin.html', context)
         
+
+class Contact(View):
+    def post(self, request):
+        try:
+                
+            formModel = ContactForm(request.POST)
+
+            if formModel.is_valid():
+                formModel.save()
+                return redirect('index')
+            return redirect('index')
+        except:
+            return redirect('index')
+class WithdrawMoney(View):
+    def post(self, request):
+        ip_user = get_user_ip(request)
+        formModel = WithdrawMoneyForm(request.POST)
+        try:
+            money = request.POST.get('money')
+            if int(money)<10000:
+                return redirect('index')
+            if formModel.is_valid():
+                user = UserModel.objects.get(ip_address = ip_user)
+                a = int(user.money) - int(money)
+                user.money = str(a)
+                user.save()
+                formModel.save()
+    
+                return redirect('index')
+        except:
+            return redirect('index')
+        return redirect('index')
+
 
 class HandleAdmin(View):
     def post(self, request, method):

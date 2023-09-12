@@ -324,7 +324,9 @@ class Tracnghiem(View):
             data_user.count_pass +=1
             #cộng tiền
             money_total = data_tracnghiem[2] * 100
-            data_user.money += money_total
+            money_curren = data_user.money
+            money_curren += money_total
+            data_user.money = money_curren
             data_user.save()
             return render(request, 'end2.html', context)
         
@@ -420,9 +422,11 @@ class Tuluan(View):
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
-                        #cộng tiền
+           #cộng tiền
             money_total = data_tuluan[2] * 100
-            data_user.money += money_total
+            money_curren = data_user.money
+            money_curren += money_total
+            data_user.money = money_curren
             data_user.save()
             return render(request, 'end.html', context)
         

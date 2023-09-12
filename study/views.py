@@ -50,7 +50,7 @@ class Login(View):
                         'tuluan':[[], {}, 0, 0]
                     }
 
-                    cache.set(cache_key, data)
+                    cache.set(cache_key, data, timeout=24*60*60)
                     return redirect('index')
                 return render(request, 'login.html', context={"message":'*sai mật khẩu', 'form':form})
             except UserModel.DoesNotExist:
@@ -90,7 +90,7 @@ class Register(View):
                 'tuluan':[[], {}, 0, 0]
             }
 
-            cache.set(cache_key, data)
+            cache.set(cache_key, data, timeout=24*60*60)
             return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
         return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng','form': form})
 
@@ -116,7 +116,7 @@ class index(View):
                     'tuluan':[[], {}, 0, 0]
                 }
 
-                cache.set(cache_key, data)
+                cache.set(cache_key, data, timeout=24*60*60)
 
             
           
@@ -268,6 +268,7 @@ class Tracnghiem(View):
 
         result = request.POST.get('result', None)
         question_main = request.POST.get('question_response')
+        question_main_ = request.POST.get('question_response')
 
         if result == None:
             return redirect('tracnghiem')
@@ -283,7 +284,7 @@ class Tracnghiem(View):
 
 
         #tính toán cộng  điểm
-        
+        a= None
         if question_main in [key for key in data_unit.keys()]:
             AW = data_unit[question_main]
             
@@ -306,11 +307,12 @@ class Tracnghiem(View):
 
             cache.set(cache_key, cache_data, timeout=24*60*60)
         else:
+        
             _ = data_tracnghiem[1]
-            _[str(question_main)] = (str(result), str(AW))
+            _[str(question_main_)] = (str(result), str(AW))
             data_tracnghiem[1] = _
             cache.set(cache_key, cache_data,timeout=24*60*60)
-        
+    
         context = {
             'total_questions':len(cache_data['data_unit']),
             'num_did_question':data_tracnghiem[2],
@@ -324,9 +326,9 @@ class Tracnghiem(View):
             data_user.count_pass +=1
             #cộng tiền
             money_total = data_tracnghiem[2] * 100
-            money_curren = data_user.money
+            money_curren = int(data_user.money)
             money_curren += money_total
-            data_user.money = money_curren
+            data_user.money = str(money_curren)
             data_user.save()
             return render(request, 'end2.html', context)
         
@@ -422,11 +424,11 @@ class Tuluan(View):
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
-           #cộng tiền
+            #cộng tiền
             money_total = data_tuluan[2] * 100
-            money_curren = data_user.money
+            money_curren = int(data_user.money)
             money_curren += money_total
-            data_user.money = money_curren
+            data_user.money = str(money_curren)
             data_user.save()
             return render(request, 'end.html', context)
         
@@ -443,22 +445,24 @@ class End(View):
 
 def reset(request):
     
+    try:
+        ip_user = get_user_ip(request)
+        cache_key = f'key_{ip_user}'
 
-    ip_user = get_user_ip(request)
-    cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
+        data = {
+            'username':cache_data['username'],
+            'data_unit':{},
+            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+            'tracnghiem':[[], {}, 0, 0],
+            'tuluan':[[], {}, 0, 0]
+        }
 
-    cache_data = cache.get(cache_key)
-    data = {
-        'username':cache_data['username'],
-        'data_unit':{},
-        #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-        'tracnghiem':[[], {}, 0, 0],
-        'tuluan':[[], {}, 0, 0]
-    }
+        cache.set(cache_key, data, timeout=24*60*60)
 
-    cache.set(cache_key, data)
-
-    return redirect('index')
+        return redirect('index')
+    except TypeError:
+        return redirect('login')
 def reset_TN(request):
 
 

@@ -542,7 +542,6 @@ class WithdrawMoney(View):
             return redirect('index')
         except:
             return redirect('index')
-        return redirect('index')
 
 
 class HandleAdmin(View):

@@ -16,10 +16,10 @@ class WithdrawMoneyForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Tên đăng nhập')
-    password = forms.CharField(label='Mật khẩu', widget=forms.PasswordInput)
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(label='Tên đăng nhập')
-    password = forms.CharField(label='Mật khẩu', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Xác nhận mật khẩu', widget=forms.PasswordInput)
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)

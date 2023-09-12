@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>Đăng Ký</title>
+    <style>
+        body {
+            font-size: 20px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
     {%if message%}
@@ -11,7 +17,11 @@
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <br>
-        {{ form }}
+        <p>Tên hiển thị:</p>{{form.username}}
+        <br>
+        <p>Mật khẩu:</p>{{form.password}}
+        <br>
+        <p>Xác nhận mật khẩu:</p>{{form.confirm_password}}
         <br>
         <button type="submit">Đăng Ký</button>
         <a href="{%url 'login'%}">Đăng Nhập</a>

@@ -6,19 +6,23 @@
         body {
             display: flex;
             flex-direction: column;
+            font-size: 20px;
             
         }
     </style>
 </head>
 
 <body>
-    {%if message%}
-    <p style="color: red;">{{message}}</p>
-    {%endif %}
     <h3>Đăng Nhập</h3>
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        <p>Tên đăng nhập:</p>{{form.username}}
+        <br>
+        <p>Mật khẩu:</p>{{form.password}}
+        <br>
+        {%if message%}
+        <p style="color: red;">{{message}}</p>
+        {%endif %}
         <br>
         <button type="submit">Đăng Nhập</button>
 

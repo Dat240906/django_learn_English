@@ -29,6 +29,7 @@ class Login(View):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
     def post(self,request):
+        form = LoginForm()
         ip_user = get_user_ip(request)
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -51,12 +52,12 @@ class Login(View):
 
                     cache.set(cache_key, data)
                     return redirect('index')
-                return render(request, 'login.html', context={"message":'*sai mật khẩu'})
+                return render(request, 'login.html', context={"message":'*sai mật khẩu', 'form':form})
             except UserModel.DoesNotExist:
-                return render(request, 'login.html', context={"message":'*không tìm thấy tài khoản'})
+                return render(request, 'login.html', context={"message":'*không tìm thấy tài khoản', 'form':form})
             
 
-        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
+        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng', 'form':form})
 
 class Register(View):
     def get(self, request):
@@ -64,19 +65,19 @@ class Register(View):
         return render(request, 'register.html', {'form': form})
     def post(self, request):
         ip_user = get_user_ip(request)
-
+        form = RegisterForm()
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
             users = [user.username for user in UserModel.objects.all()]
             username = register_form.cleaned_data['username']
             if username in users:
-                return render(request, 'login.html', context={"message":'*tài khoản đã tồn tại'})
+                return render(request, 'login.html', context={"message":'*tài khoản đã tồn tại','form': form})
             password = register_form.cleaned_data['password']
             confirm_password = register_form.cleaned_data['confirm_password']
 
             if password != confirm_password:
-                return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp'})
+                return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp','form': form})
             
             UserModel.objects.create(username=username, password= confirm_password, ip_address = ip_user)
 
@@ -91,7 +92,7 @@ class Register(View):
 
             cache.set(cache_key, data)
             return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
-        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
+        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng','form': form})
 
 
 class index(View):
@@ -302,11 +303,6 @@ class Tracnghiem(View):
         if str(AW)==str(result):
             data_tracnghiem[3] += 10/len(data_unit)
             data_tracnghiem[2] += 1
-            #cộng tiền
-            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
-            a = int(data_user.money) + 100
-            data_user.money = a
-            data_user.save()
 
             cache.set(cache_key, cache_data, timeout=24*60*60)
         else:
@@ -322,10 +318,13 @@ class Tracnghiem(View):
             'items_3': data_tracnghiem[1].items(),
             'sai':True if len(data_tracnghiem[1]) > 0 else False
         }      
-        if len(data_tracnghiem[0  ]) == len(cache_data['data_unit']):
+        if len(data_tracnghiem[0]) == len(cache_data['data_unit']):
              #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
+            #cộng tiền
+            money_total = data_tracnghiem[2] * 100
+            data_user.money += money_total
             data_user.save()
             return render(request, 'end2.html', context)
         
@@ -400,11 +399,7 @@ class Tuluan(View):
 #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
             data_tuluan[3] += 10/len(data_unit)
             data_tuluan[2] += 1
-            #cộng tiền
-            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
-            a = int(data_user.money) + 100
-            data_user.money = a
-            data_user.save()
+
 
             cache.set(cache_key, cache_data, timeout=24*60*60)
         else:
@@ -425,6 +420,9 @@ class Tuluan(View):
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
+                        #cộng tiền
+            money_total = data_tuluan[2] * 100
+            data_user.money += money_total
             data_user.save()
             return render(request, 'end.html', context)
         

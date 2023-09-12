@@ -49,7 +49,7 @@ class Login(View):
                         'tuluan':[[], {}, 0, 0]
                     }
 
-                    cache.set(cache_key, data, timeout=24*60*60)
+                    cache.set(cache_key, data)
                     return redirect('index')
                 return render(request, 'login.html', context={"message":'*sai mật khẩu'})
             except UserModel.DoesNotExist:
@@ -89,7 +89,7 @@ class Register(View):
                 'tuluan':[[], {}, 0, 0]
             }
 
-            cache.set(cache_key, data, timeout=24*60*60)
+            cache.set(cache_key, data)
             return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
         return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
 
@@ -115,7 +115,7 @@ class index(View):
                     'tuluan':[[], {}, 0, 0]
                 }
 
-                cache.set(cache_key, data, timeout=24*60*60)
+                cache.set(cache_key, data)
 
             
           
@@ -275,6 +275,8 @@ class Tracnghiem(View):
 
         cache_key = f'key_{ip_user}'
         cache_data = cache.get(cache_key)
+        if cache_data is  None:
+            return redirect('index')
         data_unit = cache_data['data_unit']
         data_tracnghiem = cache_data['tracnghiem']
 
@@ -452,7 +454,7 @@ def reset(request):
         'tuluan':[[], {}, 0, 0]
     }
 
-    cache.set(cache_key, data, timeout=24*60*60)
+    cache.set(cache_key, data)
 
     return redirect('index')
 def reset_TN(request):

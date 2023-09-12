@@ -40,6 +40,16 @@ class Login(View):
                 if password == password_db:
                     user.ip_address = ip_user
                     user.save()
+                    cache_key = f'key_{ip_user}'
+                    data = {
+                        'username':username,
+                        'data_unit':{},
+                        #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+                        'tracnghiem':[[], {}, 0, 0],
+                        'tuluan':[[], {}, 0, 0]
+                    }
+
+                    cache.set(cache_key, data, timeout=24*60*60)
                     return redirect('index')
                 return render(request, 'login.html', context={"message":'*sai mật khẩu'})
             except UserModel.DoesNotExist:
@@ -69,6 +79,17 @@ class Register(View):
                 return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp'})
             
             UserModel.objects.create(username=username, password= confirm_password, ip_address = ip_user)
+
+            cache_key = f'key_{ip_user}'
+            data = {
+                'username':username,
+                'data_unit':{},
+                #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+                'tracnghiem':[[], {}, 0, 0],
+                'tuluan':[[], {}, 0, 0]
+            }
+
+            cache.set(cache_key, data, timeout=24*60*60)
             return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
         return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng'})
 
@@ -87,6 +108,7 @@ class index(View):
 
             if cache_data is None:
                 data = {
+                    'username':cache_data['username'],
                     'data_unit':{},
                     #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
                     'tracnghiem':[[], {}, 0, 0],
@@ -100,7 +122,7 @@ class index(View):
 
             #xét sếp hạng & data_unit & username
             count_pass_all = UserModel.objects.all()
-            user = UserModel.objects.get(ip_address = ip_user)
+            user = UserModel.objects.get(username = cache_data['username'],ip_address = ip_user)
             data_unit = StorageDataModel.objects.all()
 
             list_user = []
@@ -133,50 +155,54 @@ class index(View):
             return render(request, 'index.html', context)
         except UserModel.DoesNotExist:
             return redirect('login')
-        
+        except TypeError:
+            return redirect('login')
     def post(self, request):
+        try:
+            name_data = request.POST.get('unit', 'None')
+            exam_type = request.POST.get('submit_button')
 
-        name_data = request.POST.get('unit', 'None')
-        exam_type = request.POST.get('submit_button')
-
-        if name_data == 'None':
-            return redirect('index')
-        
-
-
-        #lấy data_unit
-        data_unit = StorageDataModel.objects.get(name_data = name_data)
-
-        #lấy cache dựa theo key+ip
-        ip_user = get_user_ip(request)
-        cache_key = f'key_{ip_user}'
-        cache_data = cache.get(cache_key)
-
-        #xử lí data từ dạng "key:value.key:value" về dạng {key:value;key:value}
-        pairs = data_unit.data.split('.')
-        dictionary = {}
-
-        for pair in pairs:
-            parts = pair.split(':')
+            if name_data == 'None':
+                return redirect('index')
             
-            if len(parts) == 2:
-                key, value = parts
-                dictionary[key] = value
 
-        ##########################################
-        data = {
-            'data_unit':dictionary,
-            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-            'tracnghiem':[[], {}, 0, 0],
-            'tuluan':[[], {}, 0, 0]
-        }
-        cache.set(cache_key, data, 24*60*60)
-        # return HttpResponse(cache_data['data_unit'])#out put không là None
-      
-        if exam_type == 'tracnghiem':
-            return redirect('tracnghiem')
+
+            #lấy data_unit
+            data_unit = StorageDataModel.objects.get(name_data = name_data)
+
+            #lấy cache dựa theo key+ip
+            ip_user = get_user_ip(request)
+            cache_key = f'key_{ip_user}'
+            cache_data = cache.get(cache_key)
+
+            #xử lí data từ dạng "key:value.key:value" về dạng {key:value;key:value}
+            pairs = data_unit.data.split('.')
+            dictionary = {}
+
+            for pair in pairs:
+                parts = pair.split(':')
+                
+                if len(parts) == 2:
+                    key, value = parts
+                    dictionary[key] = value
+
+            ##########################################
+            data = {
+                'username':cache_data['username'],
+                'data_unit':dictionary,
+                #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+                'tracnghiem':[[], {}, 0, 0],
+                'tuluan':[[], {}, 0, 0]
+            }
+            cache.set(cache_key, data, 24*60*60)
+            # return HttpResponse(cache_data['data_unit'])#out put không là None
         
-        return redirect('tuluan')
+            if exam_type == 'tracnghiem':
+                return redirect('tracnghiem')
+            
+            return redirect('tuluan')
+        except TypeError:
+            return redirect('login')
 
 class Tracnghiem(View):
     question_main = None
@@ -216,7 +242,7 @@ class Tracnghiem(View):
                 AW_temp1 = get_key_from_value(data_unit,question_temp_1)
                 AW_temp2 = get_key_from_value(data_unit,question_temp_2)
                 AW_temp3 = get_key_from_value(data_unit,question_temp_3)
-                if question_main not in cache_data['tracnghiem'][0] and AW_temp1 != AW_temp2 and AW_temp1 != AW_temp3 and AW_temp2 != AW_temp3 and question_main != question_temp_1 and question_main != question_temp_2 and question_main != question_temp_3:
+                if AW_main not in cache_data['tracnghiem'][0] and AW_temp1 != AW_temp2 and AW_temp1 != AW_temp3 and AW_temp2 != AW_temp3 and question_main != question_temp_1 and question_main != question_temp_2 and question_main != question_temp_3:
                     break
 
         # xáo chộn các câu trả Lời
@@ -270,6 +296,12 @@ class Tracnghiem(View):
         if str(AW)==str(result):
             data_tracnghiem[3] += 10/len(data_unit)
             data_tracnghiem[2] += 1
+            #cộng tiền
+            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
+            a = int(data_user.money) + 100
+            data_user.money = a
+            data_user.save()
+
             cache.set(cache_key, cache_data, timeout=24*60*60)
         else:
             _ = data_tracnghiem[1]
@@ -286,11 +318,9 @@ class Tracnghiem(View):
         }      
         if len(data_tracnghiem[0  ]) == len(cache_data['data_unit']):
              #cộng số lần thi trong DB
-            data_user = UserModel.objects.get(ip_address=ip_user)
+            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
-            a = int(data_user.money) + 1000
-            data_user.money = a
-            data_user.save()
+
             return render(request, 'end2.html', context)
         
 
@@ -364,6 +394,12 @@ class Tuluan(View):
 #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
             data_tuluan[3] += 10/len(data_unit)
             data_tuluan[2] += 1
+            #cộng tiền
+            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
+            a = int(data_user.money) + 100
+            data_user.money = a
+            data_user.save()
+
             cache.set(cache_key, cache_data, timeout=24*60*60)
         else:
             _ = data_tuluan[1]
@@ -381,11 +417,8 @@ class Tuluan(View):
         if len(data_tuluan[0]) == len(data_unit):
 
             #cộng số lần thi trong DB
-            data_user = UserModel.objects.get(ip_address=ip_user)
+            data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
-            a = int(data_user.money) + 1000
-            data_user.money = a
-            data_user.save()
             return render(request, 'end.html', context)
         
 
@@ -400,27 +433,21 @@ class End(View):
 
 
 def reset(request):
-
-    questions = QuestionsModel.objects.all()
-    ip_user = get_user_ip(request)
-
-    cache_key = f'ip_{ip_user}_data_cache_tracnghiem'
-    cache_key_ = f'ip_{ip_user}_data_cache_tuluan'
-
-
-    dict_data = {
-        'total_questions':len(questions),
-        'user_question': list(questions),
-        'used_question': [],
-        'fail_question':{},
-        'num_did_question': 0,
-        'point': 0,
-        'sai':False
-
-        }
-    cache.set(cache_key, dict_data, timeout=24*60*60)
-    cache.set(cache_key_, dict_data, timeout=24*60*60)
     
+
+    ip_user = get_user_ip(request)
+    cache_key = f'key_{ip_user}'
+
+    cache_data = cache.get(cache_key)
+    data = {
+        'username':cache_data['username'],
+        'data_unit':{},
+        #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+        'tracnghiem':[[], {}, 0, 0],
+        'tuluan':[[], {}, 0, 0]
+    }
+
+    cache.set(cache_key, data, timeout=24*60*60)
 
     return redirect('index')
 def reset_TN(request):
@@ -495,18 +522,24 @@ class WithdrawMoney(View):
     def post(self, request):
         ip_user = get_user_ip(request)
         formModel = WithdrawMoneyForm(request.POST)
+
+        cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
+
         try:
+            user = UserModel.objects.get(username = cache_data['username'],ip_address = ip_user)
             money = request.POST.get('money')
-            if int(money)<10000:
-                return redirect('index')
-            if formModel.is_valid():
-                user = UserModel.objects.get(ip_address = ip_user)
-                a = int(user.money) - int(money)
-                user.money = str(a)
-                user.save()
-                formModel.save()
-    
-                return redirect('index')
+            money_user = user.money
+            if int(money)>=10000 and money<= money_user:
+                if formModel.is_valid():
+                    a = int(user.money) - int(money)
+                    user.money = str(a)
+                    user.save()
+                    formModel.save()
+        
+                    return redirect('index')
+                
+            return redirect('index')
         except:
             return redirect('index')
         return redirect('index')

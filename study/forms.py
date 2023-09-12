@@ -20,6 +20,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class RegisterForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=12)
+    password = forms.CharField(max_length=12,widget=forms.PasswordInput)
+    confirm_password = forms.CharField(max_length=12,widget=forms.PasswordInput)

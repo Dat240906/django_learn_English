@@ -283,10 +283,14 @@ class Tracnghiem(View):
         
         if question_main in [key for key in data_unit.keys()]:
             AW = data_unit[question_main]
+            
         else:
             AW = get_key_from_value(data_unit, question_main)
+            a =get_key_from_value(data_unit, question_main)
+            question_main = a
         #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
         #thêm câu đã làm  
+
         list_ = data_tracnghiem[0]
         list_.append(question_main)
         data_tracnghiem[0] = list_
@@ -320,7 +324,7 @@ class Tracnghiem(View):
              #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
-
+            data_user.save()
             return render(request, 'end2.html', context)
         
 
@@ -419,6 +423,7 @@ class Tuluan(View):
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
+            data_user.save()
             return render(request, 'end.html', context)
         
 

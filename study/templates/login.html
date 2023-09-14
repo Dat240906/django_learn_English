@@ -14,6 +14,7 @@
 
 <body>
     <h3>Đăng Nhập</h3>
+    <h5 style="color:  red;">*Chúng tôi đã chuyển cơ sở dữ liệu nhằm nâng cấp và tối ưu, hãy tạo mới tài khoản nếu tài khoản cũ không tồn tại, xin lỗi vì sự bất tiện.</h5>
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <p>Tên đăng nhập:</p>{{form.username}}

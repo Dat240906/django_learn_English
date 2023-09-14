@@ -154,6 +154,18 @@
         .info button:hover {
             background-color: #0a2745;
         }
+        .dot {
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: red;
+          left: 34%;
+          bottom: 13%;
+        }
+        .bank input {
+          width: 90%;
+        }
     </style>
 </head>
 
@@ -189,6 +201,10 @@
         </form>
     <div class="info">
         <button id="createFrameElement1">Thông Báo</button>
+        {%csrf_token%}
+        {% if is_noti%}
+        <div class="dot"></div>
+        {%endif%}
         <button id="createFrameElement2">Liên Hệ</button>
         <button id="createFrameElement3">Rút Tiền</button>
       
@@ -196,23 +212,13 @@
         <div id="frameContainer1" class="custom-frame-container">
           <div class="custom-frame">
             <span class="close-button" id="closeButton1">X</span>
-            <h3 style="color: green; text-shadow: 0px 0px 9px red;">Sau khi cập nhật:</h3><br>
-            <p>
-            - Thêm Money<br>
-            - Thêm chức năng liên hệ (nhắn nhủ lời yêu thương tới admin)<br>
-            - Thêm chức năng rút tiền<br>
-            - Thêm chức năng thông báo từ máy chủ(khi màu đỏ là có tin nhắn)<br>
-            <h3 style="color: green; text-shadow: 0px 0px 9px red;">Cách web hoạt động;</h3><br>
-            <p>
-            - Chọn chương, nhấp vào trắc nghiệm hoặc tự luận sẽ có test tương ứng<br>
-            - Khi tải lại trang trong khi làm sẽ chỉ đổi câu hỏi<br>
-            - Dữ liệu làm bài được lưu vào bộ nhớ tạm (xóa sau 1 day)<br>
-            - Bài làm dở sẽ được lưu, có thể làm lại<br>
-            - <br>
-            - Hoàn thành đúng 1 câu +1,000 vnđ (chỉ cộng khi hoàn thành cả bài)<br>
-            - Min rút tiền hiện tại là: 10,000 vnđ <p style="color: red;display: inline-block">chưa rút thì thử thì đừng bảo người ta BỊP hehee</p>>
-            - Nhà cái đến từ CHÂU ÂU chiết khấu rút tiền <p style="color: red; display: inline-block">99%</p>
-            </p>
+            
+              <h3 style="color: rgb(13, 28, 231);">Thông báo từ ADMIN:</h3>
+              {{notification|safe}}
+              <p>---------------------------------------------------</p>
+              <h3 style="color: rgb(13, 28, 231);">Thông báo dành cho bạn:</h3>
+              {{noti_user|safe}}
+            
           </div>
         </div>
       
@@ -222,7 +228,8 @@
             <span class="close-button" id="closeButton2">X</span>
             <form action="{%url 'contact'%}" method="post">
                 {% csrf_token %}
-                Nội dung:<input style="width: 70%;height: 40px;margin-bottom: 20px;" type="text" name="massage" placeholder="max 255 kí tự">
+                Tên:<input style="width: 70%;height: 40px;margin-bottom: 20px;" type="text" name="user" placeholder="max 12 kí tự"><br>
+                Nội dung:<input style="width: 70%;height: 40px;margin-bottom: 20px;" type="text" name="message" placeholder="max 255 kí tự">
               <br>
               <button>Gửi</button>
             </form>
@@ -233,20 +240,24 @@
         <div id="frameContainer3" class="custom-frame-container">
           <div class="custom-frame">
             <span class="close-button" id="closeButton3">X</span>
-            <form action="{%url 'pay'%}" method="post">
+            <form class="bank" action="{%url 'pay'%}" method="post">
                 {%csrf_token%}
-                Số Tiền<input type="text" name="money">
-              <br>
+                <input type="email" name="gmail" placeholder="Gmail phản hồi">
+                <p style="color: red;">*Our Gmail: imgtourl@gmail.com</p>
+                <input type="text" name="money" placeholder="Số tiền">
+              
               <p style="color: red;">*Thông tin:</p><br>
-              STK <input type="text" name="stk" placeholder='123456789'><br>
-              TTK <input type="text" name="ttk" placeholder="PHUNG THANH DO"><br>
+              <input type="text" name="stk" placeholder='Số tài khoản'>
+              <input type="text" name="ttk" placeholder="Tên tài khoản:(vd: PHAM NHAT VUONG)"><br>
               BANK <select name="bank" id="">
+                    <option value="mm">Ví MoMo</option>
                     <option value="mbb">MbBANK</option>
                     <option value="vcb">Vietcombank</option>
                     <option value="bidv">BIDV</option>
                     <option value="tcb">Techcombank</option>
                     <option value="vtb">VietinBank</option>
                     <option value="tpb">TP Bank</option>
+                    
               </select><br>
               <button>Rút</button>
             </form>
@@ -274,12 +285,36 @@
         function openFrame1() {
           const frameContainer1 = document.getElementById('frameContainer1');
           frameContainer1.style.display = 'block';
+          const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value
+          fetch("http://127.0.0.1:8000/notiAPI/", {
+                  method: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                  headers: {
+                    "Content-Type": "application/json", // Định dạng dữ liệu gửi đi
+                    "X-CSRFToken":csrf
+                  },
+                  body: JSON.stringify({
+                      'type': 'is_noti'
+                  }), // Dữ liệu bạn muốn gửi lên server
+                  })
+                .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Phản hồi mạng không tốt');
+                  }
+                  // Không có xử lí dữ liệu ở đây
+                })
+                .catch(error => {
+                  // Xử lí lỗi nếu có
+                  console.error('eror:', error);
+                });
+
         }
-    
+        
+
         // Hàm xử lý sự kiện click để đóng bảng Thông Báo
         function closeFrame1() {
           const frameContainer1 = document.getElementById('frameContainer1');
           frameContainer1.style.display = 'none';
+          
         }
     
         // Hàm xử lý sự kiện click để mở bảng Liên Hệ

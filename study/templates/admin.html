@@ -3,99 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Trang Admin</title>
     <style>
-        .contain {
-            position: relative;
-            text-align: center;
-            width: 300px;
-            height: 300px;
-            border: 3px solid #918787;
-            margin: 30px;
-            border-radius: 30px;
-        }
-        h4 {
-            position: relative;
-            text-align: center;
-            top: -30px;
-            background-color: yellow;
-            border: 3px solid rgb(44, 35, 35);
-            width: 50%;
-            left: 20%;
-            color: rgb(60, 67, 72);
-            padding: 5px;
-            border-radius: 20px;
-        }
-        input {
-            position: relative;
-            border-radius: 10px;
-            width: 250px;
-            height: 30px;
-            border: 3px inset black ;
-            top: -30px;
-        }
-        .vd {
-            top: -35px;
-        }
-        .note {
-            margin-top: 10px;
-            border-radius: 10px;
-            position: relative;
-            left: 20px;
-            top: -30px;
-            border: 3px  solid red;
-            width: 250px;
-        }
-        button {
-            position: relative;
-            padding: 5px;
-            margin-top: 10px;
-            border-radius: 10px;
-            border: none;
-            background-color: green;
-            color: aliceblue;
-            cursor: pointer;
+        /* CSS cho trang admin */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
 
-        #name_data {
-            border-radius: 10px;
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ffffff;
+            padding: 20px;
+        }
+
+        .admin-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #a08b8b;
+            box-shadow: 0px 0px 10px black;
+            border-radius: 20px;
+
+        }
+
+        .admin-section h2 {
+            margin-top: 0;
+        }
+
+        .admin-section input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 30px;
+            width: 80%;
+        }
+
+        .admin-section button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-list li {
+            margin-bottom: 10px;
+        }
+
+        /* CSS cho nội dung chuyển tiền */
+        .transaction-history {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .transaction-history h2 {
+            margin-top: 0;
+        }
+
+        .transaction-list {
+            list-style:None;
+            padding: 0;
+        }
+
+        .transaction-list li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="contain">
-        <form action="{% url 'HandleAdmin' 'add' %}" method="post">
-            {% csrf_token %}
-            <h4>Thêm dữ liệu</h4>
-            <input type="text" name="name_data" placeholder="Tên dữ liệu">
-            <input type="text" name="data" placeholder="Dữ liệu:.. (eg: my:của tôi, he:anh ấy)">
-            <div class="note">
-                <p >Dữ liệu phải tuân theo nguyên tắc:</p>
-                <ul>
-                    <li>Từ tiếng anh viết trước dấu ":"</li>
-                    <li>Từ tiếng việt viết sau dấu ":"</li>
-                    <li>Ngăn cách cặp Anh:Việt với nhau bằng dấu "."</li>
-                </ul>
-            </div>
-            <button class="vd" type="submit">Thêm dữ liệu</button>
-        </form>
-    </div>
+    <div class="admin-container">
 
+        <h3 style="text-shadow: 0px 0px 6px red; text-decoration: line-through;">ADMIN-created by ptđ - 14/9/2023</h3>
+        <!-- Mục nạp dữ liệu -->
+        <div class="admin-section">
+            <h2>Nạp dữ liệu</h2>
+            <form action="{% url 'HandleAdmin' 'adddata'%}" method="post">
+                {%csrf_token%}
+                <input type="text" name="name_data" placeholder="Nhập tên dữ liệu"><br>
+                <input type="text" name="data" placeholder="Nhập dữ liệu"><br>
+                <button type="submit">Nạp</button>
+            </form>
+        </div>
 
-    <div class="contain">
-        <form action="{% url 'HandleAdmin' 'remove' %}" method="post">
-            {% csrf_token %}
-            <h4>Cập nhật dữ liệu</h4>
-            <label for="name_data"></label>
-            <select name="name_data" id="name_data">
-                <option value="None">Chọn dữ liệu...</option>
-                {% for item in data %}
-                <option value="{{item.name_data}}">{{item.name_data}}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <button type="submit">Cập nhật dữ liệu</button>
-        </form>
+        <!-- Mục cập nhật thông báo -->
+        <div class="admin-section">
+            <h2>Cập nhật thông báo</h2>
+            <form action="{%url 'HandleAdmin' 'updatenoti'%}" method="post">
+                {%csrf_token%}
+                
+                <input type="text" name="message" placeholder="Nhập thông báo mới">
+                <br>
+                <select name="victim" id="">
+                    <option value="None">Phạm vi...</option>
+                    <option value="all">Tới mọi người</option>
+                    {% for user in users%}
+                    <option value="{{user.username}}">{{user.username}}</option>
+                    {%endfor%}
+                </select>
+                <br>
+                <br><button type="submit">Cập nhật</button>
+            </form>
+        </div>
+
+        <!-- Mục xem contact -->
+        <div class="admin-section">
+            <h2>Contact gửi đến</h2>
+            <ul class="contact-list">
+                {% if contacts%}
+                {%for contact in contacts%}
+                <li>{{contact.user}} : {{contact.message}}</li>
+                {%endfor%}
+                {%else%}
+                <p style="color: red;">Không có.</p>
+                {%endif%}
+                
+                <!-- Dữ liệu contact có thể được đưa từ cơ sở dữ liệu Django -->
+            </ul>
+        </div>
+        <div class="admin-section">
+            <h2>Gửi tin</h2>
+                <form action="{%url 'HandleAdmin' 'replycontact'%}" method="post">
+                {%csrf_token%}
+                    
+                    <input type="text" name="message" placeholder="Nhập tin nhắn">
+                    <br>
+                    <select name="victim" id="">
+                        <option >Chọn user</option>
+                        {% for user in users%}
+                        <option value="{{user.username}}">{{user.username}}</option>
+                        {%endfor%}
+                        
+                    </select>
+                    <br>
+                    <button type="submit">Gửi</button>
+                </form>
+        </div>
+            <!-- Mục xem nội dung chuyển tiền -->
+        <div class="admin-section">
+            <h2>User rút tiền</h2>
+            {%if all_menu %}
+            {% for menu in all_menu %}
+            <form action="{% url 'HandleAdmin' 'withdrawmoney' %}" method="post">
+                {% csrf_token %}
+                <li>{{ menu.username }}|{{ menu.money }}|{{ menu.stk }}|{{ menu.ttk }}|{{ menu.bank }}|{{menu.gmail}}</li>
+                <input type="hidden" name="pay" value="{{ menu.username }}-{{ menu.money }}">
+                <input type="text" name="note_{{ menu.username }}" placeholder="Tin nhắn trả về User"><br>
+                <button type="submit" name="type" value="done">Hoàn thành</button>
+                <button style="background-color: red;" type="submit" name="type" value="huy">Từ chối</button>
+            </form>
+            {% endfor %}
+            {% else%}
+            <p style="color: red;">không có.</p>
+            {%endif%}    
+                
+                <!-- Dữ liệu lịch sử giao dịch có thể được đưa từ cơ sở dữ liệu Django -->
+        </div>
+     
     </div>
 </body>
 </html>

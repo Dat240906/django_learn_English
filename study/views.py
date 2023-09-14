@@ -1,3 +1,4 @@
+from re import U
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse
 from django.views import View
@@ -5,8 +6,53 @@ from .models import *
 import random
 from django.core.cache import cache
 from .forms import *
+from .serializers import NoficationsSerializer
+from rest_framework.views  import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import os
+import base64
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from email.mime.text import MIMEText
 
+def send_email(content, title, email_victim):
+# Thông tin xác thực OAuth2
+    SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+    creds = None
 
+    def refresh_token():
+        global creds
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+            with open('token.json', 'w') as token:
+                token.write(creds.to_json())
+
+    # Kiểm tra xem đã có thông tin xác thực OAuth2 hay chưa
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+
+    # Nếu chưa có hoặc hết hạn, thì yêu cầu xác thực mới
+    if not creds or not creds.valid:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
+        refresh_token()  # Làm mới token sau khi xác thực
+
+    # Tạo service Gmail
+    service = build('gmail', 'v1', credentials=creds)
+
+    # Tạo email
+    message = MIMEText(content)
+    message['to'] = email_victim
+    message['subject'] = title
+
+    # Gửi email
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
+    body = {'raw': raw_message}
+    service.users().messages().send(userId='me', body=body).execute()
 
 # Create your views here.
 def get_user_ip(request):
@@ -33,7 +79,7 @@ class Login(View):
         ip_user = get_user_ip(request)
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            username = login_form.cleaned_data['username']
+            username = login_form.cleaned_data['username'].lower()
             password = login_form.cleaned_data['password']
             try:
                 user = UserModel.objects.get(username=username)
@@ -70,7 +116,7 @@ class Register(View):
         if register_form.is_valid():
             # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
             users = [user.username for user in UserModel.objects.all()]
-            username = register_form.cleaned_data['username']
+            username = register_form.cleaned_data['username'].lower()
             if username in users:
                 return render(request, 'login.html', context={"message":'*tài khoản đã tồn tại','form': form})
             password = register_form.cleaned_data['password']
@@ -145,13 +191,27 @@ class index(View):
 
             #lấy money trong db
             money = format_currency(user.money)
+            #lấy thông báo trong db
+            if user.message is None or user.message =='None':
+                notification = NotificationsModel.objects.get(pk=1)
+                user.message = notification.message
+                message = notification.message
+                user.save()
+            
+            message = user.message
 
+
+            #lấy trạng thái thông báo trong db
+            is_noti = user.is_seen_noti
             user_XH = sorted_list_user.index(user) + 1
             context = {
                 'user':user,
                 'data_unit':data_unit,
                 'user_XH':user_XH, 
-                'money':money
+                'money':money,
+                'notification':NotificationsModel.objects.get(pk=1).message,
+                'noti_user':message,
+                'is_noti':is_noti
             }
             return render(request, 'index.html', context)
         except UserModel.DoesNotExist:
@@ -325,7 +385,7 @@ class Tracnghiem(View):
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
             #cộng tiền
-            money_total = data_tracnghiem[2] * 100
+            money_total = data_tracnghiem[2] * 500
             money_curren = int(data_user.money)
             money_curren += money_total
             data_user.money = str(money_curren)
@@ -425,7 +485,7 @@ class Tuluan(View):
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
             #cộng tiền
-            money_total = data_tuluan[2] * 100
+            money_total = data_tuluan[2] * 500
             money_curren = int(data_user.money)
             money_curren += money_total
             data_user.money = str(money_curren)
@@ -506,18 +566,60 @@ def return_dict(str):
             key, value = parts
             dictionary[key] = value
     return dictionary
-class Admin(View):
-    def get(self, request):
-        
-        data = StorageDataModel.objects.all()
-        
+    
+class NoficationsAPI(APIView):
+    def post(self, request):
+        ip_user = get_user_ip(request)
+        cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
+
+        collect_data = NoficationsSerializer(data=request.data)
+
+        if collect_data.is_valid():
+
             
-        
-        context  = {
-            'data':data
-        }
-        return render(request, 'admin.html', context)
-        
+            type = collect_data.data['type']
+
+            if type == "change_noti_all":
+                message = collect_data.data['message']
+                # json = {
+                #     'type':'change_noti_all',
+                #     'message':'message'
+                # }
+                obj = NotificationsModel.objects.get(pk=1)
+                obj.message = message
+                obj.save()
+
+            elif type == "change_noti_user":
+                message = collect_data.data['message']
+                # json = {
+                #     'type':'change_noti_user',
+                #     'ip_address':ip_user,
+                #     'username':username,
+                #     'message':'message'
+                # }
+                ip_user_from_admin = collect_data.data['ip_address']
+                username_from_admin = collect_data.data['username']
+
+                user_db = UserModel.objects.get(username=username_from_admin, ip_address = ip_user_from_admin)
+
+                #thay đôiỉ noti
+                user_db.message = message
+                
+                #thay đổi trạng thái thông báo
+                user_db.is_seen_noti = True
+
+                user_db.save()
+            elif type == "is_noti":
+                # json = {
+                #     'type':'is_noti',
+                # }
+
+                user_db = UserModel.objects.get(username=cache_data['username'], ip_address = ip_user)
+                user_db.is_seen_noti = False
+                user_db.save()
+            return Response(data='done', status=status.HTTP_200_OK)       
+        return Response(data='er', status=status.HTTP_400_BAD_REQUEST)       
 
 class Contact(View):
     def post(self, request):
@@ -533,42 +635,118 @@ class Contact(View):
             return redirect('index')
 class WithdrawMoney(View):
     def post(self, request):
-        ip_user = get_user_ip(request)
-        formModel = WithdrawMoneyForm(request.POST)
+            ip_user = get_user_ip(request)
+            data = request.POST
+            cache_key = f'key_{ip_user}'
+            cache_data = cache.get(cache_key)
 
-        cache_key = f'key_{ip_user}'
-        cache_data = cache.get(cache_key)
-
-        try:
+            stk = data.get('stk')
+            ttk = data.get('ttk')
+            bank = data.get('bank')
+            gmail = data.get('gmail')
             user = UserModel.objects.get(username = cache_data['username'],ip_address = ip_user)
             money = request.POST.get('money')
             money_user = user.money
-            if int(money)>=10000 and money<= money_user:
-                if formModel.is_valid():
+            if int(money)>=10000 and int(money)<= int(money_user):
+                    WithdrawMoneyModel.objects.create(gmail=gmail,username=cache_data['username'], money=money,stk=stk, ttk=ttk, bank=bank)
                     a = int(user.money) - int(money)
                     user.money = str(a)
                     user.save()
-                    formModel.save()
-        
+                    send_email('Đơn rút tiền đã nhận được, chúng tôi sẽ cập nhận tình trạng của nó qua GMAIL và WEBSITE. ')
+                    
+                    
                     return redirect('index')
                 
             return redirect('index')
-        except:
-            return redirect('index')
+      
+class Admin(View):
+    def get(self, request):
 
+        all_user = UserModel.objects.all()
+        contacts = ContactModel.objects.all()
+        user_withdraw_money = WithdrawMoneyModel.objects.all()
+
+        context = {
+            'users':all_user,
+            'contacts':contacts,
+            'all_menu':user_withdraw_money
+        }
+        return render(request, 'admin.html', context)
 
 class HandleAdmin(View):
+
+
+
     def post(self, request, method):
 
-        get = request.POST
+            data = request.POST
 
-        #add
-        if method == 'add':
-            name_data = get.get('name_data')
-            data = get.get('data')
-            StorageDataModel.objects.create(name_data = name_data, data = data)
-            return redirect('ptd_admin')
-        
+            #add
+            if method == 'adddata':
+                name_data = data.get('name_data')
+                data = data.get('data')
+                StorageDataModel.objects.create(name_data = name_data, data = data)
+                return redirect('admin_06')
+            
+            elif method == 'updatenoti':
+            
+                message = data.get('message')
+                victim = data.get('victim')
+                if victim == 'None' or victim is None:
+                    return redirect('admin_06')
 
-           
-        return redirect('ptd_admin')
+                elif victim == 'all':
+                    user_model = UserModel.objects.all()
+                    noti_model = NotificationsModel.objects.get(pk=1)
+
+                    noti_model.message = message
+                    noti_model.save()
+                    return redirect('admin_06')
+
+                else:
+
+                    user_model = UserModel.objects.get(username = victim)
+                    user_model.message = message
+                    user_model.is_seen_noti = True
+                    # victim is user
+                    user_model.save()
+                    return redirect('admin_06')
+            elif method == 'replycontact':
+                message = data.get('message')
+                victim = data.get('victim')
+                user_model = UserModel.objects.get(username = victim)
+                user_model.message = message
+                user_model.is_seen_noti = True
+                # victim is user
+                user_model.save()
+                return redirect('admin_06')
+            
+
+            elif method == 'withdrawmoney':
+                info_bill = data.get('pay').split('-')
+                type = data.get('type')
+                username = info_bill[0]
+                note_message = data.get(f'note_{username}', None)
+
+                money = info_bill[1]
+                user = UserModel.objects.get(username = username)
+                model = WithdrawMoneyModel.objects.get(username =username, money=money)
+                if type == 'done':
+                    model.delete()
+                    user.message = f"Đơn rút {money}đ (Nhà cái đến từ Châu Âu lấy (99%) -> {int(money)//100}đ: <p style='color:green;display: inline-block'>THÀNH CÔNG</p>"
+                    user.is_seen_noti = True
+                    user.save()
+                    send_email(f'Đơn rút {money}đ (Nhà cái đến từ Châu Âu lấy (99%) -> {int(money)//100}đ: THÀNH CÔNG', 'Exam-Relax', f'{model.gmail}' )
+                    return redirect('admin_06')
+                #hủy
+                
+                a = int(user.money)
+                total = a+int(money)
+                user.money = str(total)
+                user.message = f'Đơn rút {money}đ: <p style="color:red;display: inline-block">BỊ TỪ CHỐI</p>, lí do:{note_message}'
+                user.is_seen_noti = True
+                user.save()
+                send_email(f'Đơn rút {money}đ: BỊ TỪ CHỐI, lí do:{note_message}', 'Exam-Relax', f'{model.gmail}' )
+                model.delete()
+                return redirect('admin_06')
+            return redirect('admin_06')

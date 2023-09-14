@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pv-blvz=-9$f+o=8^p5-mg&xni3#imtbd6an4-27s_m4a+jb8@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'study',
+    'rest_framework'
 ]
 
 
@@ -48,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django.middleware.csrf.CsrfViewMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'learn_E.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'roobwrab',
-        'USER': 'roobwrab',
-        'PASSWORD': '7dFBvLMjnPAcG9NHDQPBu4pBKYzVY1K9',
-        'HOST': 'floppy.db.elephantsql.com',
+        'NAME': 'vorugmee',
+        'USER': 'vorugmee',
+        'PASSWORD': 'Mjz4EYGpwI1meBW3gVC9wn8Z9V9dXdha',
+        'HOST': 'rain.db.elephantsql.com',
         'PORT': '5432',
     }
 }

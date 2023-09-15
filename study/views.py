@@ -24,7 +24,6 @@ def send_email(content, title, email_victim):
     creds = None
 
     def refresh_token():
-        global creds
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
             with open('token.json', 'w') as token:
@@ -33,9 +32,11 @@ def send_email(content, title, email_victim):
     # Kiểm tra xem đã có thông tin xác thực OAuth2 hay chưa
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-
-    # Nếu chưa có hoặc hết hạn, thì yêu cầu xác thực mới
-    if not creds or not creds.valid:
+        
+        # Kiểm tra lại token
+        if creds and creds.expired and creds.refresh_token:
+            refresh_token()
+    else:
         flow = InstalledAppFlow.from_client_secrets_file(
             'credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
@@ -125,7 +126,7 @@ class Register(View):
             if password != confirm_password:
                 return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp','form': form})
             
-            UserModel.objects.create(username=username, password= confirm_password, ip_address = ip_user)
+            UserModel.objects.create(message = 'Không có',username=username, password= confirm_password, ip_address = ip_user)
 
             cache_key = f'key_{ip_user}'
             data = {
@@ -192,11 +193,6 @@ class index(View):
             #lấy money trong db
             money = format_currency(user.money)
             #lấy thông báo trong db
-            if user.message is None or user.message =='None':
-                notification = NotificationsModel.objects.get(pk=1)
-                user.message = notification.message
-                message = notification.message
-                user.save()
             
             message = user.message
 
@@ -416,15 +412,27 @@ class Tuluan(View):
 
         # if cache_data is None:
         #     cache.set(cache_key, dict_data, timeout=24*60*60
+        num_random = random.choice([True, False])
+        #true: question là tiếng việt
+        #false: question là tiếng anh
+        if num_random:
+            while True:
+                question_main = random.choice([value for value in data_unit.values()])
+                # random.choice(cache_data['user_question'])
 
-        while True:
-            question_main = random.choice([value for value in data_unit.values()])
-            # random.choice(cache_data['user_question'])
+                qs = get_key_from_value(data_unit, question_main)
+                if qs not in data_tuluan[0]:
+                    break
+        else:
+            while True:
+                question_main = random.choice([value for value in data_unit.keys()])
+                # random.choice(cache_data['user_question'])
 
 
-            if question_main not in data_tuluan[0]:
-                break
-            
+                if question_main not in data_tuluan[0]:
+                    break
+                        
+
         context = {
             'total_questions':len(data_unit),
             'question_main':question_main,
@@ -451,15 +459,17 @@ class Tuluan(View):
         #câu hỏi trong DB là câu trả lời của user
         question_main =  request.POST.get('question_main') 
 
-
-        AW = get_key_from_value(data_unit, question_main)
+        if question_main in [key for key in data_unit.keys()]:
+            AW =data_unit[question_main]
+        else:
+            AW = get_key_from_value(data_unit, question_main)
 
   
         list_ = data_tuluan[0]
         list_.append(AW)
         data_tuluan[0] = list_
         cache.set(cache_key, cache_data, timeout=24*60*60)
-        if str(result).strip() in str(AW):
+        if str(result).strip().lower() in str(AW).strip().lower():
 #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
             data_tuluan[3] += 10/len(data_unit)
             data_tuluan[2] += 1
@@ -524,34 +534,35 @@ def reset(request):
     except TypeError:
         return redirect('login')
 def reset_TN(request):
+    try:
 
+        ip_user = get_user_ip(request)
+        cache_key = f'key_{ip_user}'
 
-    ip_user = get_user_ip(request)
-    cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
 
-    cache_data = cache.get(cache_key)
+        cache_data['tracnghiem'] = [[], {}, 0, 0]
 
-    cache_data['tracnghiem'] = [[], {}, 0, 0]
+        cache.set(cache_key, cache_data, timeout=24*60*60)
 
-    cache.set(cache_key, cache_data, timeout=24*60*60)
-
-    return redirect('tracnghiem')
-
+        return redirect('tracnghiem')
+    except:return redirect('index')
 
 
 def reset_TL(request):
+    try:
+        ip_user = get_user_ip(request)
+        cache_key = f'key_{ip_user}'
 
-    ip_user = get_user_ip(request)
-    cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
 
-    cache_data = cache.get(cache_key)
+        cache_data['tuluan'] = [[], {}, 0, 0]
 
-    cache_data['tuluan'] = [[], {}, 0, 0]
-
-    cache.set(cache_key, cache_data, timeout=24*60*60)
+        cache.set(cache_key, cache_data, timeout=24*60*60)
 
 
-    return redirect('tuluan')
+        return redirect('tuluan')
+    except:return redirect('index')
 
 
 def return_dict(str):
@@ -635,6 +646,8 @@ class Contact(View):
             return redirect('index')
 class WithdrawMoney(View):
     def post(self, request):
+        try:
+            money = request.POST.get('money')
             ip_user = get_user_ip(request)
             data = request.POST
             cache_key = f'key_{ip_user}'
@@ -644,8 +657,10 @@ class WithdrawMoney(View):
             ttk = data.get('ttk')
             bank = data.get('bank')
             gmail = data.get('gmail')
+            if money == '' or stk == '' or ttk =='' or gmail=='':
+                return redirect('index')
             user = UserModel.objects.get(username = cache_data['username'],ip_address = ip_user)
-            money = request.POST.get('money')
+            
             money_user = user.money
             if int(money)>=10000 and int(money)<= int(money_user):
                     WithdrawMoneyModel.objects.create(gmail=gmail,username=cache_data['username'], money=money,stk=stk, ttk=ttk, bank=bank)
@@ -658,7 +673,7 @@ class WithdrawMoney(View):
                     return redirect('index')
                 
             return redirect('index')
-      
+        except TypeError:return redirect('index')
 class Admin(View):
     def get(self, request):
 

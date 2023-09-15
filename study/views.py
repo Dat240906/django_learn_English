@@ -667,8 +667,8 @@ class WithdrawMoney(View):
                     a = int(user.money) - int(money)
                     user.money = str(a)
                     user.save()
-                    send_email('Đơn rút tiền đã nhận được, chúng tôi sẽ cập nhận tình trạng của nó qua GMAIL và WEBSITE. ')
-                    
+                    send_email('Đơn rút tiền đã nhận được, chúng tôi sẽ cập nhận tình trạng của nó qua GMAIL và WEBSITE. ', 'Exam-Relax', gmail)
+                    send_email(f'Hệ thống thông báo: [RÚT TIỀN] [{user.username}] [{money}đ]', 'Exam-Relax', 'phungthanhdat001@gmail.com')
                     
                     return redirect('index')
                 

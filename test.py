@@ -1,42 +1,64 @@
-import os
-import base64
-from googleapiclient.discovery import build
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from email.mime.text import MIMEText
+import requests
 
-# Thông tin xác thực OAuth2
-SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-creds = None
+# URL và header của request
 
-def refresh_token():
-    global creds
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
 
-# Kiểm tra xem đã có thông tin xác thực OAuth2 hay chưa
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+def send_request(username):
+    payload = {
+        "username": username,
+        "password": "dungco2006",
+        "server": "1",
+        "accept": "on",
+    }
 
-# Nếu chưa có hoặc hết hạn, thì yêu cầu xác thực mới
-if not creds or not creds.valid:
-    flow = InstalledAppFlow.from_client_secrets_file(
-        'credentials.json', SCOPES)
-    creds = flow.run_local_server(port=0)
-    refresh_token()  # Làm mới token sau khi xác thực
+    url = "https://ngocrongaz.online/dang-ky"
+    headers = {
+        "authority": "ngocrongaz.online",
+        "method": "POST",
+        "path": "/dang-ky",
+        "scheme": "https",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.9,vi;q=0.8",
+        "Cache-Control": "max-age=0",
+        "Content-Length": "48",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": "PHPSESSID=mvgc6g6l7i36n0sudrp440ldit",
+        "Origin": "https://ngocrongaz.online",
+        "Referer": "https://ngocrongaz.online/dang-ky",
+        "Sec-Ch-Ua": '"Chromium";v="116", "Not)A;Brand";v="24", "Microsoft Edge";v="116"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.0.0",
+    }
+        # Thực hiện POST request
+    response = requests.post(url, headers=headers, data=payload)
+    if response.status_code == 200:
+        print(f'Success {i}')
+    else:
+        print(f'Error {i}')
 
-# Tạo service Gmail
-service = build('gmail', 'v1', credentials=creds)
+import threading
 
-# Tạo email
-message = MIMEText("nd")
-message['to'] = "umbalaavc16@gmail.com"
-message['subject'] = "Exam-Relax"
 
-# Gửi email
-raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
-body = {'raw': raw_message}
-service.users().messages().send(userId='me', body=body).execute()
+# Tạo danh sách các luồng
+threads = []
+
+start_index = 1001
+end_index = 10000
+
+for i in range(start_index, end_index + 1):
+    username = f"Kaioken{i}"
+    thread = threading.Thread(target=send_request, args=(username,))
+    threads.append(thread)
+    thread.start()
+
+for thread in threads:
+    thread.join()
+
+print("Hoàn thành tất cả request")

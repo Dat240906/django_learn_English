@@ -19,47 +19,47 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from email.mime.text import MIMEText
 
-def send_email(content, title, email_victim):
-    # Thông tin xác thực OAuth2
-    SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-    creds = None
+# def send_email(content, title, email_victim):
+#     # Thông tin xác thực OAuth2
+#     SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+#     creds = None
 
-    def refresh_token():
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-            with open('token.json', 'w') as token:
-                token.write(creds.to_json())
+#     def refresh_token():
+#         if creds and creds.expired and creds.refresh_token:
+#             creds.refresh(Request())
+#             with open('token.json', 'w') as token:
+#                 token.write(creds.to_json())
 
-    # Kiểm tra xem đã có thông tin xác thực OAuth2 hay chưa
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+#     # Kiểm tra xem đã có thông tin xác thực OAuth2 hay chưa
+#     if os.path.exists('token.json'):
+#         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         
-        # Kiểm tra lại token
-        if creds and creds.expired and creds.refresh_token:
-            refresh_token()
-    else:
-        # Sử dụng key.json để xác thực
-        creds = service_account.from_service_account_file(
-            'key.json', scopes=SCOPES)
+#         # Kiểm tra lại token
+#         if creds and creds.expired and creds.refresh_token:
+#             refresh_token()
+#     else:
+#         # Sử dụng key.json để xác thực
+#         creds = service_account.from_service_account_file(
+#             'key.json', scopes=SCOPES)
         
-        # Làm mới token sau khi xác thực
-        creds.refresh(Request())
+#         # Làm mới token sau khi xác thực
+#         creds.refresh(Request())
 
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+#         with open('token.json', 'w') as token:
+#             token.write(creds.to_json())
 
-    # Tạo service Gmail
-    service = build('gmail', 'v1', credentials=creds)
+#     # Tạo service Gmail
+#     service = build('gmail', 'v1', credentials=creds)
 
-    # Tạo email
-    message = MIMEText(content)
-    message['to'] = email_victim
-    message['subject'] = title
+#     # Tạo email
+#     message = MIMEText(content)
+#     message['to'] = email_victim
+#     message['subject'] = title
 
-    # Gửi email
-    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
-    body = {'raw': raw_message}
-    service.users().messages().send(userId='me', body=body).execute()
+#     # Gửi email
+#     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
+#     body = {'raw': raw_message}
+#     service.users().messages().send(userId='me', body=body).execute()
 # Create your views here.
 def get_user_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -710,8 +710,8 @@ class WithdrawMoney(View):
                     a = int(user.money) - int(money)
                     user.money = str(a)
                     user.save()
-                    send_email('Đơn rút tiền đã nhận được, chúng tôi sẽ cập nhận tình trạng của nó qua GMAIL và WEBSITE. ', 'Exam-Relax', gmail)
-                    send_email(f'Hệ thống thông báo: [RÚT TIỀN] [{user.username}] [{money}đ]', 'Exam-Relax', 'phungthanhdat001@gmail.com')
+                    # send_email('Đơn rút tiền đã nhận được, chúng tôi sẽ cập nhận tình trạng của nó qua GMAIL và WEBSITE. ', 'Exam-Relax', gmail)
+                    # send_email(f'Hệ thống thông báo: [RÚT TIỀN] [{user.username}] [{money}đ]', 'Exam-Relax', 'phungthanhdat001@gmail.com')
                     
                     return redirect('index')
                 
@@ -794,7 +794,7 @@ class HandleAdmin(View):
                     user.message = f"Đơn rút {money}đ (Nhà cái đến từ Châu Âu lấy (99%) -> {int(money)//100}đ: <p style='color:green;display: inline-block'>THÀNH CÔNG</p>"
                     user.is_seen_noti = True
                     user.save()
-                    send_email(f'Đơn rút {money}đ (Nhà cái đến từ Châu Âu lấy (99%) -> {int(money)//100}đ: THÀNH CÔNG', 'Exam-Relax', f'{model.gmail}' )
+                    # send_email(f'Đơn rút {money}đ (Nhà cái đến từ Châu Âu lấy (99%) -> {int(money)//100}đ: THÀNH CÔNG', 'Exam-Relax', f'{model.gmail}' )
                     return redirect('admin_06')
                 #hủy
                 
@@ -804,7 +804,7 @@ class HandleAdmin(View):
                 user.message = f'Đơn rút {money}đ: <p style="color:red;display: inline-block">BỊ TỪ CHỐI</p>, lí do:{note_message}'
                 user.is_seen_noti = True
                 user.save()
-                send_email(f'Đơn rút {money}đ: BỊ TỪ CHỐI, lí do:{note_message}', 'Exam-Relax', f'{model.gmail}' )
+                # send_email(f'Đơn rút {money}đ: BỊ TỪ CHỐI, lí do:{note_message}', 'Exam-Relax', f'{model.gmail}' )
                 model.delete()
                 return redirect('admin_06')
             return redirect('admin_06')

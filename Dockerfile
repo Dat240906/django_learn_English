@@ -8,10 +8,10 @@ WORKDIR /app
 COPY . /app
 
 # Install the application dependencies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Expose the port
-# This line exposes port 8000 which is the port used by the application
+# This line exposes port 8080 which is the port used by the application
 EXPOSE 8080
 
 # Define the entry point for the container

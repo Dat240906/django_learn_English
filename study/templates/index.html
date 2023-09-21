@@ -280,7 +280,7 @@
           const frameContainer1 = document.getElementById('frameContainer1');
           frameContainer1.style.display = 'block';
           const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value
-          fetch("http://127.0.0.1:8000/notiAPI/", {
+          fetch("/notiAPI/", {
                   method: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
                   headers: {
                     "Content-Type": "application/json", // Định dạng dữ liệu gửi đi

@@ -1,6 +1,6 @@
 from re import U
 from django.shortcuts import redirect, render
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views import View
 from .models import *
 import random
@@ -103,13 +103,31 @@ class Login(View):
                     }
 
                     cache.set(cache_key, data, timeout=24*60*60)
-                    return redirect('index')
-                return render(request, 'login.html', context={"message":'*sai mật khẩu', 'form':form})
-            except UserModel.DoesNotExist:
-                return render(request, 'login.html', context={"message":'*không tìm thấy tài khoản', 'form':form})
-            
 
-        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng', 'form':form})
+
+                    data_response = {
+                        'success':True,
+                        'redirect_url': '/'
+                    }
+                    return JsonResponse(data_response)
+                
+                data_response = {
+                        'success':False,
+                        "message":'*sai mật khẩu',
+                    }
+                return JsonResponse(data_response)
+            except UserModel.DoesNotExist:
+                data_response = {
+                        'success':False,
+                        "message":'*không tìm thấy tài khoản',
+                    }
+                return JsonResponse(data_response)
+            
+        data_response = {
+                        'success':False,
+                        "message":'*lỗi về dữ liệu chưa nhập đúng',
+                    }
+        return JsonResponse(data_response)
 
 class Register(View):
     def get(self, request):
@@ -124,12 +142,20 @@ class Register(View):
             users = [user.username for user in UserModel.objects.all()]
             username = register_form.cleaned_data['username'].lower()
             if username in users:
-                return render(request, 'login.html', context={"message":'*tài khoản đã tồn tại','form': form})
+                data_response = {
+                        'success':False,
+                        "message":'*tài khoản đã tồn tại',
+                    }
+                return JsonResponse(data_response)
             password = register_form.cleaned_data['password']
             confirm_password = register_form.cleaned_data['confirm_password']
 
             if password != confirm_password:
-                return render(request, 'login.html', context={"message":'*2 mật khẩu không trùng khớp','form': form})
+                data_response = {
+                        'success':False,
+                        "message":'*2 mật khẩu không trùng khớp',
+                    }
+                return JsonResponse(data_response)
             
             UserModel.objects.create(message = 'Không có',username=username, password= confirm_password, ip_address = ip_user)
 
@@ -143,8 +169,16 @@ class Register(View):
             }
 
             cache.set(cache_key, data, timeout=24*60*60)
-            return redirect('index')  # Thay 'home' bằng URL của trang chính của bạn
-        return render(request, 'login.html', context={"message":'*lỗi về dữ liệu chưa nhập đúng','form': form})
+            data_response = {
+                        'success':True,
+                        'redirect_url': '/',
+                    }
+            return JsonResponse(data_response)
+        data_response = {
+                        'success':False,
+                        "message":'*lỗi về dữ liệu chưa nhập đúng',
+                    }
+        return JsonResponse(data_response)
 
 
 class index(View):
@@ -374,13 +408,7 @@ class Tracnghiem(View):
             data_tracnghiem[1] = _
             cache.set(cache_key, cache_data,timeout=24*60*60)
     
-        context = {
-            'total_questions':len(cache_data['data_unit']),
-            'num_did_question':data_tracnghiem[2],
-            'point':data_tracnghiem[3],
-            'items_3': data_tracnghiem[1].items(),
-            'sai':True if len(data_tracnghiem[1]) > 0 else False
-        }      
+   
         if len(data_tracnghiem[0]) == len(cache_data['data_unit']):
              #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
@@ -391,6 +419,14 @@ class Tracnghiem(View):
             money_curren += money_total
             data_user.money = str(money_curren)
             data_user.save()
+            context = {
+                'money':money_total,
+                'total_questions':len(cache_data['data_unit']),
+                'num_did_question':data_tracnghiem[2],
+                'point':data_tracnghiem[3],
+                'items_3': data_tracnghiem[1].items(),
+                'sai':True if len(data_tracnghiem[1]) > 0 else False
+        }   
             return render(request, 'end2.html', context)
         
 
@@ -487,15 +523,9 @@ class Tuluan(View):
             data_tuluan[1] = _
             cache.set(cache_key, cache_data,timeout=24*60*60)
         
-        context = {
-            'total_questions':len(data_unit),
-            'num_did_question':data_tuluan[2],
-            'point':data_tuluan[3],
-            'items_3': data_tuluan[1].items(),
-            'sai':True if len(data_tuluan[1]) > 0 else False
-        }      
+        
         if len(data_tuluan[0]) == len(data_unit):
-
+    
             #cộng số lần thi trong DB
             data_user = UserModel.objects.get(username = cache_data['username'],ip_address=ip_user)
             data_user.count_pass +=1
@@ -505,6 +535,14 @@ class Tuluan(View):
             money_curren += money_total
             data_user.money = str(money_curren)
             data_user.save()
+            context = {
+                'total_questions':len(data_unit),
+                'money':money_total,
+                'num_did_question':data_tuluan[2],
+                'point':data_tuluan[3],
+                'items_3': data_tuluan[1].items(),
+                'sai':True if len(data_tuluan[1]) > 0 else False
+                }  
             return render(request, 'end.html', context)
         
 

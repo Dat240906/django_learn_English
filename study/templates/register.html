@@ -16,11 +16,11 @@
         .container {
             background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 5%;
             text-align: center;
-            width: 300px;
+            max-width: 300px;
             position: relative; /* Thêm thuộc tính position để làm cho loading hoạt động */
         }
 
@@ -112,6 +112,18 @@
             80% { transform: rotate(260deg); }
             90% { transform: rotate(300deg); }
             100% { transform: rotate(360deg); }
+        };
+        @media (max-width: 768px) {
+            .container {
+                max-width: 90%; /* Đặt giá trị tối đa cho container */
+            }
+        }
+
+        /* Điều chỉnh kích thước container cho màn hình nhỏ hơn (điện thoại di động) */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%; /* Đặt giá trị tối đa cho container */
+            }
         }
     </style>
 </head>

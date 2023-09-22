@@ -19,9 +19,9 @@
             border: 1px solid #ccc;
             border-radius: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 5%; /* Sử dụng % để tự động phóng to container */
             text-align: center;
-            width: 300px;
+            max-width: 300px; /* Đặt giá trị tối đa cho container */
         }
 
         .container h3 {
@@ -118,6 +118,20 @@
             80% { transform: rotate(260deg); }
             90% { transform: rotate(300deg); }
             100% { transform: rotate(360deg); }
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 90%; /* Đặt giá trị tối đa cho container */
+            }
+        }
+
+        /* Điều chỉnh kích thước container cho màn hình nhỏ hơn (điện thoại di động) */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%; /* Đặt giá trị tối đa cho container */
+            }
         }
     </style>
 </head>

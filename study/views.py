@@ -254,51 +254,48 @@ class index(View):
         except TypeError:
             return redirect('login')
     def post(self, request):
-        try:
-            name_data = request.POST.get('unit', 'None')
-            exam_type = request.POST.get('submit_button')
+        name_data = request.POST.get('unit', 'None')
+        exam_type = request.POST.get('submit_button')
 
-            if name_data == 'None':
-                return redirect('index')
-            
-
-
-            #lấy data_unit
-            data_unit = StorageDataModel.objects.get(name_data = name_data)
-
-            #lấy cache dựa theo key+ip
-            ip_user = get_user_ip(request)
-            cache_key = f'key_{ip_user}'
-            cache_data = cache.get(cache_key)
-
-            #xử lí data từ dạng "key:value.key:value" về dạng {key:value;key:value}
-            pairs = data_unit.data.split('.')
-            dictionary = {}
-
-            for pair in pairs:
-                parts = pair.split(':')
-                
-                if len(parts) == 2:
-                    key, value = parts
-                    dictionary[key] = value
-
-            ##########################################
-            data = {
-                'username':cache_data['username'],
-                'data_unit':dictionary,
-                #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-                'tracnghiem':[[], {}, 0, 0],
-                'tuluan':[[], {}, 0, 0]
-            }
-            cache.set(cache_key, data, 24*60*60)
-            # return HttpResponse(cache_data['data_unit'])#out put không là None
+        if name_data == 'None':
+            return redirect('index')
         
-            if exam_type == 'tracnghiem':
-                return redirect('tracnghiem')
+
+
+        #lấy data_unit
+        data_unit = StorageDataModel.objects.get(name_data = name_data)
+
+        #lấy cache dựa theo key+ip
+        ip_user = get_user_ip(request)
+        cache_key = f'key_{ip_user}'
+        cache_data = cache.get(cache_key)
+
+        #xử lí data từ dạng "key:value.key:value" về dạng {key:value;key:value}
+        pairs = data_unit.data.split('.')
+        dictionary = {}
+
+        for pair in pairs:
+            parts = pair.split(':')
             
-            return redirect('tuluan')
-        except TypeError:
-            return redirect('login')
+            if len(parts) == 2:
+                key, value = parts
+                dictionary[key] = value
+
+        ##########################################
+        data = {
+            'username':cache_data['username'],
+            'data_unit':dictionary,
+            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+            'tracnghiem':[[], {}, 0, 0],
+            'tuluan':[[], {}, 0, 0]
+        }
+        cache.set(cache_key, data, 24*60*60)
+        # return HttpResponse(cache_data['data_unit'])#out put không là None
+    
+        if exam_type == 'tracnghiem':
+            return redirect('tracnghiem')
+        
+        return redirect('tuluan')
 
 class Tracnghiem(View):
     question_main = None

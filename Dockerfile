@@ -14,5 +14,5 @@ RUN pip3 install -r requirements.txt
 # This line exposes port 8080 which is the port used by the application
 EXPOSE 8080
 
-# Define the entry point for the container
+# Define the entry point for the containe
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]

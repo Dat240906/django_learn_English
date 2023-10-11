@@ -1,5 +1,5 @@
 from django import forms
-from .models import ContactModel, WithdrawMoneyModel
+from .models import ContactModel, WithdrawMoneyModel, UserModel
 
 
 class ContactForm(forms.ModelForm):
@@ -15,9 +15,11 @@ class WithdrawMoneyForm(forms.ModelForm):
 
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ('username', 'password')
+    
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=12)

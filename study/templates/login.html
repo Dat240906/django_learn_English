@@ -1,211 +1,39 @@
+
+
+
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Đăng Nhập</title>
-    <style>
-        body {
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-size: 30px;
-        }
-
-        .container {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 5%; /* Sử dụng % để tự động phóng to container */
-            text-align: center;
-            max-width: 300px; /* Đặt giá trị tối đa cho container */
-        }
-
-        .container h3 {
-            margin-bottom: 20px;
-        }
-
-        .container p {
-            text-align: left;
-            margin: 5px 0;
-        }
-
-        .container input[type="text"],
-        .container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            box-sizing: border-box;
-        }
-
-        .container button {
-            background-color: #007bff;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .container button:hover {
-            background-color: #0056b3;
-        }
-
-        .container a {
-            text-decoration: none;
-            color: #007bff;
-            margin-top: 10px;
-            display: block;
-        }
-
-        .container a:hover {
-            text-decoration: underline;
-        }
-
-
-
-
-                /* CSS cho trạng thái tải */
-  
-        #loading-overlay {
-            position: absolute;
-            display: none;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Màu nền mờ lại (màu đen với độ trong suốt 0.5) */
-            z-index: 1; /* Đặt z-index để đè lên phần tử khác (loading) */
-        }
-
-        #loading {
-            position: absolute;
-            display: none;
-            text-align: center;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            
-            z-index: 2; /* Đặt z-index cao hơn để nổi lên trên nền mờ lại */
-        }
-
-        .loading-spinner {
-            border: 6px solid #f3f3f3; /* Màu nền của vòng tròn */
-            border-top: 6px solid #3498db; /* Màu của vòng tròn quay */
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite; /* Động cơ quay vô tận */
-        }
-
-        /* Keyframe cho động cơ quay */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            10% { transform: rotate(12deg); }
-            20% { transform: rotate(30deg); }
-            30% { transform: rotate(41deg); }
-            40% { transform: rotate(52deg); }
-            50% { transform: rotate(120deg); }
-            60% { transform: rotate(160deg); }
-            70% { transform: rotate(200deg); }
-            80% { transform: rotate(260deg); }
-            90% { transform: rotate(300deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-
-        @media (max-width: 768px) {
-            .container {
-                max-width: 90%; /* Đặt giá trị tối đa cho container */
-            }
-        }
-
-        /* Điều chỉnh kích thước container cho màn hình nhỏ hơn (điện thoại di động) */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 100%; /* Đặt giá trị tối đa cho container */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{%static 'study/css/login.css'%}">
+    <link rel="icon" href="{%static 'study/css/logo.png'%}" type="image/x-icon">
+    
 </head>
 
 <body>
 
-    <div id="loading-overlay"></div>
-    <div id="loading" style="display: none;">
+    <div id="main">
         
+        <div class="logo-text-container">
+            <img src="{%static 'study\img\logo.png'%}" alt="Logo">
+            <p class="slogan">Exam Relax là nền tảng làm bài nhanh, hiệu quả.</p>
+        </div>
 
-        <div class="loading-spinner"></div>
-        <p>Loading...</p>
+        <div >
+            <form class = "form-login-container"  action="{% url 'login'%}" method="post">
+                {%csrf_token%}
+                <input placeholder="Tên tài khoản" name="username" type="text">
+                <input type="password" placeholder="Mật khẩu" name="password">
+                <button type="submit" class="btn-login">Đăng nhập</button>
+                <a href="#" class="btn-repassword">Quên mật khẩu?</a>
+                <div class="underline"></div>
+                <a href="{% url 'register'%}" class="btn-signup">Tạo tài khoản mới</a>
+            </form>
+        </div>
+
     </div>
 
-    <div class="container">
-    <form  id="login-form" method="post">
-        <h3>Đăng Nhập</h3>
-        {% csrf_token %}
-        <p>Tên đăng nhập:</p>{{form.username}}
-        <br>
-        <p>Mật khẩu:</p>{{form.password}}
-        <br>
-        {%if message%}
-        <p style="color: red;">{{message}}</p>
-        {%endif %}
-        <br>
-        <button type="submit">Đăng Nhập</button>
-
-    <br>
-    <a href="{%url 'register'%}">Đăng kí</a>
-</div>
-<script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Hiển thị "loading" và "loading-overlay"
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('loading-overlay').style.display = 'block';
-
-
-
-        fetch('', {
-            method:'POST',
-            body: new FormData(this),
-            headers: {
-                'X-CSRFToken':document.querySelector('input[name="csrfmiddlewaretoken"]').value
-            },
-        })
-
-        .then(response => response.json())
-
-        .then(data => {
-            if (data.success) {
-                window.location.href = data.redirect_url;
-            }else {
-                // Ẩn "loading" và "loading-overlay"
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('loading-overlay').style.display = 'none';
-
-                const message = data.message
-                alert(message);
-            }
-            
-        })
-
-        .catch(error => {
-                // Ẩn "loading" và "loading-overlay"
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('loading-overlay').style.display = 'none';
-            console.error('Lỗi:', error);
-        })
-
-
-        
-    })
-</script>
 </body>
+
 </html>

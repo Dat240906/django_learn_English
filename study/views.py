@@ -78,56 +78,48 @@ def get_key_from_value(dictionary, value):
 class Login(View):
     def get(self, request):
         cache.clear()
-        form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html')
     def post(self,request):
-        form = LoginForm()
         ip_user = get_user_ip(request)
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            username = login_form.cleaned_data['username'].lower()
-            password = login_form.cleaned_data['password']
-            try:
-                user = UserModel.objects.get(username=username)
-                password_db = user.password
-                if password == password_db:
-                    user.ip_address = ip_user
-                    user.save()
-                    cache_key = f'key_{ip_user}'
-                    data = {
-                        'username':username,
-                        'data_unit':{},
-                        #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-                        'tracnghiem':[[], {}, 0, 0],
-                        'tuluan':[[], {}, 0, 0]
-                    }
+        data = request.POST
+        username = data.get('username', None).lower()
+        password = data.get('password', None)
+        try:
+            user = UserModel.objects.get(username=username)
+            password_db = user.password
+            if password == password_db:
+                user.ip_address = ip_user
+                user.save()
+                cache_key = f'key_{ip_user}'
+                data = {
+                    'username':username,
+                    'data_unit':{},
+                    #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+                    'tracnghiem':[[], {}, 0, 0],
+                    'tuluan':[[], {}, 0, 0]
+                }
 
-                    cache.set(cache_key, data, timeout=24*60*60)
+                cache.set(cache_key, data, timeout=24*60*60)
 
 
-                    data_response = {
-                        'success':True,
-                        'redirect_url': '/'
-                    }
-                    return JsonResponse(data_response)
-                
                 data_response = {
-                        'success':False,
-                        "message":'*sai mật khẩu',
-                    }
-                return JsonResponse(data_response)
-            except UserModel.DoesNotExist:
-                data_response = {
-                        'success':False,
-                        "message":'*không tìm thấy tài khoản',
-                    }
+                    'success':True,
+                    'redirect_url': '/'
+                }
                 return JsonResponse(data_response)
             
-        data_response = {
-                        'success':False,
-                        "message":'*lỗi về dữ liệu chưa nhập đúng',
-                    }
-        return JsonResponse(data_response)
+            data_response = {
+                    'success':False,
+                    "message":'*sai mật khẩu',
+                }
+            return JsonResponse(data_response)
+        except UserModel.DoesNotExist:
+            data_response = {
+                    'success':False,
+                    "message":'*không tìm thấy tài khoản',
+                }
+            return JsonResponse(data_response)
+    
 
 class Register(View):
     def get(self, request):
@@ -135,51 +127,43 @@ class Register(View):
         return render(request, 'register.html', {'form': form})
     def post(self, request):
         ip_user = get_user_ip(request)
-        form = RegisterForm()
-        register_form = RegisterForm(request.POST)
-        if register_form.is_valid():
-            # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
-            users = [user.username for user in UserModel.objects.all()]
-            username = register_form.cleaned_data['username'].lower()
-            if username in users:
-                data_response = {
-                        'success':False,
-                        "message":'*tài khoản đã tồn tại',
-                    }
-                return JsonResponse(data_response)
-            password = register_form.cleaned_data['password']
-            confirm_password = register_form.cleaned_data['confirm_password']
-
-            if password != confirm_password:
-                data_response = {
-                        'success':False,
-                        "message":'*2 mật khẩu không trùng khớp',
-                    }
-                return JsonResponse(data_response)
-            
-            UserModel.objects.create(message = 'Không có',username=username, password= confirm_password, ip_address = ip_user)
-
-            cache_key = f'key_{ip_user}'
-            data = {
-                'username':username,
-                'data_unit':{},
-                #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-                'tracnghiem':[[], {}, 0, 0],
-                'tuluan':[[], {}, 0, 0]
-            }
-
-            cache.set(cache_key, data, timeout=24*60*60)
+        data = request.POST
+        # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
+        users = [user.username for user in UserModel.objects.all()]
+        username = data.get('username').lower()
+        if username in users:
             data_response = {
-                        'success':True,
-                        'redirect_url': '/',
-                    }
+                    'success':False,
+                    "message":'*tài khoản đã tồn tại',
+                }
             return JsonResponse(data_response)
-        data_response = {
-                        'success':False,
-                        "message":'*lỗi về dữ liệu chưa nhập đúng',
-                    }
-        return JsonResponse(data_response)
+        password = data.get('password')
+        confirm_password = data.get('confirm_password')
 
+        if password != confirm_password:
+            data_response = {
+                    'success':False,
+                    "message":'*2 mật khẩu không trùng khớp',
+                }
+            return JsonResponse(data_response)
+        
+        UserModel.objects.create(message = 'Không có',username=username, password= confirm_password, ip_address = ip_user)
+
+        cache_key = f'key_{ip_user}'
+        data = {
+            'username':username,
+            'data_unit':{},
+            #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+            'tracnghiem':[[], {}, 0, 0],
+            'tuluan':[[], {}, 0, 0]
+        }
+
+        cache.set(cache_key, data, timeout=24*60*60)
+        data_response = {
+                    'success':True,
+                    'redirect_url': '/',
+                }
+        return JsonResponse(data_response)
 
 class index(View):
 

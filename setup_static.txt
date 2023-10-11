@@ -15,10 +15,15 @@ MIDDLEWARE = [
 ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '/static/')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Đây là thư mục chứa tệp tĩnh sau khi thu thập
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Đây là thư mục tĩnh của ứng dụng Django
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'study/static')
+    ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 Đảm bảo rằng STATIC_URL đã được cấu hình để trỏ đúng đến thư mục tĩnh trong ứng dụng của bạn.
 
 Chạy tập lệnh thu thập tệp tĩnh: Trước khi triển khai ứng dụng, chạy lệnh sau để thu thập tất cả các tệp tĩnh vào một vị trí cố định:

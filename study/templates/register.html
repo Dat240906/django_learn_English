@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Relax</title>
     <link rel="stylesheet" href="{%static 'study/css/login.css'%}">
-    <link rel="icon" type="image/png" href="{%static 'study/css/logo.png'%}">
+    <link rel="icon" type="image/png" href="{%static 'study/img/logo.png'%}">
     
 </head>
 
@@ -24,11 +24,15 @@
         </div>
 
         <div >
-            <form class = "form-login-container"  action="{% url 'register'%}" method="post">
+            <form class = "form-login-container form-login-container-js"  action="{% url 'register'%}" method="post">
                 {%csrf_token%}
-                <input placeholder="Tên tài khoản" name="username" type="text">
-                <input type="password" placeholder="Mật khẩu" name="password">
-                <input type="password" placeholder="Xác nhận mật khẩu" name="confirm_password">
+                <div class="notification notification-js">
+                    <p>Chào Mừng!!</p>
+                    <label for="check-close-noti" class="close-noti close-noti-js">x</label>
+                </div>
+                <input class="username-js" required placeholder="Tên tài khoản" name="username" type="text">
+                <input class="password-js" required type="password" placeholder="Mật khẩu" name="password">
+                <input class="confirm-password-js" required type="password" placeholder="Xác nhận mật khẩu" name="confirm_password">
                 <button type="submit" class="btn-login">Tạo tài khoản</button>
                 <a href="#" class="btn-repassword">Quên mật khẩu?</a>
                 <div class="underline"></div>
@@ -37,7 +41,8 @@
         </div>
 
     </div>
-
+    <script src="{% static 'study\js\register\register_API.js'%}"></script>
+    <script src="{% static 'study\js\commom.js'%}"></script>
 </body>
 
 </html>

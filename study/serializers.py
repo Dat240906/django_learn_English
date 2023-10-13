@@ -1,6 +1,6 @@
 from ipaddress import ip_address
 from rest_framework import serializers
-from .models import NotificationsModel
+from .models import *
 
 
 
@@ -10,3 +10,8 @@ class NoficationsSerializer(serializers.Serializer):
     user_name = serializers.CharField(max_length=12, required=False)
     ip_address = serializers.IPAddressField(required = False)
     
+
+
+class UserSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=12)
+    password = serializers.CharField(max_length=12)

@@ -1,3 +1,4 @@
+import json
 from re import U
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, JsonResponse
@@ -6,7 +7,7 @@ from .models import *
 import random
 from django.core.cache import cache
 from .forms import *
-from .serializers import NoficationsSerializer
+from .serializers import NoficationsSerializer, UserSerializer
 from rest_framework.views  import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -75,79 +76,92 @@ def get_key_from_value(dictionary, value):
             return key
     return None 
 
-class Login(View):
+class Login(APIView):
     def get(self, request):
         cache.clear()
         return render(request, 'login.html')
     def post(self,request):
         ip_user = get_user_ip(request)
-        data = request.POST
-        username = data.get('username', None).lower()
-        password = data.get('password', None)
+        collect_data = UserSerializer(data=request.data)
+        if not collect_data.is_valid():
+            data_response = {
+                'success':False,
+                "message":'Dữ liệu quá kí tự cho phép',
+            }
+            return JsonResponse(data_response)
+        
         try:
+            username = collect_data.data['username']
+            password = collect_data.data['password']
+            
             user = UserModel.objects.get(username=username)
             password_db = user.password
-            if password == password_db:
-                user.ip_address = ip_user
-                user.save()
-                cache_key = f'key_{ip_user}'
-                data = {
-                    'username':username,
-                    'data_unit':{},
-                    #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
-                    'tracnghiem':[[], {}, 0, 0],
-                    'tuluan':[[], {}, 0, 0]
-                }
-
-                cache.set(cache_key, data, timeout=24*60*60)
-
-
+            if password != password_db:
                 data_response = {
-                    'success':True,
-                    'redirect_url': '/'
-                }
+                        'success':False,
+                        "message":'Sai mật khẩu hoặc tài khoản',
+                    }
                 return JsonResponse(data_response)
-            
+            user.ip_address = ip_user
+            user.save()
+            cache_key = f'key_{ip_user}'
+            data = {
+                'username':username,
+                'data_unit':{},
+                #key:[câu đã làm(list), câu sai(dict), tổng câu đã làm(int), điểm(int) ]
+                'tracnghiem':[[], {}, 0, 0],
+                'tuluan':[[], {}, 0, 0]
+            }
+
+            cache.set(cache_key, data, timeout=24*60*60)
+
+
             data_response = {
-                    'success':False,
-                    "message":'*sai mật khẩu',
-                }
+                'success':True,
+                'redirect_url': '/',
+                'message':'Đăng nhập thành công'
+            }
             return JsonResponse(data_response)
+            
+        
         except UserModel.DoesNotExist:
             data_response = {
                     'success':False,
-                    "message":'*không tìm thấy tài khoản',
+                    "message":'Sai mật khẩu hoặc tài khoản',
                 }
             return JsonResponse(data_response)
-    
-
-class Register(View):
-    def get(self, request):
-        form = RegisterForm()
-        return render(request, 'register.html', {'form': form})
-    def post(self, request):
-        ip_user = get_user_ip(request)
-        data = request.POST
-        # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
-        users = [user.username for user in UserModel.objects.all()]
-        username = data.get('username').lower()
-        if username in users:
+        except:
             data_response = {
                     'success':False,
-                    "message":'*tài khoản đã tồn tại',
-                }
-            return JsonResponse(data_response)
-        password = data.get('password')
-        confirm_password = data.get('confirm_password')
-
-        if password != confirm_password:
-            data_response = {
-                    'success':False,
-                    "message":'*2 mật khẩu không trùng khớp',
+                    "message":'Lỗi không xác định',
                 }
             return JsonResponse(data_response)
         
-        UserModel.objects.create(message = 'Không có',username=username, password= confirm_password, ip_address = ip_user)
+class Register(APIView):
+    def get(self, request):
+        return render(request, 'register.html')
+    def post(self, request):
+        ip_user = get_user_ip(request)
+        collect_data = UserSerializer(data=request.data)
+        if not collect_data.is_valid():
+            data_response = {
+                    'success':False,
+                    "message":'Dữ liệu quá kí tự cho phép',
+                }
+            return JsonResponse(data_response)
+        # Xử lý đăng ký ở đây, ví dụ: tạo tài khoản và đăng nhập
+        users = [user.username for user in UserModel.objects.all()]
+        username = collect_data.data['username'].lower()
+        password = collect_data.data['password'].lower()
+        if username in users:
+            data_response = {
+                    'success':False,
+                    "message":'Tài khoản đã tồn tại',
+                }
+            return JsonResponse(data_response)
+
+        
+        UserModel.objects.create(message = 'Không có',username=username, password= password, ip_address = ip_user)
 
         cache_key = f'key_{ip_user}'
         data = {
@@ -162,6 +176,7 @@ class Register(View):
         data_response = {
                     'success':True,
                     'redirect_url': '/',
+                    'message':'Tạo tài khoản thành công'
                 }
         return JsonResponse(data_response)
 

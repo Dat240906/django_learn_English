@@ -7,7 +7,7 @@
 }
 
 html {
-    background-color: #cad4e2;
+    background-color: #0B1727;
 }
 
 .notification {
@@ -77,13 +77,14 @@ html {
 }
 
 .slogan {
+    color: whitesmoke;
 }
 
 .form-login-container {
     display: flex;
     flex-direction: column;
     width: 396px;
-    background-color: #FFFFFF;
+    background-color: #121E2D;
     border-radius: 8px;
     text-align: center;
     align-items: center;
@@ -125,8 +126,8 @@ html {
 
 .btn-repassword {
     margin-top: 16px;
-    background-color: #FFFFFF;
-    color: #1877f2;
+    background-color: #121E2D;
+    color: #92a1b5;
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
@@ -137,14 +138,14 @@ html {
 }
 
 .underline{
-    border: 1px solid #DADDE1;
+    border: 1px solid #c9ddf7;
     margin: 20px 16px;
     width: 90%;
 }
 
 .btn-signup {
     border: none;
-    background-color: #42B72A;
+    background-color: #E63757;
     border-radius: 6px;
     font-size: 17px;
     line-height: 48px;
@@ -156,7 +157,7 @@ html {
 
 
 .btn-signup:hover {
-    background-color: #36A420;
+    background-color: #a8283f;
 }
 
 
@@ -189,9 +190,7 @@ html {
 @media screen and  (max-width:46.1875em) {
 
  
-    .form-login-container {
-        width: 100%;
-    }
+
     .btn-signup {
         width: 70%;
     }
@@ -204,9 +203,7 @@ html {
     .slogan {
         font-size: 40px;
     }
-    .form-login-container {
-        width: 100%;
-    }
+
     .btn-repassword {
         font-size: 20px;
     }

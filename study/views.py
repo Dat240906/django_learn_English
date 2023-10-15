@@ -118,7 +118,7 @@ class Login(APIView):
 
             data_response = {
                 'success':True,
-                'redirect_url': '/',
+                'redirect_url': '/home/',
                 'message':'Đăng nhập thành công'
             }
             return JsonResponse(data_response)
@@ -175,11 +175,16 @@ class Register(APIView):
         cache.set(cache_key, data, timeout=24*60*60)
         data_response = {
                     'success':True,
-                    'redirect_url': '/',
+                    'redirect_url': '/home/',
                     'message':'Tạo tài khoản thành công'
                 }
         return JsonResponse(data_response)
 
+
+
+class Home(View):
+    def get(self, request):
+        return render(request, 'home.html') 
 class index(View):
 
     # def __init__(self) -> None:

@@ -1,148 +1,95 @@
-{%load static%}
+{% extends 'site_base.html'%}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Exam Relax</title>
-    <link rel="stylesheet" href="{% static 'study\font\themify-icons\themify-icons.css'%}">
-    <link rel="stylesheet" href="{% static 'study\css\home.css'%}">
-</head>
-<body>
-    <div id="main" class="ct-80-lr-20">
-        <div id="header" class="mg-8-16  row ">
-            <img class="header-logo" src="{%static 'study\img\logo.png'%}" alt="logo">
-            <img class= 'header-logo-text' src="{%static 'study\img\logo-text.png'%}" alt="logo">
-            <div class="header-container-search row child-ct-col">
-                <i class="ti-search icon-search pd-lr-8"></i>
-                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
-            </div>
-            <div class="header-user row ">
-                <i class="ti-comment-alt header-notification"></i>
-                <div class="coin row"><b>50000</b> xu</div>
-                <p class="name-user  ">Phùng Thành Đạt</p>
-                <img src="{%static 'study\img\logo.png'%}" alt="">
-            </div>
-        </div>
-        <div id="nav">
-            <label for="on-nav-items" class="nav-home"><i class="ti-menu"></i></label>
-            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="ti-menu"></i></label>
-            <input type="checkbox" name="" id="on-nav-items" hidden>
+{% block home %}
+<div id="content">
+    <div class="content-container">
+        <!-- Nội dung bài viết và bảng xếp hạng của bạn ở đây -->
+        <div class="post">
             
-            <div class="nav-items">
-                <a href='#' class="nav-child"><i class="ti-home"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="ti-book"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="ti-money"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="ti-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="ti-user"></i>Hồ sơ</a>
-                <a href="#" class="nav-child"><i class="ti-settings"></i>Cài đặt</a>
-            </div>
-            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
-            <label for="on-nav-items-mobile" class="fullscreen"></label>
-            <div class="nav-items-mobile" >
-                <a href="#" class="nav-child"><i class="ti-home"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="ti-book"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="ti-money"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="ti-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="ti-user"></i>Hồ sơ</a>
-                <a href="#" class="nav-child element-add"><i class="ti-comment"></i>Thông báo</a>
-                <a href="#" class="nav-child"><i class="ti-settings"></i>Cài đặt</a>
-            </div>
-
-        </div>
-
-        <div id="content">
-            <div class="content-container">
-                <!-- Nội dung bài viết và bảng xếp hạng của bạn ở đây -->
-                <div class="post">
-                    
-                    <div class="post-child">
-                        <div class="post-header">
-                            <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="" class="avatar">
-                            <div class="info">
-                                <p class="username">Admin</p>
-                                <p class="time">11:00 <i class="ti-world mode"></i></p>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
-                        </div>
-                        <div class="post-emotions">
-                            <div class="emotion-item">
-                                <i class="ti-heart heart"></i>Like
-                            </div>
-                            <label for="on-comment" class ="emotion-item">
-                                <i class="ti-comment comment"></i>Comment
-                            </label>
-                            <div class="emotion-item">
-                                <i class="ti-share share"></i>Share
-                            </div>
-                        </div>
-
-                        <input type="checkbox" name="" hidden id="on-comment" class="on-comment-class">
-                        <div class="post-container-comment">
-                            <i class="ti-control-play comment-next"></i>
-                            <input type="text" class="input-comment" placeholder="Viết bình luận...">
-                            <img src="{%static 'study\img\logo.png'%}" alt="user" class="img-user-comment img-50">
-                        </div>
-                    </div>
-
-
-                    <div class="post-child">
-                        <div class="post-header">
-                            <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="" class="avatar">
-                            <div class="info">
-                                <p class="username">Admin</p>
-                                <p class="time">11:00 <i class="ti-world mode"></i></p>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
-                        </div>
-                        <div class="post-emotions">
-                            <div class="emotion-item">
-                                <i class="ti-heart heart"></i>Like
-                            </div>
-                            <label for="on-comment1" class ="emotion-item">
-                                <i class="ti-comment comment"></i>Comment
-                            </label>
-                            <div class="emotion-item">
-                                <i class="ti-share share"></i>Share
-                            </div>
-                        </div>
-
-                        <input type="checkbox" name="" hidden id="on-comment1" class="on-comment-class">
-                        <div class="post-container-comment">
-                            <i class="ti-control-play comment-next"></i>
-                            <input type="text" class="input-comment" placeholder="Viết bình luận...">
-                            <img src="{%static 'study\img\logo.png'%}" alt="user" class="img-user-comment img-50">
-                        </div>
-                    </div>
-          
- 
-                    <!-- Các phần tử bài viết khác ở đây -->
-                </div>
-            </div>
-            <div class="rank">
-                <div class="rank-header">
-                    <h3 class="header-content">Bảng Xếp Hạng Trẻ Trâu</h3>
-                </div>
-                <div class="rank-user">
-                    <div class="user-child">
-                        <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="">
-                        <div class="info">
-                            <p class="username">Client1</p>
-                            <p class="rank-user">Thách Đố</p>
-                            <p class="point">Điểm: 2000003</p>
-                        </div>
+            <div class="post-child">
+                <div class="post-header">
+                    <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="" class="avatar">
+                    <div class="info">
+                        <p class="username">Admin</p>
+                        <p class="time">11:00 <i class="ti-world mode"></i></p>
                     </div>
                 </div>
-                
+                <div class="post-content">
+                    <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
+                </div>
+                <div class="post-emotions">
+                    <div class="emotion-item">
+                        <i class="ti-heart heart"></i>Like
+                    </div>
+                    <label for="on-comment" class ="emotion-item">
+                        <i class="ti-comment comment"></i>Comment
+                    </label>
+                    <div class="emotion-item">
+                        <i class="ti-share share"></i>Share
+                    </div>
+                </div>
+
+                <input type="checkbox" name="" hidden id="on-comment" class="on-comment-class">
+                <div class="post-container-comment">
+                    <i class="ti-control-play comment-next"></i>
+                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
+                    <img src="{%static 'study\img\logo.png'%}" alt="user" class="img-user-comment img-50">
+                </div>
             </div>
-            
+
+
+            <div class="post-child">
+                <div class="post-header">
+                    <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="" class="avatar">
+                    <div class="info">
+                        <p class="username">Admin</p>
+                        <p class="time">11:00 <i class="ti-world mode"></i></p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
+                </div>
+                <div class="post-emotions">
+                    <div class="emotion-item">
+                        <i class="ti-heart heart"></i>Like
+                    </div>
+                    <label for="on-comment1" class ="emotion-item">
+                        <i class="ti-comment comment"></i>Comment
+                    </label>
+                    <div class="emotion-item">
+                        <i class="ti-share share"></i>Share
+                    </div>
+                </div>
+
+                <input type="checkbox" name="" hidden id="on-comment1" class="on-comment-class">
+                <div class="post-container-comment">
+                    <i class="ti-control-play comment-next"></i>
+                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
+                    <img src="{%static 'study\img\logo.png'%}" alt="user" class="img-user-comment img-50">
+                </div>
+            </div>
+  
+
+            <!-- Các phần tử bài viết khác ở đây -->
         </div>
     </div>
-
-</body>
-</html>
+    <div class="rank">
+        <div class="rank-header">
+            <h3 class="header-content">Bảng Xếp Hạng Trẻ Trâu</h3>
+        </div>
+        <div class="rank-user">
+            <div class="user-child">
+                <img class="img-50" src="{%static 'study\img\logo.png'%}" alt="">
+                <div class="info">
+                    <p class="username">Client1</p>
+                    <p class="rank-user">Thách Đố</p>
+                    <p class="point">Điểm: 2000003</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Exam Relax</title>
+    <link rel="stylesheet" href="{% static 'study\font\themify-icons\themify-icons.css'%}">
+    <link rel="stylesheet" href="{% static 'study\css\home.css'%}">
+</head>
+<body>
+    <div id="main" class="ct-80-lr-20">
+        <div id="header" class="mg-8-16  row ">
+            <img class="header-logo" src="{%static 'study\img\logo.png'%}" alt="logo">
+            <img class= 'header-logo-text' src="{%static 'study\img\logo-text.png'%}" alt="logo">
+            <div class="header-container-search row child-ct-col">
+                <i class="ti-search icon-search pd-lr-8"></i>
+                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
+            </div>
+            <div class="header-user row ">
+                <i class="ti-comment-alt header-notification"></i>
+                <div class="coin row"><b>50000</b> xu</div>
+                <p class="name-user  ">Phùng Thành Đạt</p>
+                <img src="{%static 'study\img\logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="nav">
+            <label for="on-nav-items" class="nav-home"><i class="ti-menu"></i></label>
+            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="ti-menu"></i></label>
+            <input type="checkbox" name="" id="on-nav-items" hidden>
+            
+            <div class="nav-items">
+                <a href='{% url "home"%}' class="nav-child"><i class="ti-home"></i>Trang chủ</a>
+                <a href="#" class="nav-child"><i class="ti-book"></i>Tài liệu</a>
+                <a href="#" class="nav-child"><i class="ti-money"></i>Kiếm tiền</a>
+                <a href="#" class="nav-child"><i class="ti-credit-card"></i>Thanh toán</a>
+                <a href="#" class="nav-child"><i class="ti-user"></i>Hồ sơ</a>
+                <a href="#" class="nav-child"><i class="ti-settings"></i>Cài đặt</a>
+            </div>
+            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
+            <label for="on-nav-items-mobile" class="fullscreen"></label>
+            <div class="nav-items-mobile" >
+                <a href="#" class="nav-child"><i class="ti-home"></i>Trang chủ</a>
+                <a href="#" class="nav-child"><i class="ti-book"></i>Tài liệu</a>
+                <a href="#" class="nav-child"><i class="ti-money"></i>Kiếm tiền</a>
+                <a href="#" class="nav-child"><i class="ti-credit-card"></i>Thanh toán</a>
+                <a href="#" class="nav-child"><i class="ti-user"></i>Hồ sơ</a>
+                <a href="#" class="nav-child element-add"><i class="ti-comment"></i>Thông báo</a>
+                <a href="#" class="nav-child"><i class="ti-settings"></i>Cài đặt</a>
+            </div>
+
+        </div>
+        
+    {% block home %}{% endblock %}
+
+    </div>
+
+</body>
+</html>

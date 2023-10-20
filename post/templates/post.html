@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Post</title>
+
+
+</head>
+<body>
+    
+    {% for post in posts %}
+    <h2>{{post.title}}</h2>
+    <img src="{{post.img.url}}" alt="">
+    
+    <i class="fa-solid fa-house"></i>
+    {% endfor  %}
+    <h3>too</h3>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+</body>
+</html>

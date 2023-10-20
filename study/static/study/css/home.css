@@ -158,13 +158,13 @@
             min-width: 50%;
             max-width: 100%;
             /* height: 30px; */
-            text-align: center;
+            text-align: left;
             border-radius: 8px;
             color: aliceblue;
             display: none;
             flex-direction: column;
             background-color: #162231;
-            animation: movein linear 0.1s;
+            animation: move-r-in linear 0.1s;
         }
         .nav-items-mobile .element-add {
             display: none;
@@ -179,6 +179,8 @@
             width: 100%;
             height: 100%;
         }
+
+    
         .nav-items-mobile a:hover {
             border-bottom: 2px solid #00D27A;
             padding-bottom: 10px;
@@ -277,7 +279,7 @@
             border-radius: 10px 10px 0 0;
             display: flex;
             padding: 16px 0;
-            background-color: #162231;
+            background-color: #00224d;
         }
 
         .post-content {
@@ -286,17 +288,48 @@
             background-color: #121E2D;
         }
 
+        .total-emotions {
+            display: flex;
+            font-size: 13px;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .total-emotions .heart {
+            position: absolute;
+            padding: 0 8px;
+        }
+        .total-emotions .comment-share {
+            display: flex;
+            position: absolute;
+            right: 20px;
+            
+        }
+        .total-emotions .comment-share p {
+            margin: 0 20px;
+        }
+
+        .total-emotions .heart:hover,
+        .total-emotions p:hover {
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
         .post-emotions {
             display: flex;
+            width: 100%;
         }
 
         .emotion-item {
-            padding:8px 16px ;
+            text-align: center;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-top: 23px;
             
         }
 
         .emotion-item:hover {
-            text-decoration:underline;
+            background-color: rgb(2, 17, 38);
             cursor: pointer;
         }
 
@@ -310,12 +343,85 @@
 
         .username {
             margin-left: 12px;
+            font-size: 14px;
         }
 
 
         .time {
             margin-left: 12px;
+            font-size: 12px;
+            margin-top: 8px;
         }
+
+
+
+        /*CONTAINER_TOTAL_COMMENT*/
+        .container-total-comment {
+            position: fixed;
+            top: 7%;
+            width: 57%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            display: none;
+            animation: move-t-in linear .2s;
+        }
+        .post-child-comment {
+    /* height: 30%; */
+            background-color: #162231;
+            margin: 6px;
+            padding: 15px;
+            width: 96%;
+            border-radius: 10px;
+        }
+        .cuon {
+            overflow-y: auto;
+            height: 661PX;
+        }
+        .user-comment {
+            color: black;
+            margin: 0 16px 20px 20px;
+            display: flex;
+        
+        }
+
+        .img-user {
+            width: 35px;
+            height: 35px;
+        }
+
+        .clctncm {
+            position: sticky;
+            top: 0;
+            float: right;
+            color: black;   
+            padding: 10px;
+            border-radius: 50%;
+            margin: 10px;
+            background-color: #dfe2e8;
+        }
+        .clctncm:hover {
+            cursor: pointer;
+            background-color: #c6c8ce;
+        }
+
+        .info-user {
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #F0F2F5;
+            margin-left: 7px;
+            width: 88%;
+        }
+
+        .name-user-comment {
+            font-size: 14px;
+
+        }
+
+        .content-user {
+
+        }
+
+
 
         .mode {
         }
@@ -339,13 +445,11 @@
         }
 
         .rank-user {
-            border-bottom:1px solid #68650f ;
         }
 
         .user-child {
             display: flex;
             background-color: #121E2D;
-            line-height: 20px;
             padding: 20px;
         }
 
@@ -432,9 +536,11 @@
 
             .post-child {
                 width: 90%;
-                margin: 7px;
+                margin-bottom: 20px;
             }
-
+            .post-emotions {
+                font-size: 14px;
+            }
             #content {
                 flex-direction: column;
                 /* margin-left: 16px; */
@@ -453,10 +559,7 @@
                     background-color: transparent;
                 };
             }
-            .rank {
-                width: 90%;
-                margin: 7px;
-            }
+
 
              
         }
@@ -464,6 +567,19 @@
         /* MOBILE */
 
         @media screen and (max-width:740px) {
+            .rank {
+                width: 90%;
+            }
+            .container-total-comment {
+                position: fixed;
+                top: 7%;
+                background-color: #ffffff;
+                border-radius: 8px;
+                display: none;
+                left: 0;
+                width: 95%;
+                margin: 0 10px;
+            }
             .header-notification {
                 display: none;
             }
@@ -476,7 +592,14 @@
         }
         /* TABLET */
         @media screen and (max-width:1160px) and (min-width:740px){
-
+            .container-total-comment {
+                top: 9%;
+                left: 22%;
+            }
+            .rank {
+                width: 90%;
+                margin: 7px;
+            }
         }
 
         /* pc */
@@ -496,7 +619,7 @@
             
         }
         @media screen and (max-width:530px) {
-            .name-user {
+            #header .name-user {
                 display: none;
             }
             
@@ -508,12 +631,21 @@
             
         }
 
-        @keyframes movein {
+        @keyframes move-r-in {
             from {
                 transform: translateX(-100%);
             }
             to {
                 transform: translateX(0%);
+
+            }
+        }
+        @keyframes move-t-in {
+            from {
+                transform: translateY(-112%);
+            }
+            to {
+                transform: translateY(0%);
 
             }
         }

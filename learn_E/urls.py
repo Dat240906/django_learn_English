@@ -31,8 +31,13 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('24092006/', admin.site.urls),
-    path('', include('study.urls')),
-    path('post/', include('post.urls')),
+    # path('/', include('study.urls')),
+    path('home/', include('home_app.urls')),
+    path('post/', include('post_app.urls')),
+    path('setting/', include('setting_app.urls')),
+    path('earn_money/', include('earn_money_app.urls')),
+    path('pay/', include('pay_app.urls')),
+    path('profile_user/', include('profile_user_app.urls')),
 
 ]
 

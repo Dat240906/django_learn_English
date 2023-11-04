@@ -1,0 +1,48 @@
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Relax</title>
+    <link rel="stylesheet" href="{%static 'home_app/css/login.css'%}">
+    <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+    
+</head>
+
+<body>
+
+    <div id="main">
+        
+        <div class="logo-text-container">
+            <img src="{%static 'home_app\img\logo.png'%}" alt="Logo">
+            <p class="slogan">Exam Relax là nền tảng làm bài nhanh, hiệu quả.</p>
+        </div>
+
+        <div >
+            <form class = "form-login-container form-login-container-js"  action="{% url 'register'%}" method="post">
+                {%csrf_token%}
+                <div class="notification notification-js">
+                    <p>Chào Mừng!!</p>
+                    <label for="check-close-noti" class="close-noti close-noti-js">x</label>
+                </div>
+                <input class="username-js" required placeholder="Tên tài khoản" name="username" type="text">
+                <input class="password-js" required type="password" placeholder="Mật khẩu" name="password">
+                <input class="confirm-password-js" required type="password" placeholder="Xác nhận mật khẩu" name="confirm_password">
+                <button type="submit" class="btn-login">Tạo tài khoản</button>
+                <a href="#" class="btn-repassword">Quên mật khẩu?</a>
+                <div class="underline"></div>
+                <a href="{% url 'login'%}" class="btn-signup">Đăng nhâp</a>
+            </form>
+        </div>
+
+    </div>
+    <script src="{% static 'home_app\js\register\register_API.js'%}"></script>
+    <script src="{% static 'home_app\js\commom.js'%}"></script>
+</body>
+
+</html>

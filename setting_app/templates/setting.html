@@ -1,0 +1,144 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Exam Relax</title>
+    <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
+    <link rel="stylesheet" href="{% static 'setting_app\css\setting.css'%}">
+    <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+    <style>
+        html {
+            font-family:Verdana;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="ct-80-lr-20">
+        <div id="header" class="mg-8-16  row ">
+            <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
+            <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
+            <div class="header-container-search row child-ct-col">
+                <i class="fa-solid fa-magnifying-glass icon-search pd-lr-8"></i>
+                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
+            </div>
+            <div class="header-user row ">
+                <i class="fa-solid fa-bell header-notification"></i>
+                <div class="coin row"><b>50000</b> xu</div>
+                <p class="name-user  ">Phùng Thành Đạt</p>
+                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="nav">
+            <label for="on-nav-items" class="nav-home"><i class="fa-solid fa-bars-progress"></i></label>
+            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="fa-solid fa-bars-progress"></i></label>
+            <input type="checkbox" name="" id="on-nav-items" hidden>
+            
+            <div class="nav-items">
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
+            <label for="on-nav-items-mobile" class="fullscreen"></label>
+            <div class="nav-items-mobile" >
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
+                <a href="#" class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href="#" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+
+        </div>
+        <div id="content">
+            <div class="header-container">
+                <img src="{% static 'setting_app\img\background-user.jpg' %}" alt="" class="img-background">
+                <div class="info-user">
+                    <img src="{%static 'setting_app\img\member.png'%}" class="img-user" alt="">
+                    <p class="name">Hoa Quang Vinh</p>
+                    <i>Member</i>
+                </div>
+            </div>
+
+            <div class="content-container">
+                <div class="info-container">
+                    <div class="info-account">
+                        <div class="info-header">
+                            <h4>Thông tin tài khoản</h4>
+                        </div>
+
+                        <div class="content-info">
+                            <div class="username">
+                                <p>Tên đăng nhập:</p>
+                                <div class="container-input">
+
+                                    <input readonly placeholder="0366820837">
+                                </div>
+                            </div>
+                            <div class="coin">
+                                <p>Hiện có:</p>
+                                <div class="container-input">
+
+                                <input readonly placeholder="20000 Xu">
+                                </div>
+                            </div>
+                            <div class="access_token">
+                                <p>Access_token: (không được chia sẻ với ai)</p>
+                                <div class="container-input">
+
+                                <input readonly placeholder="iojIyVmdlNnIsIyNzgDMygjN2M">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="handle_error">
+                        <div class="handle">
+                            <p>Nội dung xử lí 1</p>
+    
+                        </div>
+                        <div class="handle">
+                            <p>Nội dung xử lí 2</p>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="change-pw">
+                    <div class="header"><h4>Đổi mật khẩu</h4></div>
+                    <div class="content">
+                        <div>
+                            <p>Mật khẩu cũ</p>
+                            <input type="password" placeholder="******">
+                        </div>
+                        <div>
+                            <p>Mật khẩu mới</p>
+                            <input type="password" placeholder="******">
+                        </div>
+                        <div>
+                            <p>Nhập lại mật khẩu mới</p>
+                            <input type="password" placeholder="******">
+                        </div>
+                        <button type="submit">Đổi mật khẩu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+</body>
+</html>

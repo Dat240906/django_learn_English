@@ -1,0 +1,230 @@
+
+
+
+
+/* reset css */
+.info-user,
+#content {
+    all:initial;
+}
+html {
+    font-family: "Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+input::placeholder {
+    font-size: 16px;
+    color: black;
+    padding: 7px;
+    position: absolute;
+}
+.search-input::placeholder {
+    color: white;
+}
+.search-input {
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 30px 30px 0;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-size: 26px;
+    background: transparent;
+}
+.container-input {
+    position: relative;
+}
+
+
+
+
+
+#content {
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    color: whitesmoke;
+}
+
+.header-container {
+    width: 80%;
+    /* height: 70%; */
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+}
+
+.header-container .img-background {
+    width: 100%;
+    height: 50%;
+}
+.header-container .img-user {
+    width: 16%;
+    height: 27%;
+    position: absolute;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    margin-left: 30px;
+}
+
+.header-container .info-user {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    background-color: #121E2D;
+    width: 100%;
+    top: 50%;
+}
+
+.header-container .name {
+    margin: 120px 0 0 30px;
+    font-size: 28px;
+    color: #ffffff;
+}.info-user i {
+    color: #5E6E7A;
+}
+.header-container .info-user i {
+    margin: 97px 0 0 30px;
+    color: antiquewhite;
+}
+
+#content .content-container {
+    display: flex;
+    width: 80%;
+    margin-top: 40px;
+    font-size: 19px;
+}
+
+.content-container .info-container {
+    width: 50%;
+}
+
+.content-container .info-account {
+    background-color: #162231;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.content-container .info-header {
+    background-color: #121E2E;
+    padding: 16px;
+    color: lime;
+
+
+}
+.content-info p {
+    padding-bottom: 8px;
+}
+
+
+.content-info input {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+.info-account .content-info {
+    padding:20px;
+}
+
+.info-account .username {
+
+}
+
+
+.info-account .coin {
+
+}
+.info-account .access_token {
+
+}
+.content-container .handle_error {
+    background-color: #162231;
+    border-radius: 10px;
+}
+
+.handle_error .handle {
+    width: 93%;
+    margin-top: 10px;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.content-container .change-pw {
+    width: 50%;
+    border-radius: 2px;
+    margin-left: 20px;
+}
+
+.change-pw .header {
+    padding: 16px;
+    background-color: #121E2E;
+    color: #00FF00;
+}
+.change-pw .content {
+    padding: 26px;
+    background-color: #162231;
+}
+
+.change-pw .content p {
+    margin-bottom: 8px;
+}
+
+
+.change-pw .content input {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.change-pw .content button {
+    height: 39px;
+    width: 100%;
+    background-color: #2cd652;
+    border-radius: 7px;
+}
+
+/* MOBILE */
+
+@media screen and (max-width:740px) {
+    #content {
+        display: contents;
+    }
+    .header-container {
+        width: 90%;
+        height: 302px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 8px;
+        margin: 16px;
+    }
+    .header-container .name {
+        margin: 67px 0 0 30px;
+        font-size: 28px;
+        color: rgb(255, 255, 255);
+    }.info-user i {
+        color: #5E6E7A;
+    }
+    .content-container .info-container {
+        width: 100%;
+        margin: 10px;
+    }
+    #content .content-container {
+        display: block;
+        width: 89%;
+        margin: 10px;
+        font-size: 19px;
+    }
+    .content-container .change-pw {
+        width: 100%;
+        border-radius: 2px;
+        margin: 34px 10px 10px 10px;
+    }
+    .header-container .img-user {
+        width: 33%;
+        height: 38%;
+        position: absolute;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        margin-left: 30px;
+    }
+}

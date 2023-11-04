@@ -363,7 +363,7 @@
             background-color: #ffffff;
             border-radius: 8px;
             display: none;
-            animation: move-t-in linear .2s;
+            animation: move-t-in linear .1s;
         }
         .post-child-comment {
     /* height: 30%; */
@@ -511,6 +511,15 @@
         /* REPONSIVE COMMOM */
 
         @media screen and (max-width:1160px) {
+            .cuon {
+                overflow-y: auto;
+                height: 451PX;
+            }
+            .total-emotions {
+                display: flex;
+                font-size: 13px;
+                padding-top: 20px;
+            }
             .header-container-search {
                 display: none
             }
@@ -643,9 +652,11 @@
         @keyframes move-t-in {
             from {
                 transform: translateY(-112%);
+                opacity: 0;
             }
             to {
                 transform: translateY(0%);
+                opacity: 1;
 
             }
         }

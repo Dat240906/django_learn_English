@@ -6,4 +6,4 @@ from django.views import View
 
 class SettingSite(View):
     def get(self, request):
-        return render(request, '.\setting.html')
+        return render(request, 'setting.html')

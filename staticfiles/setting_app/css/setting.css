@@ -12,9 +12,21 @@ html {
 }
 input::placeholder {
     font-size: 16px;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 7px;
     position: absolute;
+}
+
+.content input, 
+.container-input input {
+    background-color:#232E3C;
+    border-radius: 4px;
+    border: none;
+}
+
+.content input:focus, 
+.container-input input:focus {
+    color: white;
 }
 .search-input::placeholder {
     color: white;
@@ -107,7 +119,7 @@ input::placeholder {
 .content-container .info-header {
     background-color: #121E2E;
     padding: 16px;
-    color: lime;
+    color: #5d8cda;
 
 
 }
@@ -157,7 +169,7 @@ input::placeholder {
 .change-pw .header {
     padding: 16px;
     background-color: #121E2E;
-    color: #00FF00;
+    color: #5d8cda;
 }
 .change-pw .content {
     padding: 26px;
@@ -179,8 +191,10 @@ input::placeholder {
 .change-pw .content button {
     height: 39px;
     width: 100%;
-    background-color: #2cd652;
+    background-color: #2C7BE5;
     border-radius: 7px;
+    font-size: 16px;
+    color: white;
 }
 
 /* MOBILE */
@@ -201,8 +215,6 @@ input::placeholder {
         margin: 67px 0 0 30px;
         font-size: 28px;
         color: rgb(255, 255, 255);
-    }.info-user i {
-        color: #5E6E7A;
     }
     .content-container .info-container {
         width: 100%;
@@ -226,5 +238,16 @@ input::placeholder {
         border-radius: 50%;
         transform: translateY(-50%);
         margin-left: 30px;
+    }
+}
+
+
+
+/* TABLET */
+@media screen and (max-width:1160px) and (min-width:740px){
+    .header-container .name {
+        margin: 67px 0 0 30px;
+        font-size: 28px;
+        color: rgb(255, 255, 255);
     }
 }

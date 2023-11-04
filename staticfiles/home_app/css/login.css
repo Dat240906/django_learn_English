@@ -99,7 +99,9 @@ html {
     border-radius: 6px;
     width: 90%;
 }
-
+.form-login-container input::placeholder {
+    font-size: 18px;
+}
 .form-login-container input:focus {
     outline: 1px solid #1B74E4;
     box-shadow: 0 0 5px rgba(27,116,228, .5);

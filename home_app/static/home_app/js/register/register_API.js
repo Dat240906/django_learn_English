@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const password = document.querySelector('.password-js').value
     
         try {
-            const response = await fetch('/home/register/', {
+            const response = await fetch('/register/', {
                 method: "POST",
                 body: JSON.stringify(data_input),
                 headers: {

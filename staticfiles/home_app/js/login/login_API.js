@@ -32,7 +32,7 @@ function changeRespondSuccess(message_change) {
 }
 
 try {
-    const response = await fetch('/home/login/', {
+    const response = await fetch('/login/', {
         method: "POST",
         body: JSON.stringify(data_input),
         headers: {

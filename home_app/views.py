@@ -49,7 +49,7 @@ class Login(APIView):
 
             data_response = {
                 'success':True,
-                'redirect_url': '/home/',
+                'redirect_url': '/',
                 'message':'Đăng nhập thành công'
             }
             return JsonResponse(data_response)
@@ -97,7 +97,7 @@ class Register(APIView):
         UserModel.objects.create(message = 'Không có',username=username, password= password, ip_address = ip_user)
         data_response = {
                     'success':True,
-                    'redirect_url': '/home/',
+                    'redirect_url': '/',
                     'message':'Tạo tài khoản thành công'
                 }
         return JsonResponse(data_response)

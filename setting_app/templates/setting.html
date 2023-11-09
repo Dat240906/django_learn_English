@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
     <title>Home - Exam Relax</title>
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="stylesheet" href="{% static 'setting_app\css\setting.css'%}">
@@ -38,11 +38,11 @@
             
             <div class="nav-items">
                 <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
                 </div>
@@ -51,12 +51,12 @@
             <label for="on-nav-items-mobile" class="fullscreen"></label>
             <div class="nav-items-mobile" >
                 <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
-                <a href="#" class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
                 </div>
@@ -64,14 +64,14 @@
 
         </div>
         <div id="content">
-            <div class="header-container">
+            <!-- <div class="header-container">
                 <img src="{% static 'setting_app\img\background-user.jpg' %}" alt="" class="img-background">
                 <div class="info-user">
                     <img src="{%static 'setting_app\img\member.png'%}" class="img-user" alt="">
                     <p class="name">Hoa Quang Vinh</p>
                     <i>Member</i>
                 </div>
-            </div>
+            </div> -->
 
             <div class="content-container">
                 <div class="info-container">
@@ -83,23 +83,23 @@
                         <div class="content-info">
                             <div class="username">
                                 <p>Tên đăng nhập:</p>
-                                <div class="container-input">
+                                <div class="container-info">
 
-                                    <input readonly placeholder="0366820837">
+                                    <p>Your Name</p>
                                 </div>
                             </div>
                             <div class="coin">
                                 <p>Hiện có:</p>
-                                <div class="container-input">
+                                <div class="container-info">
 
-                                <input readonly placeholder="20000 Xu">
+                                    <p>20000 xu</p>
                                 </div>
                             </div>
                             <div class="access_token">
                                 <p>Access_token: (không được chia sẻ với ai)</p>
-                                <div class="container-input">
+                                <div class="container-info">
 
-                                <input readonly placeholder="iojIyVmdlNnIsIyNzgDMygjN2M">
+                                    <p>âcjcjjjjjjjjjjjjjjjjjjjj</p>
                                 </div>
                             </div>
                         </div>

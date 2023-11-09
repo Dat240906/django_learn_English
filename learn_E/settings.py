@@ -139,15 +139,15 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 STATIC_URL = '/static/'
 # Đây là thư mục chứa tệp tĩnh sau khi thu thập
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
+# Đây là thư mục tĩnh của ứng dụng Django
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+    ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'post/media')
 
-# Đây là thư mục tĩnh của ứng dụng Django
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'study/static')
-    ]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

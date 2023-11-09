@@ -6,4 +6,4 @@ from django.views import View
 
 class ProfileSite(View):
     def get(self, request):
-        return None
+        return render(request, 'profile_user_app.html')

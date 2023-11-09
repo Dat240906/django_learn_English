@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
     <title>Home - Exam Relax</title>
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
@@ -37,11 +37,11 @@
             
             <div class="nav-items">
                 <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
-                <a href="{%url 'setting'%}" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
                 </div>
@@ -50,12 +50,12 @@
             <label for="on-nav-items-mobile" class="fullscreen"></label>
             <div class="nav-items-mobile" >
                 <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
-                <a href="#" class="nav-child"><i class="fa-solid fa-user"></i>Hồ sơ</a>
-                <a href="#" class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
-                <a href="{%url 'setting'%}" class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
                 </div>

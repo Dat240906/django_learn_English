@@ -1,0 +1,340 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>Home - Exam Relax</title>
+    <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
+    <link rel="stylesheet" href="{% static 'profile_user_app\css\profile_user_app.css'%}">
+    <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+
+</head>
+<body>
+    <div id="main" class="ct-80-lr-20">
+        <div id="header" class="mg-8-16  row ">
+            <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
+            <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
+            <div class="header-container-search row child-ct-col">
+                <i class="fa-solid fa-magnifying-glass icon-search pd-lr-8"></i>
+                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
+            </div>
+            <div class="header-user row ">
+                <i class="fa-solid fa-bell header-notification"></i>
+                <div class="coin row"><b>50000</b> xu</div>
+                <p class="name-user  ">Phùng Thành Đạt</p>
+                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="nav">
+            <label for="on-nav-items" class="nav-home"><i class="fa-solid fa-bars-progress"></i></label>
+            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="fa-solid fa-bars-progress"></i></label>
+            <input type="checkbox" name="" id="on-nav-items" hidden>
+            
+            <div class="nav-items">
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
+            <label for="on-nav-items-mobile" class="fullscreen"></label>
+            <div class="nav-items-mobile" >
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+
+        </div>
+        <div id="content" >
+            <div class="container">
+                <h2>Thông tin người dùng </h2>
+                <div class="container_base_info">
+
+                    <div class="base-info">
+                        <div class="info">
+                            <div class="container_img_user">
+                                <img class="img-user" src="{%static 'home_app\img\logo.png'%}" alt="avt">
+    
+                            </div>
+                            <div class="sub-name">
+                                <h3 class="username hover-color-xanh transition-color">PTD Gaming</h3>
+                                <p class="email color-gray hover-color-xanh transition-color"><i class="fa-solid fa-envelope-circle-check mail_checked_icon"></i>phungthanhdat001@gmail.com</p>
+                                <div class="container_coin">
+                                    <div class="coin pd-7-10 bd br-7">
+                                        <h4 class="coin ">50000 xu</h4>
+                                        <p class="sub_decs color-gray hover-color-xanh transition-color">Thu nhập chính</p>
+                                    </div>
+
+                                    <div class="coin pd-7-10 bd br-7">
+                                        <h4 class="coin ">3000 xu</h4>
+                                        <p class="sub_decs color-gray transition-color hover-color-xanh">Thu Nhập Giới Thiệu</p>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+    
+                        <div class="nav">
+                            <ul class="nav_items">
+                                <label for="nav_base_info"><li class="cursor-pointer nav_item pd-7-10">Thông tin cơ bản </li></label>
+                                <label for="nav_pay_info"><li class="cursor-pointer nav_item pd-7-10">Thông tin thanh toán</li></label>
+                                <label for="nav_post"><li class="cursor-pointer nav_item pd-7-10">Bài đăng</li></label>
+                                <label for="nav_login_log"><li class="cursor-pointer nav_item pd-7-10">Nhật ký đăng nhập</li></label>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="change-nav br-7 mg-top-bottom-16">
+                    <!-- cách mục điều hướng -->
+
+                    <input type="radio" checked hidden name="nav_info_profile" class="check_nav_profile" id="nav_base_info">
+                    <!-- thông tin cơ bản -->
+                    <div class="base-info" >
+                        <div class="container">
+
+                            <h3 class="">Thông tin cơ bản</h3>
+                            <div class="change-flex pd-7-10">
+
+                                <div class="item_con">
+    
+    
+                                    <p class="info-fields-title">Name </p>
+                                    <input value="PTĐ vipzz" type="text" class="input-base">
+                                    <p class="info-fields">Email</p>
+                                    <input value="phungthanhdat001@gmail.com" type="email" class="input-base">
+                                </div>
+                                <div class="item_con">
+                                    <p class="info-fields">Số điện thoại </p>
+                                    <input value="0366820837" type="text" class="input-base">
+                                    <p class="info-fields">Địa chỉ</p>
+                                    <input value="Đông Hải Quỳnh Phụ Thái Bình" type="text" class="input-base">
+    
+                                </div>
+                                <button type="submit" class="btn_submit  bg-color_color_btn cursor-pointer">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END thông tin cơ bản -->
+
+                    <input type="radio" hidden name="nav_info_profile" class="check_nav_profile" id="nav_pay_info">
+
+                    <!-- Thông tin thanh toán  -->
+                    <div class="pay-info pd-20"  >
+                       <h3> Thông tin thanh toán</h3>
+                        <div class="container">
+
+                            <div class="update_method_pay">
+                                <div class="container_header">
+
+                                    <p class="info-fields">Phương thức thanh toán</p>
+                                    <select name="" id="choose_method" class="input-base">
+                                        <option value="none">Chọn phương pháp</option>
+                                        <option value="momo">MoMo</option>
+                                        <option value="bank">Bank Transfer</option>
+                                        <option value="paypal">Paypal</option>
+                                    </select>
+                                    
+                                </div>
+                                <div id="method_momo" style="display: none;">
+                                    <p class="title_input">Số điện thoại MoMo</p>
+                                    <input class="input-base" type="text" class="input" placeholder="MoMo Phone Number">
+                                </div>
+     
+                                 <div id="method_bank" style="display: none;">
+                                     <p class="title_input ">Tên ngân hàng</p>
+                                     <select name="" id="" class="input-base">
+                                         <option value="vtb">VietinBank</option>
+                                         <option value="vcb">Vietcombank</option>
+                                         <option value="bidv">BIDV</option>
+                                         <option value="agb">Agribank</option>
+                                         <option value="mbb">MBBank</option>
+                                         <option value="vpb">VPBank</option>
+                                     </select>
+                                     <p class="title_input">Tên tài khoản ngân hàng</p>
+                                     <input type="text" class="input input-base" placeholder="Back Account Name">
+                                     <p class="title_input">Số tài khoản ngân hàng</p>
+                                     <input type="text" class="input input-base" placeholder="Back Account Number">
+                                 </div>
+                                 <div id="method_paypal" style="display: none;" >
+                                     <p class="title_input">Paypal Email</p>
+                                     <input class="input-base" type="text" class="input" placeholder="Paypal Email">
+     
+                                 </div>
+     
+                                 <button type="submit" class="btn_submit bg-color_color_btn">Xác nhận</button>
+                            </div>
+                        
+
+                       <div class="note_pay br-7 pd-20">
+                            <table class="table_note">
+                                <tr>
+                                    <td class="item_note ">Phương thức rút tiền</td>
+                                    <td class="item_note ">	Số tiền rút tối thiểu</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note ">Bank Transfer</td>
+                                    <td class="item_note ">$20.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note">MoMo</td>
+                                    <td class="item_note">$20.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note">PayPal</td>
+                                    <td class="item_note">$20.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note">Web Money</td>
+                                    <td class="item_note">$20.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note">Thẻ Cào Điện Thoại, Game</td>
+                                    <td class ="item_note ">$20.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="item_note not-border">ZaloPay</td>
+                                    <td class="item_note not-border">$20.00</td>
+                                </tr>
+                            </table>
+                       </div>
+                    </div>
+                    </div>
+                    <!--  END Thông tin thanh toán  -->
+
+                    <input type="radio" hidden name="nav_info_profile" class="check_nav_profile" id="nav_post">
+
+                    <!-- thông tin các bài viết -->
+                    <div class="post" >
+                        <h3 class="pd-20">Bài đăng</h3>
+                        <div class="container_post pd-20">
+                            <!-- các post của user -->
+                            <div class="post-child">
+                                <div class="post-header">
+                                    <img class="img-50" src="{%static 'home_app\img\logo.png'%}" alt="" class="avatar">
+                                    <div class="info">
+                                        <p class="username">Admin <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i></p>
+                                        <p class="time">11:00 <i class="fa-solid fa-globe"></i></p>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
+                                </div>
+                
+                                <div class="total-emotions">
+                                    <div class="heart"><i class="fa-solid fa-heart"> 1,2K</i></div>
+                                    <div class="comment-share">
+                                        <p style="margin-right: 20px;" class="opctncm">30 bình luận</p>
+                                        <p>6 lượt chia sẻ</p>
+                                    
+                                    </div>
+                                </div>
+                                <div class="post-emotions">
+                                    <div class="emotion-item">
+                                        <i class="fa-solid fa-heart"></i>Like
+                                    </div>
+                                    <label for="on-comment" class ="emotion-item">
+                                        <i class="fa-solid fa-comment"></i>Comment
+                                    </label>
+                                    <div class="emotion-item">
+                                        <i class="fa-solid fa-share"></i>Share
+                                    </div>
+                                </div>
+                
+                                <input type="checkbox" name="" hidden id="on-comment" class="on-comment-class">
+                                <div class="post-container-comment">
+                                    <i class="fa-solid fa-check comment-next"></i>
+                                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
+                                    <img src="{%static 'home_app\img\logo.png'%}" alt="user" class="img-user-comment img-50">
+                                </div>
+                            </div>
+                            <!-- end post -->
+                            <!-- container comment  -->
+                            <input type="checkbox" name="" hidden id="on-comment1" class="on-comment-class">
+                            <div class="post-container-comment">
+                                <i class="fa-solid fa-check comment-next"></i>
+                                <input type="text" class="input-base" placeholder="Viết bình luận...">
+                                <img src="{%static 'home_app\img\logo.png'%}" alt="user" class="img-user-comment img-50">
+                            </div>
+                            <div class="container-total-comment">
+                                <div class="cuon">
+                                    <i class="fa-solid fa-xmark clctncm"></i>
+                                    <div class="post-child-comment">
+                                        <div class="post-header">
+                                            <img class="img-50" src="{% static 'home_app\img\logo.png' %}" alt="" class="avatar">
+                                            <div class="info">
+                                                <p class="username">Admin <i class="fa-solid fa-circle-check tick"></i></p>
+                                                <p class="time">11:00 <i class="fa-solid fa-globe"></i></p>
+                                            </div>
+                                        </div>
+                                        <div class="post-content">
+                                            <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
+                                        </div>
+    
+                                    <div style="margin-top: 10px;"></div>
+                                    </div>
+                                    <div class="user-comment mg-8-16">
+                                        <img src="{% static 'home_app\img\logo.png'%}" alt="" class="img-user">
+                                        <div class="info-user pd-7-10 br-7" style="background-color: #F0F2F5;">
+                                            <p class="name-user-comment"><b>Minh Quang</b></p>
+                                            <p class="content-user">Không còn điều dì để mà diễn tả tôi cái bài viết này, phải nói là một kiệt tác của nhân loại luôn á quý dị.s</p>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                            </div>
+                            <!-- end container-comment  -->
+                        </div>
+                    </div>
+                    
+                    <!-- END thông tin các bài viết -->
+
+                    <input type="radio" hidden name="nav_info_profile" class="check_nav_profile" id="nav_login_log">
+
+                    <!-- thông tin lưu trữ đăng nhập -->
+                    <div class="login_log pd-20"  >
+                        <h3>Nhật ký đăng nhập</h3>
+
+                        <div class="container br-7 mg-top-bottom-16">
+                            <table class="table_log">
+                                <tr >
+                                    <th>#</th>
+                                    <th>Địa chỉ IP</th>
+                                    <th>Trình duyệt</th>
+                                    <th>Thời gian đăng nhập</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>102.007.007</td>
+                                    <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)</td>
+                                    <td>26/10/2023 18:44</td>
+                                </tr>
+                    
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- END thông tin lưu trữ đăng nhập -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{%static 'profile_user_app\js\profile_user_app.js'%}"></script>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
+</body>
+</html>

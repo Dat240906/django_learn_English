@@ -17,7 +17,7 @@
     box-sizing: border-box;
 }
 body {
-    font-family: "Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family:Verdana;
 }
 html {
     background-color: #0B1727;
@@ -79,6 +79,7 @@ html {
     outline: none;
     font-size: 16px;
     background: transparent;
+    color: white;
 }
 
 .search-input:focus {
@@ -491,6 +492,7 @@ html {
     background-color    : #232E3C;
     height: 100%;
     border-radius: 10px;
+    color: white;
     
 }
 .input-comment:focus {
@@ -613,6 +615,9 @@ html {
     .nav-items-mobile .element-add {
         display: block;
     }
+    .header-logo {
+        display: none;
+    }
 }
 /* TABLET */
 @media screen and (max-width:1160px) and (min-width:740px){
@@ -640,7 +645,9 @@ html {
     .header-user .coin {
         display: none;
     }
-    
+    .header-logo {
+        display: none;
+    }
 }
 @media screen and (max-width:530px) {
     #header .name-user {

@@ -152,6 +152,7 @@ html {
     text-align: center;
     border-radius: 8px;
     color: aliceblue;
+    z-index: 2;
 }
 #nav .nav-items-mobile {
     top: 67px;

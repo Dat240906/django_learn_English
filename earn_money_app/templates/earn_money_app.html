@@ -1,0 +1,268 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>Home - Exam Relax</title>
+    <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
+    <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+    <style>
+        body {
+            font-family:Arial;
+        }   
+        body, html {
+            overflow: auto;
+        }
+        .bgc_in_container {
+            background-color: #00224D;
+        }
+        .bgc-container {
+            background-color: #121E2E;
+        }
+        .w-151px {
+            width: 151px;
+        }
+        .w-63px {
+            width: 63px;
+        }
+        .w-169px {
+            width: 169px;
+        }
+        .ai-center {
+
+            align-items: center;
+        }
+        .ta-center {
+            text-align: center;
+        }
+        .width-33pt {
+            width: 33%;
+        }
+        .width-100pt {
+            width: 100% !important;
+        }
+        .bd-1 {
+            border: 1px solid #474761
+        }
+        .dp-flex {
+            display: flex;
+        }
+        .color-blue {
+            color: #0E7BF7;
+        }
+        .bg-color_color_btn {
+            background-color: #009EF7;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 7px;
+        }
+        .mg-top-bottom-16 {
+            margin: 16px 0 16px;
+        }
+        .br-7 {
+            border-radius: 7px;
+        }
+
+        .fix-input {
+            color: white;
+        }
+        .bd {
+            border: 1px solid #474761;
+        }
+        .pd-20 {
+            padding: 20px;
+        }
+        .pd-7-10 {
+            padding: 7px 10px;
+        }
+
+        .width-50pt {
+            width: 50%;
+        }
+        .color-gray {
+            color: #474761;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .transition-color {
+            transition: color 0.5s
+        }
+        .hover-color-xanh:hover  {
+            color: #049EF7;
+        }
+
+        /* COMMOM */
+
+        @media screen and (max-width:1160px) {
+           
+        }
+        /* MOBILE */
+
+        @media screen and (max-width:740px) {
+            .container .header .container {
+                display: block;
+                
+            }
+            .header .container .earn_money_day,
+            .header .container .earn_money_month,
+            .header .container .earn_money_total {
+                width: 100%;
+                margin: 8px 0;
+            }
+
+            #content .container {
+                /* padding: 0; */
+            }
+            .w-169px,
+            .w-151px {
+                width: 100px;
+            }
+            .dp-flex {
+                display: block;
+            }
+            .pd-20 {
+                padding: 8px;
+            }
+        }
+
+
+        /* TABLET */
+        @media screen and (max-width:1160px) and (min-width:740px){
+        
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div id="main" class="ct-80-lr-20">
+        <div id="header" class="mg-8-16  row ">
+            <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
+            <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
+            <div class="header-container-search row child-ct-col">
+                <i class="fa-solid fa-magnifying-glass icon-search pd-lr-8"></i>
+                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
+            </div>
+            <div class="header-user row ">
+                <i class="fa-solid fa-bell header-notification"></i>
+                <div class="coin row"><b>50000</b> xu</div>
+                <p class="name-user  ">Phùng Thành Đạt</p>
+                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="nav">
+            <label for="on-nav-items" class="nav-home"><i class="fa-solid fa-bars-progress"></i></label>
+            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="fa-solid fa-bars-progress"></i></label>
+            <input type="checkbox" name="" id="on-nav-items" hidden>
+            
+            <div class="nav-items">
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
+            <label for="on-nav-items-mobile" class="fullscreen"></label>
+            <div class="nav-items-mobile" >
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+
+        </div>
+        <div id="content">
+            <div class="container width-100pt pd-20">
+
+                <div class="header pd-20 br-7 mg-top-bottom-16 bgc-container">
+                    <div class="info"><h3>Thông tin thu nhập </h3></div>
+                    <div class="container pd-20 dp-flex">
+                        <div class="earn_money_day  bd-1 mg-8-16 width-33pt pd-20 br-7">
+                            <h4 class="color-blue mg-top-bottom-16">5000 xu</h4>
+                            <p class="color-gray">Thu nhập trong ngày</p>
+    
+                        </div>
+    
+                        <div class="earn_money_month bd-1 mg-8-16 width-33pt pd-20 br-7">
+                            <h4 class="color-blue mg-top-bottom-16">5000 xu</h4>
+                            <p class="color-gray">Thu nhập trong tháng</p>
+                        </div>
+    
+                        <div class="earn_money_total bd-1 mg-8-16 width-33pt pd-20 br-7">
+                            <h4 class="color-blue mg-top-bottom-16">5000 xu</h4>
+                            <p class="color-gray">Tồng thu nhập</p>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="content pd-20 br-7 bgc-container mg-top-bottom-16">
+                    <div class="info "><h3>Hình thức kiếm tiền</h3></div>
+
+                    <div class="earn_money_method ">
+                        <div class="container_link mg-top-bottom-16 br-7 pd-20 bgc_in_container">
+                            <div class="header"><h4>Vượt LINK rút gọn kiếm tiền <i class="fa-solid fa-gear fa-spin fa-spin-reverse" style="color: #05ad21;"></i></h4></div>
+                            <div class="container pd-20">
+
+                                <div class="link1s_method width-100pt pd-20 dp-flex ai-center bd-1 mg-top-bottom-16 br-7 cursor-pointer bgc-container">
+                                    <img src="{%static 'earn_money_app\img\logolink1s.png'%}" alt="" class="img_method w-151px mg-8-16">
+                                    <h4 class="color-gray">LINK1S.com - Rút gọn liên kết và KIẾM TIỀN</h4>
+                                </div>
+                                <div class="web1s_method width-100pt pd-20 dp-flex ai-center bd-1 mg-top-bottom-16 br-7 cursor-pointer bgc-container ">
+                                    <img src="{%static 'earn_money_app\img\logoweb1s.png'%}" alt="" class="img_method w-169px mg-8-16">
+                                    <h4 class="color-gray">WEB1S.com - Nền tảng kiếm tiền online không giới hạn</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container_watch mg-top-bottom-16 br-7 pd-20 bgc_in_container">
+
+                            <div class="watch_video_method  ">
+                                <div class="header"><h4>Xem VIDEO kiếm tiền <i class="fa-solid fa-gear fa-spin fa-spin-reverse" style="color: #05ad21;"></i></h4></div>
+                                <div class="container pd-20">
+                                    <div class="youtube_method width-100pt pd-20 dp-flex ai-center bd-1 mg-top-bottom-16 br-7 cursor-pointer bgc-container">
+                                        <img src="{%static 'earn_money_app\img\logoyoutube.png'%}" alt="" class="img_method w-63px ">
+                                        <h4 class="color-gray">YouTube.com - Video Sáng Tạo, Thu Nhập Linh Hoạt - YouTube Cho Mọi Người!</h4>
+                                    </div>
+                                    <div class="facebook_method width-100pt pd-20 dp-flex ai-center bd-1 mg-top-bottom-16 br-7 cursor-pointer bgc-container">
+                                        <img src="{%static 'earn_money_app\img\logofacebook.png'%}" alt="" class="img_method w-63px ">
+                                        <h4 class="color-gray">Facebook.com - Kết Nối và Kiếm Tiền - Facebook Mạnh Mẽ Như Tình Bạn!</h4>
+                                    </div>
+                                    <div class="tiktok_method width-100pt pd-20 dp-flex ai-center bd-1 mg-top-bottom-16 br-7 cursor-pointer bgc-container">
+                                        <img src="{%static 'earn_money_app\img\logotiktok.png'%}" alt="" class="img_method w-63px ">
+                                        <h4 class="color-gray">TikTok.com - Tạo Nguồn Thu Nhập, Nhịp Điệu Cuộc Sống!</h4>
+        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
+</body>
+</html>

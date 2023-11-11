@@ -6,4 +6,4 @@ from django.views import View
 
 class EarnMoneySite(View):
     def get(self, request):
-        return None
+        return render(request, 'earn_money_app.html')

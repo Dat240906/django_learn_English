@@ -1,0 +1,128 @@
+body {
+    font-family:Arial;
+}   
+body, html {
+    overflow: auto;
+}
+.bgc_in_container {
+    background-color: #00224D;
+}
+.bgc-container {
+    background-color: #121E2E;
+}
+.w-151px {
+    width: 151px;
+}
+.w-63px {
+    width: 63px;
+}
+.w-169px {
+    width: 169px;
+}
+.ai-center {
+
+    align-items: center;
+}
+.ta-center {
+    text-align: center;
+}
+.width-33pt {
+    width: 33%;
+}
+.width-100pt {
+    width: 100% !important;
+}
+.bd-1 {
+    border: 1px solid #474761
+}
+.dp-flex {
+    display: flex;
+}
+.color-blue {
+    color: #0E7BF7;
+}
+.bg-color_color_btn {
+    background-color: #009EF7;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 7px;
+}
+.mg-top-bottom-16 {
+    margin: 16px 0 16px;
+}
+.br-7 {
+    border-radius: 7px;
+}
+
+.fix-input {
+    color: white;
+}
+.bd {
+    border: 1px solid #474761;
+}
+.pd-20 {
+    padding: 20px;
+}
+.pd-7-10 {
+    padding: 7px 10px;
+}
+
+.width-50pt {
+    width: 50%;
+}
+.color-gray {
+    color: #474761;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.transition-color {
+    transition: color 0.5s
+}
+.hover-color-xanh:hover h4  {
+    color: #049EF7;
+}
+/* COMMOM */
+
+@media screen and (max-width:1160px) {
+   
+}
+/* MOBILE */
+
+@media screen and (max-width:740px) {
+    .container .header .container {
+        display: block;
+        
+    }
+    .header .container .earn_money_day,
+    .header .container .earn_money_month,
+    .header .container .earn_money_total {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    #content .container {
+        /* padding: 0; */
+    }
+    .w-169px,
+    .w-151px {
+        width: 100px;
+    }
+    .dp-flex {
+        display: block;
+    }
+    .pd-20 {
+        padding: 8px;
+    }
+}
+
+
+/* TABLET */
+@media screen and (max-width:1160px) and (min-width:740px){
+
+}
+
+
+
+

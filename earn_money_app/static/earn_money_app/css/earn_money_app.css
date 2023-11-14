@@ -80,7 +80,9 @@ body, html {
 .transition-color {
     transition: color 0.5s
 }
-.hover-color-xanh:hover h4  {
+
+.hover-color-xanh:hover h4, 
+.hover-color-xanh:active h4  {
     color: #049EF7;
 }
 /* COMMOM */

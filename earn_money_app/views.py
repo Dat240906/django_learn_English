@@ -7,3 +7,34 @@ from django.views import View
 class EarnMoneySite(View):
     def get(self, request):
         return render(request, 'earn_money_app.html')
+
+
+
+class EarnMoneyLink1s(View):
+    def get(self, request):
+        return render(request, 'earn_money_link1s.html')
+    
+
+
+
+class EarnMoneyWeb1s(View):
+    def get(self, request):
+        return render(request, 'earn_money_web1s.html')
+    
+
+
+class EarnMoneyYoutube(View):
+    def get(self, request):
+        return render(request, 'earn_money_youtube.html')
+
+
+
+class EarnMoneyTiktok(View):
+    def get(self, request):
+        return render(request, 'earn_money_tiktok.html')
+    
+
+
+class EarnMoneyFacebook(View):
+    def get(self, request):
+        return render(request, 'earn_money_facebook.html')

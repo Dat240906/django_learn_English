@@ -1,0 +1,166 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>Home - Exam Relax</title>
+    <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_web1s.css'%}">
+    <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+
+</head>
+<body>
+    <div id="main" class="ct-80-lr-20">
+        <div class="fullscreen-noti width-100pt"></div>
+        <div id="header" class="mg-8-16  row ">
+            <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
+            <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
+            <div class="header-container-search row child-ct-col">
+                <i class="fa-solid fa-magnifying-glass icon-search pd-lr-8"></i>
+                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
+            </div>
+            <div class="header-user row ">
+                <i class="fa-solid fa-bell header-notification">
+                    
+                    <div class="triangle box_shadow display-none-noti"></div>
+                    <div class="container-noti br-7 box_shadow display-none-noti">
+                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                           <p>mày vừa được Tạ Dũng like</p>
+                        </div>
+                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>ban 3 day</p>
+                        </div>
+                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>mày vừa được Tạ Dũng like</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                             <p>ban 3 day</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>mày vừa được Tạ Dũng like</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                             <p>ban 3 day</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>mày vừa được Tạ Dũng like</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                             <p>ban 3 day</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>mày vừa được Tạ Dũng like</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                             <p>ban 3 day</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                            <p>mày vừa được Tạ Dũng like</p>
+                         </div>
+                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+                             <p>ban 3 day</p>
+                         </div>
+                    </div>
+                </i>
+                <div class="coin row"><b>50000</b> xu</div>
+                <p class="name-user  ">Phùng Thành Đạt</p>
+                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="nav">
+            <label for="on-nav-items" class="nav-home"><i class="fa-solid fa-bars-progress"></i></label>
+            <label for="on-nav-items-mobile" class="nav-home-mobile"><i class="fa-solid fa-bars-progress"></i></label>
+            <input type="checkbox" name="" id="on-nav-items" hidden>
+            
+            <div class="nav-items">
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+            <input type="checkbox" hidden name="" id="on-nav-items-mobile" >
+            <label for="on-nav-items-mobile" class="fullscreen"></label>
+            <div class="nav-items-mobile" >
+                <a href='{% url "home"%}' class="nav-child"><i class="fa-solid fa-house"></i>Trang chủ</a>
+                <a href='{% url "document"%}' class="nav-child"><i class="fa-solid fa-folder"></i>Tài liệu</a>
+                <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
+                <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
+                <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                <div class="accout-out">
+                    <button>Đăng xuất</button>
+                </div>
+            </div>
+
+        </div>
+        <div id="content_">
+            
+            <div class="container  ">
+                
+                <div class="info bgc_in_container pd-20 mg-8-16 br-7  ">
+                    <div class="header">
+                        <h3>Thông số</h3>
+                    </div>
+
+                    <div class="contaier ">
+                        <div class="info dp-flex mg-12">
+                            <div class="xulive bd-1  width-50pt mg-8-16 pd-20 br-7">
+
+                                <h4 class="pd-6">5000 xu</h4>
+                                <i class="cl-gray">Đang có</i>
+                            </div>
+
+                            <div class="job_did bd-1  width-50pt mg-8-16 pd-20 br-7">
+                                <h4 class="pd-6">14 Job</h4>
+                                <i class="cl-gray">Đã làm</i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <a class="btn_submit mgbt  bg-color_color_btn cursor-pointer rm-line-a " href="/earn_money/web1s">Reload</a>
+                    <a class="btn_submit mgbt bg-color_color_btn cursor-pointer rm-line-a " href="/">Nhận xu</a>
+                </div>
+
+                <div class="jobs bgc_in_container pd-20 mg-8-16 br-7 ">
+                    <div class="hearder">
+                        <h3>Nhiệm vụ</h3>
+                        
+                    </div>
+                    <div class="contaier-job pd-20">
+                        <div class="container-job  pd-6 br-7 bd-1 mg-12 cl-green">
+                            <h4>Web1s-thekjd27</h4>
+                        </div>
+                        <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
+                            <h4>Web1s-thekjd27</h4>
+                        </div>
+                        <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
+                            <h4>Web1s-thekjd27</h4>
+                        </div>
+                        <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
+                            <h4>Web1s-thekjd27</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="torutal bgc_in_container pd-20 mg-8-16 br-7 ">
+    
+                    <h3>Hướng dẫn</h3>
+                    <iframe class="video-torutal pd-20"  src="https://www.youtube.com/embed/e_SMDjKXbEY?si=Ajic46YAR2WaIMko" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
+    <script src="{%static 'home_app\js\commom.js'%}"></script>
+</body>
+</html>

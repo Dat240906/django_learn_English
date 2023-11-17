@@ -1,0 +1,64 @@
+.acc_active table th {
+    background-color:#232E3C ;
+    padding: 12px;
+    width: 50%;
+}
+.acc_active table td {
+    padding: 12px;
+    text-align: center;
+}
+.link-table {
+    color: #2C7BE5;
+}
+.link-table:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.input-base-youtube {
+    padding: 10px 16px;
+    width: 100%;
+    background-color: #2b2b40;
+    margin: 8px 0 16px;
+    color: #92929f;
+    border: none;
+    border-radius: 7px;
+}
+
+.bt-youtube {
+    background-color: #009EF7;
+    color: white;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 7px;
+}
+.name-table {
+    color: #4DE2AA;
+}
+.container-note .content h4 {
+    color: #E63757;
+}
+.container-note .content ul {
+    color: #f9b38b ;
+}
+.mg-12 {
+    margin: 12px;
+}
+.pd-12 {
+    padding: 12px;
+}
+.mgbt-12 {
+    margin-bottom: 12px;
+}
+.bgc-container {
+    background-color: #121E2E;
+}
+.ml-12 {
+    margin-left: 12px;
+}
+.mtb-20 {
+    margin: 20px 0 20px 0;
+}
+
+.bgc-note {
+    background-color: #442D23;
+}

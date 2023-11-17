@@ -141,7 +141,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # Đây là thư mục tĩnh của ứng dụng Django
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'earn_money_app/static/')
+    os.path.join(BASE_DIR, 'home_app/static/')
     ]
 
 MEDIA_URL = '/media/'

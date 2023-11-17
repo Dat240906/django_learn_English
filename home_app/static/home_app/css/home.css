@@ -10,7 +10,9 @@
 .ct-80-lr-20 {
     width: 100%;
 }
-
+button {
+    border: none;
+}
 * {
     padding: 0;
     margin: 0;
@@ -114,14 +116,12 @@ html {
 }
 .header-user .header-notification {
     position: relative;
-    padding-bottom: 60px;
-    top:33px;
     z-index: 2;
     
 }
 
 .display-none-noti:hover,
-.header-user .header-notification:hover .display-none-noti {
+.header-user .fa-solid::before:hover .display-none-noti {
     display: block;
 }
 

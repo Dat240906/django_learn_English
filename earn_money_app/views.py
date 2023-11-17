@@ -10,10 +10,7 @@ class EarnMoneySite(View):
 
 
 
-class EarnMoneyLink1s(View):
-    def get(self, request):
-        return render(request, 'earn_money_link1s.html')
-    
+
 
 
 
@@ -26,6 +23,8 @@ class EarnMoneyWeb1s(View):
 class EarnMoneyYoutube(View):
     def get(self, request):
         return render(request, 'earn_money_youtube.html')
+
+
 
 
 

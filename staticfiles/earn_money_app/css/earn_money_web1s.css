@@ -1,0 +1,42 @@
+.video-torutal {
+    width: 100%;
+    height: 400px;
+}
+#content_ {
+    position: relative;
+    margin-left: 10%;
+    background-color: #0B1727;
+    color: whitesmoke;
+    }
+.dp-flex {
+    display: flex;
+}
+.mg-12 {
+    margin: 12px;
+}
+/* COMMOM */
+.cl-gray {
+    color: gray;
+}
+
+.rm-line-a {
+    text-decoration: none;
+}
+.cl-green {
+    color: rgb(20, 173, 20);
+}
+.mgbt {
+    margin: 10px 10px 10px 28px ;
+}
+@media screen and (max-width:1160px) {
+    #content_ {
+        margin-left: 0;
+    }
+}
+/* MOBILE */
+
+@media screen and (max-width:740px) {
+    .pd-20 {
+        padding: 17px;
+    }
+}

@@ -6,4 +6,4 @@ from django.views import View
 
 class DocumentSite(View):
     def get(self, request):
-        return None
+        return render(request, 'document.html')

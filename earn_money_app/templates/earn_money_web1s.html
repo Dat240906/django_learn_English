@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_web1s.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_youtube.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
 
 </head>
@@ -65,7 +66,7 @@
                          </div>
                     </div>
                 </i>
-                <div class="coin row"><b>50000</b> xu</div>
+                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
                 <p class="name-user  ">Phùng Thành Đạt</p>
                 <img src="{%static 'home_app\img\logo.png'%}" alt="">
             </div>
@@ -94,7 +95,6 @@
                 <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
                 <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
                 <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
-                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
                 <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
@@ -106,17 +106,18 @@
             
             <div class="container  ">
                 
-                <div class="info bgc_in_container pd-20 mg-8-16 br-7  ">
-                    <div class="header">
+                
+                <div class="info bgc-container br-7 mg-8-16  ">
+                    <div class="header bgc_in_container br-7 pd-12">
                         <h3>Thông số</h3>
                     </div>
 
-                    <div class="contaier ">
+                    <div class="contaier br-7">
                         <div class="info dp-flex mg-12">
                             <div class="xulive bd-1  width-50pt mg-8-16 pd-20 br-7">
 
-                                <h4 class="pd-6">5000 xu</h4>
-                                <i class="cl-gray">Đang có</i>
+                                <h4 class="pd-6"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
+                                <i class="cl-gray">Từ job</i>
                             </div>
 
                             <div class="job_did bd-1  width-50pt mg-8-16 pd-20 br-7">
@@ -126,16 +127,13 @@
                         </div>
                         
                     </div>
-                    <a class="btn_submit mgbt  bg-color_color_btn cursor-pointer rm-line-a " href="/earn_money/web1s">Reload</a>
-                    <a class="btn_submit mgbt bg-color_color_btn cursor-pointer rm-line-a " href="/">Nhận xu</a>
                 </div>
-
-                <div class="jobs bgc_in_container pd-20 mg-8-16 br-7 ">
-                    <div class="hearder">
+                <div class="jobs bgc_in_container  mg-8-16 br-7 ">
+                    <div class="header bgc_in_container br-7 pd-12">
                         <h3>Nhiệm vụ</h3>
                         
                     </div>
-                    <div class="contaier-job pd-20">
+                    <div class="contaier-job pd-20 bgc-container">
                         <div class="container-job  pd-6 br-7 bd-1 mg-12 cl-green">
                             <h4>Web1s-thekjd27</h4>
                         </div>
@@ -150,17 +148,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="torutal bgc_in_container pd-20 mg-8-16 br-7 ">
+                <div class="torutal bgc_in_container bgc-container  mg-8-16 br-7 ">
     
-                    <h3>Hướng dẫn</h3>
-                    <iframe class="video-torutal pd-20"  src="https://www.youtube.com/embed/e_SMDjKXbEY?si=Ajic46YAR2WaIMko" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h3 class="header bgc_in_container br-7 pd-12">Hướng dẫn</h3>
+                    <iframe class="video-torutal pd-20 br-7"  src="https://www.youtube.com/embed/e_SMDjKXbEY?si=Ajic46YAR2WaIMko" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     
                 </div>
             </div>
         </div>
     </div>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
-    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>
 </html>

@@ -62,3 +62,50 @@
 .bgc-note {
     background-color: #442D23;
 }
+
+
+
+.container-jobs {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container-jobs .job {
+    padding: 12px;
+    width: 20%;
+    margin: 12px;
+    border: 1px solid #2C7BE5;
+    color: #2C7BE5;
+    border-radius: 7px;
+}
+
+.container-jobs .job p {
+    color: #9DA9BB !important;
+    font-style: italic;
+
+}
+.container-jobs .job:hover {
+    color: white;
+    background-color: #2C7BE5;
+}
+.bd-job {
+    border: 1px solid #2C7BE5;
+}
+
+/* MOBILE */
+
+@media screen and (max-width:740px) {
+    .container-jobs .job {
+        width: 95%;
+    }
+}
+/* TABLET */
+@media screen and (max-width:1160px) and (min-width:740px){
+    .container-jobs .job {
+        width: 45%;
+    }
+}
+
+/* pc */
+@media screen and (min-width:1160px) {
+}

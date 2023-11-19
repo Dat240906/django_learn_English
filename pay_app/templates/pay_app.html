@@ -11,7 +11,68 @@
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_youtube.css'%}">
     <link rel="stylesheet" href="{% static 'profile_user_app\css\profile_user_app.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
+    <style>
+        .ai-center {
+            align-items: center;
+        }
+        .container-content .box {
+            width: 13%;
+            margin: 12px;
+        }
+        .dp-inline {
+            display: inline;
+        }
+        .box-sodu {
+            background-color: #FF413A;
+        }
 
+        .box-gioithieu {
+            background-color: #F4A100;
+        }
+
+        .box-choduyet {
+            background-color: #6C757D;
+        }
+
+        .box-giutien  {
+            background-color:#17A2B8 ;
+        }
+
+        .box-tiendaduyet {
+            background-color: #3366FF;
+        }
+
+        .box-tiendarut  {
+            background-color:#00AC69 ;
+        }
+        /* MOBILE */
+
+        @media screen and (max-width:740px) {
+            .container-content .box {
+                width: 95%;
+            }
+        }
+        /* TABLET */
+        @media screen and (max-width:1160px) and (min-width:740px){
+            .container-content .box {
+                width: 33.333%;
+            }
+            .container-content {
+                display:block;
+            }
+        }
+
+        /* pc */
+        @media screen and (min-width:1160px) {
+            .container-content {
+                display: flex;
+            }
+            .container-content .box {
+                width: 29%;
+            }
+        }
+
+    </style>
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
@@ -66,7 +127,7 @@
                          </div>
                     </div>
                 </i>
-                <div class="coin row"><b>50000</b> xu</div>
+                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
                 <p class="name-user  ">Phùng Thành Đạt</p>
                 <img src="{%static 'home_app\img\logo.png'%}" alt="">
             </div>
@@ -95,7 +156,6 @@
                 <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
                 <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
                 <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
-                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
                 <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
@@ -104,137 +164,117 @@
 
         </div>
         <div id="content">
-            <div class="container container width-100pt pd-20">
-                <div class="info bgc-container br-7  ">
-                    <div class="header bgc_in_container br-7 pd-12">
-                        <h3>Thông số</h3>
-                    </div>
+            <div class="container pd-20">
+                <div class="header">
+                    <h3>Rút tiền</h3>
+                </div>
 
-                    <div class="contaier br-7">
-                        <div class="info dp-flex mg-12">
-                            <div class="xulive bd-1  width-50pt mg-8-16 pd-20 br-7">
+                <div class="container-content pd-20 ">
+                    <div class="div dp-flex">
 
-                                <h4 class="pd-6"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
-                                <i class="cl-gray">Từ job</i>
+                        <div class="box box-sodu mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+                                <div class="icon mg-8-16"><i class="fa-solid fa-wallet"></i> 
+                                
+                                </div>
+                                <h4 style="display: inline;">Số Dư Khả Dụng</h4>
                             </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
+                            </div>
+                            
+                        </div>
+                        <div class="box box-gioithieu mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+    
+                                <div class="icon mg-8-16"><i class="fa-solid fa-link"></i> 
+        
+                                </div>
+                                <h4 class="">Thu Nhập Giới Thiệu</h4>
+                            </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
+                            </div>
+                        </div>
+                        <div class="box box-choduyet mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+    
+                                <div class="icon mg-8-16"><i class="fa-solid fa-money-bill-transfer"></i> 
+        
+                                </div>
+                                <h4 class="">Đang Chờ Rút Tiền</h4>
+                            </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dp-flex">
 
-                            <div class="job_did bd-1  width-50pt mg-8-16 pd-20 br-7">
-                                <h4 class="pd-6">14 Job</h4>
-                                <i class="cl-gray">Đã làm</i>
+                        <div class="box box-giutien mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+    
+                                <div class="icon mg-8-16"><i class="fa-solid fa-sack-xmark"></i> 
+        
+                                </div>
+                                <h4 class="">Giữ Rút Tiền</h4>
+                            </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
+                            </div>
+                        </div>
+                        <div class="box box-tiendaduyet mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+    
+                                <div class="icon mg-8-16"><i class="fa-solid fa-calendar-check"></i> 
+        
+                                </div>
+                                <h4 class="">Số Tiền Phê Duyệt</h4>
+                            </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
+                            </div>
+                        </div>
+                        <div class="box box-tiendarut mg-12 br-7 pd-20 dp-flex ai-center">
+                            <div class="">
+    
+                                <div class="icon mg-8-16"><i class="fa-solid fa-coins"></i> 
+        
+                                </div>
+                                <h4 class="">Tổng Số Tiền Rút</h4>
+                            </div>
+                            <div class="">
+                                <p style="white-space: nowrap;"><i class="fa-solid fa-dollar-sign"></i> 0.01</p>
                             </div>
                         </div>
                         
                     </div>
                 </div>
-                <div class="header bgc-container br-7 mtb-20 ">
-                    <div class="container-header pd-12 bgc_in_container">
-                        <h3>Thông báo:</h3>
-
-                    </div>
-                    <p class="pd-12 ml-12">Hãy cấu hình acc để có thể tham gia kiếm xu nhé!</p>
-                </div>
 
 
-                <div class="jobs  bgc-container br-7 mtb-20">
-                    <div class="container-header pd-12 bgc_in_container">
-                        <h3>Jobs</h3>
-                    </div>
-                    <div class="container-jobs ">
-                        <div class="job">
-                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
-                        </div>
-    
-                        <div class="job">
-                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
-                            <p>Bấm vào nội dung bên dưới để copy</p>
-                            <input class="input-base-youtube"  type="text" value="I love this music because its great and beautiful" readonly>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
-                        </div>
-    
-                        <div class="job">
-                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
-                            <p>Bấm vào nội dung bên dưới để copy</p>
-                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
-                        </div>
-    
-                        <div class="job">
-                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
-                            <p>Bấm vào nội dung bên dưới để copy</p>
-                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
-                        </div>
-                        <div class="job">
-                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
-                        </div>
-    
-                        <div class="job">
-                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
-                            <p>Bấm vào nội dung bên dưới để copy</p>
-                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="handle bgc-container br-7 mtb-20">
-                    <div class="container-header pd-12 bgc_in_container br-7">
-
-                        <h3>Thêm nick Tiktok</h3>
-                    </div>
-
-                    <div class="container-note pd-12 ml-12 br-7">
-                        <div class="content bd-1 pd-20 bgc-note br-7 mgbt-12">
-                            <h4>Điều kiện cấu hình:</h4>
-                            <ul class="pd-20">
-                                <li>Nick name Tiếng Việt.</li>
-                                <li>Có avatar</li>
-                                <li>Công khai danh sách follow và video đã thích.</li>
-                            </ul>
-                        </div>
-
-                        <p class="mgbt-12"><i class="fa-solid fa-link"></i> Nhập Username Tiktok (sau chữ @):</p>
-                        <input class="input-base-youtube mgbt-12 " type="text" placeholder="ptd.06_"><br>
-
-                        <button class="bt-youtube  mgbt-12">Thêm</button>
-                    </div>
-                </div>
-
-                <div class="acc_active bgc-container br-7 mtb-20">
-                    <div class="container-header pd-12 bgc_in_container">
-                        <h3>Danh sách Account đang chạy</h3>
-                    </div>
-                    <table class="width-100pt">
-                            
-                            <tr >
-                                <th>ID</th>
-                                <th>Name</th>
-                            </tr>
-    
-                            <tr>
-                                <td class="link-table">10008920302222</td>
-                                <td class="name-table">Hoàng At</td>
-                            </tr>
-                    </table>
+                <div class="container-pay pd-20">
+                    <select name="" id="" class="cursor-pointer input-base-youtube">
+                        <option value="">Số tiền</option>
+                        <option value="">20 $</option>
+                        <option value="">30 $</option>
+                        <option value="">40 $</option>
+                    </select>
+                    <select name="" id="" class="cursor-pointer input-base-youtube">
+                        <option value="">Chọn tài khoản thanh toán</option>
+                        <option value="">PhungThanhDat|MB</option>
+                    </select>
+                    <p class="mg-top-bottom-16">Chưa có tài khoản thanh toán? <a style="color: #3366FF;text-decoration: none;" href="{%url 'profile_user'%}">Thêm ngay</a></p>
+                    <button type="submit" class="bt-youtube">Rút tiền</button>
                 </div>
             </div>
             
         </div>
     </div>
+    <script>
+
+    </script>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+    <script src="{%static 'earn_money_app\js\redirect.js'%}"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>
 </html>

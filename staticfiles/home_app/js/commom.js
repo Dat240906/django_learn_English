@@ -3,7 +3,7 @@
 
 
 
-const obj = document.querySelector('.fa-solid')
+const obj = document.querySelector('.header-notification')
 const triangle = document.querySelector('.triangle')
 const container = document.querySelector('.container-noti')
 const fullscreen = document.querySelector('.fullscreen-noti')

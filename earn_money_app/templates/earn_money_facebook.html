@@ -8,8 +8,10 @@
     <title>Home - Exam Relax</title>
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_youtube.css'%}">
+    <link rel="stylesheet" href="{% static 'profile_user_app\css\profile_user_app.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
- 
+
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
@@ -64,7 +66,7 @@
                          </div>
                     </div>
                 </i>
-                <div class="coin row"><b>50000</b> xu</div>
+                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
                 <p class="name-user  ">Phùng Thành Đạt</p>
                 <img src="{%static 'home_app\img\logo.png'%}" alt="">
             </div>
@@ -93,7 +95,6 @@
                 <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
                 <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
                 <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
-                <a href='{% url "home"%}' class="nav-child element-add"><i class="fa-solid fa-bell"></i>Thông báo</a>
                 <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>
@@ -102,12 +103,139 @@
 
         </div>
         <div id="content">
-            
+            <div class="container container width-100pt pd-20">
+                <div class="info bgc-container br-7  ">
+                    <div class="header bgc_in_container br-7 pd-12">
+                        <h3>Thông số</h3>
+                    </div>
+
+                    <div class="contaier br-7">
+                        <div class="info dp-flex mg-12">
+                            <div class="xulive bd-1  width-50pt mg-8-16 pd-20 br-7">
+
+                                <h4 class="pd-6"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
+                                <i class="cl-gray">Từ job</i>
+                            </div>
+
+                            <div class="job_did bd-1  width-50pt mg-8-16 pd-20 br-7">
+                                <h4 class="pd-6">14 Job</h4>
+                                <i class="cl-gray">Đã làm</i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="header bgc-container br-7 mtb-20 ">
+                    <div class="container-header  br-7 pd-12 bgc_in_container">
+                        <h3>Thông báo:</h3>
+
+                    </div>
+                    <p class="pd-12 ml-12">Hãy cấu hình acc để có thể tham gia kiếm xu nhé!</p>
+                </div>
+
+
+                <div class="jobs  bgc-container br-7 mtb-20">
+                    <div class="container-header  br-7 pd-12 bgc_in_container">
+                        <h3>Jobs</h3>
+                    </div>
+                    <div class="container-jobs ">
+                        <div class="job">
+                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-regular fa-thumbs-up mg-8-16"></i>Like</h4>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
+                        </div>
+    
+                        <div class="job">
+                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
+                            <p>Bấm vào nội dung bên dưới để copy</p>
+                            <input class="input-base-youtube"  type="text" value="I love this music because its great and beautiful" readonly>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
+                        </div>
+    
+                        <div class="job">
+                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
+                            <p>Bấm vào nội dung bên dưới để copy</p>
+                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
+                        </div>
+    
+                        <div class="job">
+                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
+                            <p>Bấm vào nội dung bên dưới để copy</p>
+                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
+                        </div>
+                        <div class="job">
+                            <h4><i class="fa-solid fa-plus  mg-8-16"></i>Follow</h4>
+                        </div>
+    
+                        <div class="job">
+                            <h4><i class="fa-regular fa-comment mg-8-16"></i>Comment</h4>
+                            <p>Bấm vào nội dung bên dưới để copy</p>
+                            <input class="input-base-youtube" type="text" value="I love this music because its great and beautiful" readonly>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="handle bgc-container br-7 mtb-20">
+                    <div class="container-header pd-12 bgc_in_container br-7">
+
+                        <h3>Thêm nick Facebook</h3>
+                    </div>
+
+                    <div class="container-note pd-12 ml-12 br-7">
+                        <div class="content bd-1 pd-20 bgc-note br-7 mgbt-12">
+                            <h4>Điều kiện cấu hình:</h4>
+                            <ul class="pd-20">
+                                <li>Acc tên Tiếng Việt, Avatar Việt.</li>
+                                <li>Trên 20 bạn bè</li>
+                                <li>Tham gia 5 Group</li>
+                                <li>Avatar cũ nhất đăng trên 3 ngày</li>
+                                <li>Acc trên 19 tuổi.</li>
+                            </ul>
+                        </div>
+
+                        <p class="mgbt-12"><i class="fa-solid fa-link"></i> Nhập ID Facebook:</p>
+                        <input class="input-base-youtube mgbt-12 " type="text" placeholder="10008920302222"><br>
+
+                        <button class="bt-youtube  mgbt-12">Thêm</button>
+                    </div>
+                </div>
+
+                <div class="acc_active bgc-container br-7 mtb-20">
+                    <div class="container-header pd-12 bgc_in_container">
+                        <h3>Danh sách Account đang chạy</h3>
+                    </div>
+                    <table class="width-100pt">
+                            
+                            <tr >
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+    
+                            <tr>
+                                <td class="link-table">10008920302222</td>
+                                <td class="name-table">Hoàng At</td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
             
         </div>
     </div>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
-    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>
 </html>

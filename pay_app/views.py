@@ -6,4 +6,4 @@ from django.views import View
 
 class PaySite(View):
     def get(self, request):
-        return None
+        return render(request, 'pay_app.html')

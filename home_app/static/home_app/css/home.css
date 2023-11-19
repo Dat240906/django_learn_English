@@ -572,7 +572,9 @@ html {
     font-size: 30px;
     margin-left: 8px;
 }
-
+.header-logo {
+    display: none;
+}
 .comment-next:hover {
     background-color: #1D3D68;
     cursor: pointer;
@@ -679,6 +681,7 @@ html {
     }
     .header-notification .container-noti {
         width: 289px;
+        transform: translateX(-48%);
     }
 }
 /* TABLET */
@@ -704,12 +707,8 @@ html {
 }
 /* reponsive fix */
 @media screen and (max-width:620px) {
-    .header-user .coin {
-        display: none;
-    }
-    .header-logo {
-        display: none;
-    }
+
+
 }
 @media screen and (max-width:530px) {
     #header .name-user {

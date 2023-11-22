@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'study',
     'post_app',
     'home_app',
     'document_app',
@@ -89,12 +88,12 @@ WSGI_APPLICATION = 'learn_E.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vorugmee',
-        'USER': 'vorugmee',
-        'PASSWORD': 'Mjz4EYGpwI1meBW3gVC9wn8Z9V9dXdha',
-        'HOST': 'rain.db.elephantsql.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hczuskfl',         # Tên cơ sở dữ liệu
+        'USER': 'hczuskfl',         # Tên người dùng
+        'PASSWORD': 'KF1aqT6inNYxZkNi5Ipg1f5aew4IC2fZ',     # Mật khẩu
+        'HOST': 'kiouni.db.elephantsql.com',  # Địa chỉ hoặc IP của máy chủ PostgreSQL
+        'PORT': '5432',             # Cổng PostgreSQL mặc định
     }
 }
 
@@ -145,7 +144,7 @@ STATICFILES_DIRS = [
     ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'post/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'post_app/media')
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

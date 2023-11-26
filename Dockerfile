@@ -16,3 +16,6 @@ EXPOSE 8080
 
 # Define the entry point for the container
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+
+
+

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Đặt mã JavaScript ở đây
 document.querySelector('.form-login-container-js').addEventListener('submit', async function (event) {
 event.preventDefault();
-notification.style.display = 'none'
+notification.style.display = 'none'                 
 var data_input = {
 'username':document.querySelector('.username-js').value,
 'password':document.querySelector('.password-js').value

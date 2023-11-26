@@ -17,12 +17,13 @@ button {
 .container-loading {
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     background-color: rgba(5, 51, 48, .4);
+    top: 0;
 }
 
 .container-loading .loading {
-    position: absolute;
+    position: fixed;
     top: 50%;
     right: 50%;
 }
@@ -129,7 +130,7 @@ html {
 }
 .header-user .header-notification {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     
 }
 
@@ -462,6 +463,7 @@ html {
     border-radius: 8px;
     display: none;
     animation: move-t-in linear .1s;
+    left: 23%;
 }
 .post-child-comment {
 /* height: 30%; */
@@ -527,6 +529,7 @@ html {
 
 .img-50 {
     width: 50px;
+    height: 50px;
 }
 
 .rank {
@@ -609,10 +612,92 @@ html {
     display: flex;
 }
 
+/* container-post
+ */
+ .mg-6 {
+    margin: 6px;
+}
+.pd-20 {
+    padding: 20px;
+}
+
+
+.mgt-20 {
+    margin-top: 20px;
+}
+.container-create-post {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 53%;
+    background-color: #dcdcdc;
+    display: none;
+    animation: appear ease-in .1s;
+}
+.create-post {
+    width: 72px;
+}
+.post-contai {
+    height: 30%;
+    background-color: #162231;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+}
+.pd-816816 {
+    padding: 8px 16px 8px 16px;
+}
+.bt-post {
+    padding: 8px 16px 8px 16px;
+    border-radius: 7px;
+    background-color: #1bc692;
+    color: white;
+        }
+
+.fs-15 {
+    font-size: 15px;
+}
+.fullscreen-post {
+    position: fixed;
+    background-color: rgba(0, 0, 0, .4);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+}
+
+#check-post:checked ~ .container-create-post {
+    display: block;
+}
+#check-post:checked ~ .fullscreen-post {
+    display: block;
+}
+@keyframes appear {
+    from {
+        top: -30%;
+        opacity: 0;
+    }to {
+        top: 0;
+        opacity: 1;
+    }
+
+}
+
+
+
+
+
 
 /* REPONSIVE COMMOM */
 
 @media screen and (max-width:1160px) {
+    .container-create-post {
+        width: 81%;
+    }
     .cuon {
         overflow-y: auto;
         height: 451PX;
@@ -710,6 +795,8 @@ html {
     .content-container {
         width: 100%;
     }
+
+
 }
 /* TABLET */
 @media screen and (max-width:1160px) and (min-width:740px){
@@ -721,6 +808,7 @@ html {
         width: 90%;
         margin: 7px;
     }
+
 }
 
 /* pc */

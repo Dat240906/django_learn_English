@@ -1,5 +1,6 @@
 from calendar import c
 from django.shortcuts import render,redirect
+from django.views import View
 from rest_framework.views import APIView 
 from .serializers import UserSerializer
 from django.http import JsonResponse, HttpResponse
@@ -76,7 +77,7 @@ class Home(APIView):
         ip_user = get_user_ip(request)
         cache_key = f'test{ip_user}'
         cache_data = cache.get(cache_key)
-
+        
         if cache_data and cache_data['active']:
 
             ## notification
@@ -148,6 +149,8 @@ class Login(APIView):
             username = collect_data.data['username']
             password = collect_data.data['password']
             
+
+            #truy suất ở cache đã lưu khi tạo acc
             user = UserModel.objects.get(username=username)
             password_db = user.password
             if password != password_db:
@@ -161,6 +164,7 @@ class Login(APIView):
             ip_user = get_user_ip(request)
             cache_key = f'test{ip_user}'
             cache_data = {
+                'user':user,
                 'ip_address':ip_user,
                 'username':username,
                 'active':True
@@ -214,21 +218,32 @@ class Register(APIView):
             return JsonResponse(data_response)
 
         
-
+        UserModel.objects.create(username=username, password= password, ip_address = ip_user)
         # đăng nhập thành công thì sẽ lưu active để lưu cache login
         ip_user = get_user_ip(request)
+
+        user = UserModel.objects.get(ip_address = ip_user, username=username)
         cache_key = f'test{ip_user}'
         cache_data = {
+            'user':user,
             'ip_address':ip_user,
             'username':username,
             'active':True
         }
         cache.set(cache_key, cache_data, timeout=60*60*24)
         ######################################
-        UserModel.objects.create(username=username, password= password, ip_address = ip_user)
+        
         data_response = {
                     'success':True,
                     'redirect_url': '/',
                     'message':'Tạo tài khoản thành công'
                 }
         return JsonResponse(data_response)
+    
+
+
+
+class ShowCache(View):
+    def get(self, request):
+        data = cache.get('test127.0.0.1')
+        return JsonResponse({'success':True})

@@ -9,7 +9,7 @@ from home_app.models import UserModel, generate_random_string
 class PostModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    content = models.CharField(max_length=500)
+    content = models.CharField(max_length=500, blank=True)
     img = models.ImageField(blank=True, null=True)
     create_at = models.DateTimeField(default=timezone.now, auto_now_add=False)
     num_like = models.IntegerField(default=0)

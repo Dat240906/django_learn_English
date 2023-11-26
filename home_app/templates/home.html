@@ -8,13 +8,11 @@
     <title>Home - Exam Relax</title>
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
+    <link rel="stylesheet" href="{% static 'pay_app\css\pay_app.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
     <style>
         html, body {
             font-family:Verdana;
-        }
-        .mg-6 {
-            margin: 6px;
         }
     </style>
 </head>
@@ -79,200 +77,199 @@
             </div>
 
         </div>
-        <div id="content">
-            <div class="content-container">
-                <!-- Nội dung bài viết và bảng xếp hạng của bạn ở đây -->
-                <div class="post">
-                    {%for items in post_and_comment_them %}
-                        <div class="post-child">
-                            <div class="post-header">
-                                <img class="img-50" src="{{items.0.user.avatar.url}}" alt="" class="avatar">
-                                <div class="info">
-                                    <p class="username">{{items.0.user.username}} <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i></p>
-                                    <p class="time">{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe mg-8-16"></i></p>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h3 style="color: rgb(42, 177, 181)" class="content-text">{{items.0.title}}</h3>
-                            </div>
+        <div id="content" style="display: flex;flex-direction: column;">
 
-                            <div class="post-content">
-                                <p class="content-text">{{items.0.content}}</p>
-                            </div>
+            <!-- post  -->
+            <label for="check-post" class="create-post pd-20 mg-8-16">
+                <i class="fa-solid fa-square-plus fa-beat-fade fa-2xl" style="color: #15c68b;"></i>
+            </label>
 
-                            {% if items.0.img %}
-                            <div class="post-img br-7">
-                                <img style="display: block; height: auto;" class="br-7 width-100pt" src="{{items.0.img.url}}" alt="image_tus">
-                            </div>
-                            {% endif %}
-                            <div class="total-emotions">
-                                <div class="heart"><i class="fa-solid fa-heart mg-6"></i>{{items.0.num_like}}</div>
-                                <div class="comment-share">
-                                    <p style="margin-right: 20px;" class="opctncm " id="{{items.0.post_id}}">{{items.0.num_comment}} bình luận</p>
-                                    <p>{{items.0.num_share}} lượt chia sẻ</p>
-                                
+            <input type="checkbox" hidden id="check-post" >
+            <label for="check-post" class="fullscreen-post"></label>
+            <div class="container-create-post br-7 ">
+                <div class="post-contai">
+                    <div class="post-header">
+                        <img class="img-50" src="{{avatar.url}}" alt="" class="avatar">
+                        <div class="info">
+                            <p class="username">{{username}}
+                                {%if username == 'admin'%}
+                                <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i>
+                                {% endif%}
+                            </p>
+                            <p class="time"><i>Autotime</i><i class="fa-solid fa-globe mg-8-16"></i></p>
+                        </div>
+                    </div>
+
+                    <form class="form-create-post" enctype="multipart/form-data" >
+                        {% csrf_token %}
+                        <div class="post-content">
+                            <input type="text" class="content-text pd-816816 fs-15 br-7 width-100pt title-create-js" maxlength="75" required placeholder="Tiêu đề">
+                        </div>
+    
+                        <div class="post-content">
+                            <textarea id="message" class="pd-816816 fs-15 br-7 width-100pt content-create-js" name="message" maxlength="1080" rows="4" cols="50" placeholder="Nội dung"></textarea>
+                        </div>
+    
+                        <div class="post-img br-7">
+                            <label for="input-img-post" class=""><i class="fa-solid fa-image fa-2xl"></i></label>
+                            <input hidden id="input-img-post" type="file" class="image-input-js image-create-js" accept="image/*" >
+                            <img style="display: block; height: auto; width: 150px;" id="preview-image-js" class="br-7  mgt-20" src="" >
+                        </div>
+    
+    
+                        <button type="submit" class="bt-post bt-create-post-js mgt-20">Đăng</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- endpost 
+            
+            -->
+            <div class="dp-flex">
+
+                <div class="content-container">
+    
+    
+                    
+                    <!-- Nội dung bài viết và bảng xếp hạng của bạn ở đây -->
+                    <div class="post">
+                        {%for items in post_and_comment_them %}
+                            <div class="post-child">
+                                <div class="post-header">
+                                    <img class="img-50" src="{{items.0.user.avatar.url}}" alt="" class="avatar">
+                                    <div class="info">
+                                        <p class="username">{{items.0.user.username}} 
+                                            {% if items.0.user.username == 'admin'%}
+                                            <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i>
+                                            {% endif %}
+                                        </p>
+                                        <p class="time">{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe mg-8-16"></i></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="post-emotions">
-                                <div class="emotion-item">
-                                    <i class="fa-solid fa-heart"></i>Like
+                                <div class="post-content">
+                                    <h3 style="color: rgb(42, 177, 181)" class="content-text">{{items.0.title}}</h3>
                                 </div>
-                                <label for="{{forloop.counter}}" class ="emotion-item">
-                                    <i class="fa-solid fa-comment"></i>Comment
-                                </label>
-                                <div class="emotion-item">
-                                    <i class="fa-solid fa-share"></i>Share
+    
+                                <div class="post-content">
+                                    <p class="content-text">{{items.0.content}}</p>
+                                </div>
+    
+                                {% if items.0.img %}
+                                <div class="post-img br-7">
+                                    <img style="display: block; height: auto;" class="br-7 width-100pt" src="{{items.0.img.url}}" alt="image_tus">
+                                </div>
+                                {% endif %}
+                                <div class="total-emotions">
+                                    <div class="heart"><i class="fa-solid fa-heart mg-6"></i>{{items.0.num_like}}</div>
+                                    <div class="comment-share">
+                                        <p style="margin-right: 20px;" class="opctncm " id="{{items.0.post_id}}">{{items.0.num_comment}} bình luận</p>
+                                        <p>{{items.0.num_share}} lượt chia sẻ</p>
+                                    
+                                    </div>
+                                </div>
+                                <div class="post-emotions">
+                                    <div class="emotion-item">
+                                        <i class="fa-solid fa-heart"></i>Like
+                                    </div>
+                                    <label for="{{forloop.counter}}" class ="emotion-item">
+                                        <i class="fa-solid fa-comment"></i>Comment
+                                    </label>
+                                    <div class="emotion-item">
+                                        <i class="fa-solid fa-share"></i>Share
+                                    </div>
+                                </div>
+                
+                                <input type="checkbox" name="" hidden id="{{forloop.counter}}" class="on-comment-class">
+                                <div class="post-container-comment">
+                                    <i class="fa-solid fa-check comment-next"></i>
+                                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
+                                    <img src="{{avatar.url}}" alt="user" class="img-user-comment img-50">
                                 </div>
                             </div>
             
-                            <input type="checkbox" name="" hidden id="{{forloop.counter}}" class="on-comment-class">
-                            <div class="post-container-comment">
-                                <i class="fa-solid fa-check comment-next"></i>
-                                <input type="text" class="input-comment" placeholder="Viết bình luận...">
-                                <img src="{{avatar.url}}" alt="user" class="img-user-comment img-50">
-                            </div>
-                        </div>
-        
+                        
                     
-                
-
-                        <div class="container-total-comment">
-                            <div class="container-loading">
-
-                                <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
-                            </div>
-                            <div class="cuon mg-6">
-                                
-                                <i class="fa-solid fa-xmark clctncm"></i>
-                                <div class="post-child-comment">
-                                    <div class="post-header">
-                                        <img class=" avatar-user-js img-50" src="" alt="" class="avatar">
-                                        <div class="info">
-                                            <p class="username username-js">{{items.0.user.username}} <i class="fa-solid fa-circle-check tick"></i></p>
-                                            <p class="time time-js" >{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe"></i></p>
+    
+                            <div class="container-total-comment">
+                                <div class="container-loading">
+    
+                                    <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
+                                </div>
+                                <div class="cuon mg-6">
+                                    
+                                    <i class="fa-solid fa-xmark clctncm"></i>
+                                    <div class="post-child-comment">
+                                        <div class="post-header">
+                                            <img class=" avatar-user-js img-50" src="" alt="" class="avatar">
+                                            <div class="info">
+                                                <p class="username username-js">{{items.0.user.username}} <i class="fa-solid fa-circle-check tick"></i></p>
+                                                <p class="time time-js" >{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe"></i></p>
+                                            </div>
+                                        </div>
+                                        <div class="post-content">
+                                            <h3 style="color: rgb(42, 177, 181);" class="content-text title-js">{{items.0.title}}</h3>
+                                        </div>
+                                        <div class="post-content">
+                                            <p class="content-text content-js">{{items.0.content}}</p>
+                                        </div>
+                                        <div class="post-img br-7">
+                                            <img style="display: block; height: auto;" class="br-7 width-100pt post-img-js" src="" >
+                                        </div>
+                                        <div style="margin-top: 10px;"></div>
+                                    </div>
+                                    {% if items.1 %}
+                                    {% for comment in items.1 %}
+                                    <div class="user-comment">
+                                        <img src="{% static 'home_app\img\logo.png'%}" alt="" class="img-user">
+                                        <div class="info-user">
+                                            <p class="name-user-comment"><b>{{comment.user.username}}</b>| {{comment.create_at.time|date:"H:i"}} - {{comment.create_at.date}}</p>
+                                            <p class="content-user pd-6">{{comment.content_comment}}</p>
                                         </div>
                                     </div>
-                                    <div class="post-content">
-                                        <h3 style="color: rgb(42, 177, 181);" class="content-text title-js">{{items.0.title}}</h3>
-                                    </div>
-                                    <div class="post-content">
-                                        <p class="content-text content-js">{{items.0.content}}</p>
-                                    </div>
-                                    <div class="post-img br-7">
-                                        <img style="display: block; height: auto;" class="br-7 width-100pt post-img-js" src="" >
-                                    </div>
-                                    <div style="margin-top: 10px;"></div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <p style="color: rgb(172, 56, 56);" class="pd-6">không có bình luận</p>
+                                    {% endif%}
+    
                                 </div>
-                                {% if items.1 %}
-                                {% for comment in items.1 %}
-                                <div class="user-comment">
-                                    <img src="{% static 'home_app\img\logo.png'%}" alt="" class="img-user">
-                                    <div class="info-user">
-                                        <p class="name-user-comment"><b>{{comment.user.username}}</b>| {{comment.create_at.time|date:"H:i"}} - {{comment.create_at.date}}</p>
-                                        <p class="content-user pd-6">{{comment.content_comment}}</p>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                                {% else %}
-                                <p style="color: rgb(172, 56, 56);" class="pd-6">không có bình luận</p>
-                                {% endif%}
-
                             </div>
-                        </div>
-                    {% endfor %}
-        
-                    <!-- Các phần tử bài viết khác ở đây -->
-                </div>
-            </div>
-            <div class="rank">
-                <div class="rank-header">
-                    <h3 class="header-content">Bảng Xếp Hạng Trẻ Trâu</h3>
-                </div>
-                <div class="rank-user">
-                    <div class="user-child">
-                        <img class="img-50" src="{%static 'home_app\img\logo.png'%}" alt="">    
-                        <div class="info">
-                            <p class="username">Client1</p>
-                            <p class="rank-user">Thách Đố</p>
-                            <p class="point">Điểm: 2000003</p>
-                        </div>
+                        {% endfor %}
+            
+                        <!-- Các phần tử bài viết khác ở đây -->
                     </div>
                 </div>
-                
+                <div class="rank">
+                    <div class="rank-header">
+                        <h3 class="header-content">Bảng Xếp Hạng Trẻ Trâu</h3>
+                    </div>
+                    <div class="rank-user">
+                        <div class="user-child">
+                            <img class="img-50" src="{%static 'home_app\img\logo.png'%}" alt="">    
+                            <div class="info">
+                                <p class="username">Client1</p>
+                                <p class="rank-user">Thách Đố</p>
+                                <p class="point">Điểm: 2000003</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
             
         </div>
     </div>
 
 
-    <script>
-            const objects_comment = document.querySelectorAll('.opctncm')
-            const post_username = document.querySelector('.post-child-comment .info .username-js')
-            const post_time = document.querySelector('.post-child-comment .info .time-js')
-            const post_title = document.querySelector('.post-child-comment .title-js')
-            const post_content = document.querySelector('.post-child-comment .content-js')
-            const container_loading = document.querySelector('.container-loading')
-            const post_avatar_user = document.querySelector('.post-child-comment .avatar-user-js')
-            const post_img = document.querySelector('.post-child-comment .post-img .post-img-js')
-            for (const object of objects_comment) {
-                object.addEventListener('click', async () => {
-                    const post_id = object.id
-                    console.log(post_id)
-                    const container_comment = document.querySelector('.container-total-comment')
-                    container_comment.style.display = "block"
 
-                    //thêm loading 
-                    container_loading.style.display = 'block'
 
-                    //gửi API lên server
-                    try {
-                        const response = await fetch(`api/v1/post-comments/?post_id=${post_id}`, {
-                            method: 'GET', 
-                           
-                        })
 
-                        if (response.ok) {
-                            const data = await response.json();
-                            
 
-                            //ẩn loading
-                            container_loading.style.display = 'none'
-                            // // chỉnh sửa các thông tin của container-comment để đưa lên
-                            
-                            post_username.textContent = data.post.username
-                            post_time.textContent = data.post.time
-                            post_title.textContent = data.post.title
-                            post_content.textContent = data.post.content
-                            post_avatar_user.src = 'media/' + data.post.avatar;
-                            if (!data.post.img) {
-                                post_img.style.display = 'none'
-                            } else {
-                                post_img.src = 'media/' + data.post.img;
-                            }
-                            
-                        }else {
-                            console.log('Không tìm thấy "success" trong dữ liệu phản hồi');
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                })
-            }
-            document.querySelector('.clctncm').addEventListener('click', function (event) {
-                const container_comment = document.querySelector('.container-total-comment')
-                container_comment.style.display = "none"
 
-                //tạo sự mượt mà
-                post_username.textContent = ''
-                post_time.textContent = ''
-                post_title.textContent = ''
-                post_content.textContent = ''
-                post_avatar_user.src = '';
-                post_img.src = '';
-            })
-    </script>
+
+
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
-    <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>
+    <script src="{% static 'home_app\js\post\funs_post.js' %}"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>
 </html>

@@ -9,6 +9,14 @@ from django.utils import timezone
 from .models import UserModel, NotificationCommomModel
 from post_app.models import PostModel, CommentModel
 
+from django.core.serializers import serialize
+
+def convert_list_to_json(comment_list):
+    # Sử dụng hàm serialize để chuyển danh sách CommentModel thành JSON
+    serialized_comments = serialize('json', comment_list)
+
+    # Trả về JSON đã được chuyển đổi
+    return serialized_comments
 
 
 
@@ -35,15 +43,49 @@ class APIGetPostComment(APIView):
 
         post_id = request_for.get('post_id')
         try:
-            post = PostModel.objects.get(post_id=post_id) 
+            container_comments = False
+            #lấy bài viết
+            cache_post_key = 'allpost'
+            cache_post_data = cache.get(cache_post_key)
+            #lấy comment thuộc về bài viết
+            cache_comment_key = 'allcomment'            
+            cache_comment_data = cache.get(cache_comment_key, [])
+            
+            for item in cache_post_data:
+                if item.post_id == post_id:
+                    post = item
+                    break
             #điều chỉnh lại giờ chênh lệch
             post.create_at = add_hours_to_time(post.create_at, 7)
             #lấy comment thuộc về post
-            comments = CommentModel.objects.filter(post=post).order_by('-create_at')
+            if not cache_comment_data:
+                try:
+                    comments = CommentModel.objects.filter(post=post).order_by('-create_at')
+                    for comment in comments:
+                        cache_comment_data.append([post_id, comment])
+                    cache.set(cache_comment_key, cache_comment_data)
+                except CommentModel.DoesNotExist:
+                    container_comments = False
+            # cache đã chứa comment
+            cache_comment_data = cache.get(cache_comment_key, [])
+            #lọc comment thuộc về bài viết
 
-            for comment in comments:
-                comment.create_at = add_hours_to_time(comment.create_at, 7)
+            if cache_comment_data:
+                container_comments = []
+                for item in cache_comment_data: #itemm dạng [post_id, comment]
+                    if item[0] == post_id:
+                        container_comments.append(item[1])
 
+            #nếu đã duyệt qua hết mà không kiếm được comment thì trả về luôn
+            if not container_comments:
+                container_comments = False
+            else:
+            #điều chỉnh lại thời gian bị lệch so với server
+                for comment in container_comments:
+                    comment.create_at = add_hours_to_time(comment.create_at, 7)
+                
+                #hoàn tất comments -> chuyển đổi thành json từ list
+                container_comments = convert_list_to_json(container_comments)
             try:
                 img = post.img.url[len('media/'):]
             except:
@@ -57,7 +99,7 @@ class APIGetPostComment(APIView):
                     'time':post.create_at.strftime("%H:%M - %d.%m.%Y"),
                     'title':post.title,
                     'content':post.content,
-
+                    'comments':container_comments,
                 },
 
 
@@ -75,37 +117,44 @@ class Home(APIView):
 
         #xử lí login gần đây, nếu không có sẽ chuyển về login
         ip_user = get_user_ip(request)
-        cache_key = f'test{ip_user}'
-        cache_data = cache.get(cache_key)
+        cache_key_user = f'test{ip_user}'
+        cache_data_user = cache.get(cache_key_user)
+
+        cache_post_key = 'allpost'
+        cache_post_data = cache.get(cache_post_key, [])
+
         
-        if cache_data and cache_data['active']:
+        if cache_data_user and cache_data_user['active']:
 
             ## notification
             noties = NotificationCommomModel.objects.all().order_by('-create_at')
             for noti in noties:
                 noti.create_at = add_hours_to_time(noti.create_at, 7) 
             ## user
-            user = UserModel.objects.get(username=cache_data['username'])
-            username = user.username
+            user = cache_data_user['user']
+            username = cache_data_user['username']
             money = user.money
 
             # post
-            posts = PostModel.objects.all().order_by('-create_at')
-
+            # posts = PostModel.objects.all().order_by('-create_at')
+            print(cache_post_data)
+            if not cache_post_data:
+                allpost = []
+                posts = PostModel.objects.all().order_by('-create_at')
+                for post in posts:
+                    allpost.append(post)
+                
+                cache.set(cache_post_key, allpost)
             #xếp lại, comment nào vào đúng post ấy
-            post_and_comment_them = []   # [[post1, comment_of_post1], [post2, comment_of_post2]]
+            else:
+                #lấy dữ liệu bằng cache, không liên quan đến DB
+                posts = [post for post in cache_post_data]
+
+
             for post in posts:
+                print(post)
                 #thêm post
-                list_ = []
                 post.create_at = add_hours_to_time(post.create_at, 7)
-                list_.append(post)
-
-                #thêm comment
-                comment = CommentModel.objects.filter(post=post).order_by('-create_at')
-                list_.append(comment)
-
-                #Thêm vào list tổng
-                post_and_comment_them.append(list_)
 
             
             
@@ -119,18 +168,18 @@ class Home(APIView):
                 'money':money,
                 'posts':posts,
                 'avatar':user.avatar,
-                'post_and_comment_them':post_and_comment_them,
+                'posts':posts,
             }
 
 
 
             return render(request, 'home.html', context=context)
 
-        cache_data={
+        cache_data_user={
             'ip_address':ip_user,
             'active':False
         }
-        cache.set(cache_key, cache_data, timeout=60*60*24)
+        cache.set(cache_key_user, cache_data_user, timeout=60*60*24)
         return redirect('login')
 class Login(APIView):
     def get(self, request):

@@ -1,4 +1,9 @@
 
+// đóng thông báo ở login singup
+document.querySelector(".notification-js .close-noti-js").addEventListener('click', () => {
+    document.querySelector('.notification-js').style.display = 'none'
+})
+
 
 
 

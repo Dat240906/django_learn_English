@@ -1,3 +1,60 @@
+
+// tạo nhiều bình luận dựa trên response
+
+function CreateComment(list_comment) {
+
+    //list_comment dạng :{"model": "post_app.commentmodel", "pk": 17, "fields": {"post": 54, "user": "admin", "content_comment": "được", "create_at": "2023-11-29T13:30:35.404Z"}}, {"model": "post_app.commentmodel", "pk": 16, "fields": {"post": 54, "user": "admin", "content_comment": "được", "create_at": "2023-11-29T13:30:25.451Z"}}
+    const container_comments = document.querySelector('.container-comment-js')
+    for (let comment of list_comment) {
+        //khởi tạo
+        console.log(comment.fields.user)
+        console.log(comment.fields.content_comment)
+        const father_element = document.createElement('div')
+        father_element.classList.add('user-comment')
+        // const child1_img_user_element = document.createElement('img').add('img-user')
+        
+        const child2_element = document.createElement('div')
+        child2_element.classList.add('info-user')
+        const username_in_child2_element = document.createElement('p')
+        username_in_child2_element.classList.add('name-user-comment')
+        const create_at = document.createElement('i')
+        const content_in_child2_element = document.createElement('p')
+        content_in_child2_element.classList.add('content-user','pd-6')
+
+        // chatgpt: chỉnh sửa định dạng time create
+        // Chuỗi ngày giờ ban đầu
+        var originalDateString = `${comment.fields.create_at}`
+
+        // Tạo đối tượng Date từ chuỗi ngày giờ
+        var originalDate = new Date(originalDateString);
+
+        // Lấy các thành phần ngày giờ từ đối tượng Date
+        var hours = originalDate.getUTCHours();
+        var minutes = originalDate.getUTCMinutes();
+        var day = originalDate.getUTCDate();
+        var month = originalDate.getUTCMonth() + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
+        var year = originalDate.getUTCFullYear();
+
+        // Tạo chuỗi mới theo định dạng mong muốn
+        var time_create = hours + ":" + minutes + " - " + day + "/" + month + "/" + year;
+
+
+        //điền thông tin
+        create_at.textContent = ` - ${time_create}`
+        username_in_child2_element.textContent = comment.fields.user
+        content_in_child2_element.textContent = comment.fields.content_comment
+
+        //lồng các phần tử vào với nhau
+        username_in_child2_element.appendChild(create_at)
+        child2_element.appendChild(username_in_child2_element)
+        child2_element.appendChild(content_in_child2_element)
+
+        father_element.appendChild(child2_element)
+
+        container_comments.appendChild(father_element)
+    }
+}
+
 const objects_comment = document.querySelectorAll('.opctncm')
 const post_username = document.querySelector('.post-child-comment .info .username-js')
 const post_time = document.querySelector('.post-child-comment .info .time-js')
@@ -6,13 +63,19 @@ const post_content = document.querySelector('.post-child-comment .content-js')
 const container_loading = document.querySelector('.container-loading')
 const post_avatar_user = document.querySelector('.post-child-comment .avatar-user-js')
 const post_img = document.querySelector('.post-child-comment .post-img .post-img-js')
+const nobody_comment = document.querySelector('.container-comment-js .nobody-comment-js')
 for (const object of objects_comment) {
     object.addEventListener('click', async () => {
         const post_id = object.id
-        console.log(post_id)
         const container_comment = document.querySelector('.container-total-comment')
         container_comment.style.display = "block"
 
+        var comments_remove = document.getElementsByClassName('user-comment')
+        //change type
+        var elements_array = Array.from(comments_remove)
+        elements_array.forEach(function(element) {
+            element.parentNode.removeChild(element)
+        })
         //thêm loading 
         container_loading.style.display = 'block'
 
@@ -26,7 +89,7 @@ for (const object of objects_comment) {
             if (response.ok) {
                 const data = await response.json();
                 
-
+                    
                 //ẩn loading
                 container_loading.style.display = 'none'
                 // // chỉnh sửa các thông tin của container-comment để đưa lên
@@ -43,6 +106,12 @@ for (const object of objects_comment) {
                     post_img.src = 'media/' + data.post.img;
                 }
                 
+                if (!data.post.comments) {
+                    nobody_comment.style.display = 'block'
+                    return 
+                }
+                const list_comments = JSON.parse(data.post.comments)
+                CreateComment(list_comments)
             }else {
                 console.log('Không tìm thấy "success" trong dữ liệu phản hồi');
             }
@@ -62,6 +131,7 @@ document.querySelector('.clctncm').addEventListener('click', function (event) {
     post_content.textContent = ''
     post_avatar_user.src = '';
     post_img.src = '';
+    nobody_comment.style.display = 'none'
 })
 
 
@@ -82,6 +152,12 @@ document.querySelector('.image-input-js').addEventListener('change', (event) => 
    }
 })
 
+document.querySelector('.cancel-image-js').addEventListener('click', ()=> {
+    document.querySelector('.image-input-js').value = null
+    document.querySelector('#preview-image-js').src = ''
+    
+})
+
 // <!-- tạo bài viết -->
 
 document.querySelector('.bt-create-post-js').addEventListener('click',async (event) =>  {
@@ -95,9 +171,7 @@ document.querySelector('.bt-create-post-js').addEventListener('click',async (eve
     formData.append('title', title)
     formData.append('content', content)
     formData.append('img', img)
-    console.log(title);
-    console.log(content);
-    console.log(img);
+
     try {
         const response = await fetch('post/api/v1/create-post/', {
             method: "POST",
@@ -114,6 +188,7 @@ document.querySelector('.bt-create-post-js').addEventListener('click',async (eve
         const data = await response.json()
         
         if (!data.success) {
+            container_loading.style.display = 'none'
             return console.log(data.error)
         }
 
@@ -125,3 +200,43 @@ document.querySelector('.bt-create-post-js').addEventListener('click',async (eve
     }
     
 })
+
+
+
+
+// thêm comment 
+
+const btns = document.querySelectorAll('.button-add-comment-js')
+btns.forEach(btn => {
+    btn.addEventListener('click',async (e) => {
+        e.preventDefault()
+        container_loading.style.display = 'block'
+        const postId = btn.id
+        const content = document.querySelector(`.post-container-comment .${postId}`).value
+        const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        if (content == ''){
+            return container_loading.style.display = 'none'
+        }
+        try {
+            const form = new FormData()
+            form.append('content', content)
+            form.append('post_id', postId)
+            const response = await fetch('post/api/v1/add-comment/', {
+                method:"POST",
+                body:form,
+                headers: { 
+                    'X-CSRFToken': csrf_token, }
+            })
+
+            if (!response.ok){
+                container_loading.style.display = 'none'
+                return alert('lỗi!')
+            }
+            container_loading.style.display = 'none'
+
+            window.location.reload()       
+        } catch (error) {
+            alert(error)
+        }
+    })
+});

@@ -14,10 +14,21 @@
         html, body {
             font-family:Verdana;
         }
+
+        .post-container-comment .btn-submit-post {
+            padding: 6px 16px ;
+            border-radius: 7px;
+            margin: 7px;
+        }
     </style>
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
+
+        <div class="container-loading">
+    
+            <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
+        </div>
         <div class="fullscreen-noti h-100vh width-100pt"></div>
         <div id="header" class="mg-8-16  row ">
             <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
@@ -112,6 +123,7 @@
     
                         <div class="post-img br-7">
                             <label for="input-img-post" class=""><i class="fa-solid fa-image fa-2xl"></i></label>
+                            <i class="fa-regular fa-rectangle-xmark fa-2xl mg-8-16 cancel-image-js"></i>
                             <input hidden id="input-img-post" type="file" class="image-input-js image-create-js" accept="image/*" >
                             <img style="display: block; height: auto; width: 150px;" id="preview-image-js" class="br-7  mgt-20" src="" >
                         </div>
@@ -134,37 +146,37 @@
                     
                     <!-- Nội dung bài viết và bảng xếp hạng của bạn ở đây -->
                     <div class="post">
-                        {%for items in post_and_comment_them %}
+                        {%for post in posts %}
                             <div class="post-child">
                                 <div class="post-header">
-                                    <img class="img-50" src="{{items.0.user.avatar.url}}" alt="" class="avatar">
+                                    <img class="img-50" src="{{post.user.avatar.url}}" alt="" class="avatar">
                                     <div class="info">
-                                        <p class="username">{{items.0.user.username}} 
-                                            {% if items.0.user.username == 'admin'%}
+                                        <p class="username">{{post.user.username}} 
+                                            {% if post.user.username == 'admin'%}
                                             <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i>
                                             {% endif %}
                                         </p>
-                                        <p class="time">{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe mg-8-16"></i></p>
+                                        <p class="time">{{post.create_at.time|date:"H:i"}} - {{post.create_at.date}}<i class="fa-solid fa-globe mg-8-16"></i></p>
                                     </div>
                                 </div>
                                 <div class="post-content">
-                                    <h3 style="color: rgb(42, 177, 181)" class="content-text">{{items.0.title}}</h3>
+                                    <h3 style="color: rgb(42, 177, 181)" class="content-text">{{post.title}}</h3>
                                 </div>
     
                                 <div class="post-content">
-                                    <p class="content-text">{{items.0.content}}</p>
+                                    <p class="content-text">{{post.content}}</p>
                                 </div>
     
-                                {% if items.0.img %}
+                                {% if post.img %}
                                 <div class="post-img br-7">
-                                    <img style="display: block; height: auto;" class="br-7 width-100pt" src="{{items.0.img.url}}" alt="image_tus">
+                                    <img style="display: block; height: auto;" class="br-7 width-100pt" src="{{post.img.url}}" alt="image_tus">
                                 </div>
                                 {% endif %}
                                 <div class="total-emotions">
-                                    <div class="heart"><i class="fa-solid fa-heart mg-6"></i>{{items.0.num_like}}</div>
+                                    <div class="heart"><i class="fa-solid fa-heart mg-6"></i>{{post.num_like}}</div>
                                     <div class="comment-share">
-                                        <p style="margin-right: 20px;" class="opctncm " id="{{items.0.post_id}}">{{items.0.num_comment}} bình luận</p>
-                                        <p>{{items.0.num_share}} lượt chia sẻ</p>
+                                        <p style="margin-right: 20px;" class="opctncm " id="{{post.post_id}}">{{post.num_comment}} bình luận</p>
+                                        <p>{{post.num_share}} lượt chia sẻ</p>
                                     
                                     </div>
                                 </div>
@@ -172,7 +184,7 @@
                                     <div class="emotion-item">
                                         <i class="fa-solid fa-heart"></i>Like
                                     </div>
-                                    <label for="{{forloop.counter}}" class ="emotion-item">
+                                    <label for="{{forloop.counter}}{{post.post_id}}" class ="emotion-item">
                                         <i class="fa-solid fa-comment"></i>Comment
                                     </label>
                                     <div class="emotion-item">
@@ -180,11 +192,13 @@
                                     </div>
                                 </div>
                 
-                                <input type="checkbox" name="" hidden id="{{forloop.counter}}" class="on-comment-class">
+                                <input type="checkbox"  hidden id="{{forloop.counter}}{{post.post_id}}" class="on-comment-class">
                                 <div class="post-container-comment">
-                                    <i class="fa-solid fa-check comment-next"></i>
-                                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
-                                    <img src="{{avatar.url}}" alt="user" class="img-user-comment img-50">
+                                    <form class="form-addcomment-js" content>
+                                        {% csrf_token %}
+                                        <input type="text" class="input-comment {{post.post_id}}" name="" required placeholder="Viết bình luận...">
+                                        <button type="submit" id="{{post.post_id}}" class="btn-submit-post button-add-comment-js"><i class="fa-solid fa-paper-plane"></i></button>
+                                    </form>
                                 </div>
                             </div>
             
@@ -192,45 +206,33 @@
                     
     
                             <div class="container-total-comment">
-                                <div class="container-loading">
-    
-                                    <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
-                                </div>
-                                <div class="cuon mg-6">
+
+                                <div class="cuon mg-6 container-comment-js">
                                     
                                     <i class="fa-solid fa-xmark clctncm"></i>
                                     <div class="post-child-comment">
                                         <div class="post-header">
                                             <img class=" avatar-user-js img-50" src="" alt="" class="avatar">
                                             <div class="info">
-                                                <p class="username username-js">{{items.0.user.username}} <i class="fa-solid fa-circle-check tick"></i></p>
-                                                <p class="time time-js" >{{items.0.create_at.time|date:"H:i"}} - {{items.0.create_at.date}}<i class="fa-solid fa-globe"></i></p>
+                                                <p class="username username-js">{{post.user.username}} <i class="fa-solid fa-circle-check tick"></i></p>
+                                                <p class="time time-js" >{{post.create_at.time|date:"H:i"}} - {{post.create_at.date}}<i class="fa-solid fa-globe"></i></p>
                                             </div>
                                         </div>
                                         <div class="post-content">
-                                            <h3 style="color: rgb(42, 177, 181);" class="content-text title-js">{{items.0.title}}</h3>
+                                            <h3 style="color: rgb(42, 177, 181);" class="content-text title-js">{{post.title}}</h3>
                                         </div>
                                         <div class="post-content">
-                                            <p class="content-text content-js">{{items.0.content}}</p>
+                                            <p class="content-text content-js">{{post.content}}</p>
                                         </div>
                                         <div class="post-img br-7">
                                             <img style="display: block; height: auto;" class="br-7 width-100pt post-img-js" src="" >
                                         </div>
                                         <div style="margin-top: 10px;"></div>
                                     </div>
-                                    {% if items.1 %}
-                                    {% for comment in items.1 %}
-                                    <div class="user-comment">
-                                        <img src="{% static 'home_app\img\logo.png'%}" alt="" class="img-user">
-                                        <div class="info-user">
-                                            <p class="name-user-comment"><b>{{comment.user.username}}</b>| {{comment.create_at.time|date:"H:i"}} - {{comment.create_at.date}}</p>
-                                            <p class="content-user pd-6">{{comment.content_comment}}</p>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                    {% else %}
-                                    <p style="color: rgb(172, 56, 56);" class="pd-6">không có bình luận</p>
-                                    {% endif%}
+                                        
+                                    <p class="nobody-comment-js" style="display: none;color: rgb(157, 35, 35);">Không có comment</p>
+                                    
+                                    <!-- <p style="color: rgb(172, 56, 56);" class="pd-6">không có bình luận</p> -->
     
                                 </div>
                             </div>

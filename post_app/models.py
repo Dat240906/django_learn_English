@@ -26,8 +26,8 @@ class PostModel(models.Model):
         return f'{self.user.username} - {self.title}'
 class CommentModel(models.Model):
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    user = models.CharField(max_length=12)
     content_comment = models.CharField(max_length=200)
     create_at = models.DateTimeField(default=timezone.now, auto_now_add=False)
     def __str__(self) -> str:
-        return f'{self.post.title} - {self.user.username}'
+        return f'{self.post.title} - {self.user}'

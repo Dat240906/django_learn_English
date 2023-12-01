@@ -20,6 +20,8 @@ button {
     position: fixed;
     background-color: rgba(5, 51, 48, .4);
     top: 0;
+    display: none;
+    z-index: 99;
 }
 
 .container-loading .loading {
@@ -514,7 +516,8 @@ html {
 }
 
 .name-user-comment {
-    font-size: 14px;
+    font-size: 15px;
+    color: #8f0303;
 
 }
 
@@ -576,8 +579,8 @@ html {
     background: transparent;
     width: 70%;
     background-color    : #232E3C;
-    height: 100%;
-    border-radius: 10px;
+    border-radius: 7px;
+    padding: 8px 16px 8px 16px;
     color: white;
     
 }
@@ -609,7 +612,7 @@ html {
 }
 
 .on-comment-class:checked ~ .post-container-comment {
-    display: flex;
+    display: block;
 }
 
 /* container-post

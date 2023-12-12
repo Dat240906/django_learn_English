@@ -31,3 +31,14 @@ class CommentModel(models.Model):
     create_at = models.DateTimeField(default=timezone.now, auto_now_add=False)
     def __str__(self) -> str:
         return f'{self.post.title} - {self.user}'
+    
+
+
+
+
+
+class LikeModel(models.Model):
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
+    user_liked = models.CharField(max_length=20)
+    def __str__(self) -> str:
+        return f'{self.post.title} - {self.user_liked}'

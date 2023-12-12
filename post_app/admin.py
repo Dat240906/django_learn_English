@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  PostModel, CommentModel
+from .models import  LikeModel, PostModel, CommentModel
 
 
 # Register your models here.
@@ -8,3 +8,4 @@ from .models import  PostModel, CommentModel
 
 admin.site.register(PostModel)
 admin.site.register(CommentModel)
+admin.site.register(LikeModel)

@@ -7,7 +7,7 @@ from django.http import JsonResponse, HttpResponse
 from django.core.cache import cache
 from django.utils import timezone
 from .models import UserModel, NotificationCommomModel
-from post_app.models import PostModel, CommentModel
+from post_app.models import LikeModel, PostModel, CommentModel
 
 from django.core.serializers import serialize
 
@@ -137,7 +137,6 @@ class Home(APIView):
 
             # post
             # posts = PostModel.objects.all().order_by('-create_at')
-            print(cache_post_data)
             if not cache_post_data:
                 allpost = []
                 posts = PostModel.objects.all().order_by('-create_at')
@@ -156,9 +155,14 @@ class Home(APIView):
                 #thêm post
                 post.create_at = add_hours_to_time(post.create_at, 7)
 
-            
-            
-            #sau này muốn dùng js để gọi cmt thì tìm bằng post_id (cho post_id của post bằng với post_id của comment khi comment)
+            if cache_data_user.get('list_post_liked', None) == None:
+                try:
+                    modelLike = LikeModel.objects.filter(user_liked = cache_data_user['username'])
+                    list_post_liked = [item.post.post_id for item in modelLike]  
+                except LikeModel.DoesNotExist:
+                    list_post_liked = []
+            else:
+                list_post_liked = cache_data_user['list_post_liked']
 
 
 
@@ -169,6 +173,7 @@ class Home(APIView):
                 'posts':posts,
                 'avatar':user.avatar,
                 'posts':posts,
+                'list_post_liked':list_post_liked
             }
 
 

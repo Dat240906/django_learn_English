@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views import View
 from rest_framework.views import APIView 
-from .models import PostModel, CommentModel
+from .models import PostModel, CommentModel, LikeModel
 from .forms import CreatePostForm
 from django.core.cache import cache
 # Create your views here.
@@ -85,6 +85,95 @@ class AddComment(APIView):
                 cache.set(cache_post_key,cache_post_data)
                 break
         return  HttpResponse()
+    
+
+
+
+class AddLike(APIView):
+    def get(self, request):
+        
+        ip_user = get_user_ip(request)
+        cache_key_user = f'test{ip_user}'
+        cache_data_user = cache.get(cache_key_user)
+
+        cache_key_post = 'allpost'
+        cache_data_post = cache.get(cache_key_post)
+
+        
+        post_id = request.GET.get('post_id')
+        post = PostModel.objects.get(post_id= post_id)
+
+        #xem user đã tym bài này chưa
+        is_liked = False
+        
+        
+        try:
+            data_user_liked = LikeModel.objects.filter(post = post)
+            for like_model in data_user_liked:
+                if cache_data_user['username'] == like_model.user_liked:
+                    is_liked = True
+                    break
+        except LikeModel.DoesNotExist:
+            is_liked = False
+
+
+        data = cache_data_user.get('list_post_liked', None)
+        
+
+        #khi chưa like thì like
+        if not is_liked:
+            for post_item in cache_data_post:
+                if post_id == post_item.post_id:
+                    post_item.num_like += 1
+            cache.set(cache_key_post, cache_data_post)
+            
+            post.num_like += 1
+            post.save()
+            # xử lí trong cache của user 
+            if data == None:
+                data = []
+                data.append(post_id)
+                cache_data_user['list_post_liked'] = data
+                cache.set(cache_key_user, cache_data_user)
+            
+            else:
+                data.append(post_id)
+                cache_data_user['list_post_liked'] = data
+                cache.set(cache_key_user, cache_data_user)
+
+            #######################################################
+            LikeModel.objects.create(post = post, user_liked = cache_data_user['username'])
+
+            return JsonResponse({
+                'success':True,
+                'message':'liked'
+            })
+        
+
+        data = cache_data_user.get('list_post_liked', None)
+        data.remove(post_id)
+        cache_data_user['list_post_liked'] = data
+        cache.set(cache_key_user, cache_data_user)
+
+        cache_data_user['list_post_liked'] = data
+        cache.set(cache_key_user, cache_data_user)
+
+        #######################################################
+        #like rồi thì bỏ like
+        post.num_like -= 1
+        post.save()
+        for post_item in cache_data_post:
+                if post_id == post_item.post_id:
+                    post_item.num_like -= 1
+        cache.set(cache_key_post, cache_data_post)
+        LikeModel.objects.get(post = post, user_liked = cache_data_user['username']).delete()
+
+        return JsonResponse({
+            'success':True,
+            'message':'unliked'
+            })
+
+        
 class CheckCache(View):
     def get(self, request):
         cache_post_key = 'allpost'

@@ -12,6 +12,7 @@ urlpatterns = [
     # API
     path('api/v1/create-post/', views.CreatePostApi.as_view(), name='create_post'),
     path('api/v1/add-comment/', views.AddComment.as_view(), name='add_comment'),
+    path('api/v1/add-like/', views.AddLike.as_view(), name='add_like'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,

@@ -127,9 +127,18 @@ class Home(APIView):
         if cache_data_user and cache_data_user['active']:
 
             ## notification
-            noties = NotificationCommomModel.objects.all().order_by('-create_at')
-            for noti in noties:
-                noti.create_at = add_hours_to_time(noti.create_at, 7) 
+            cache_key_noti = 'noti'
+            cache_data_noti = cache.get(cache_key_noti)
+            if not cache_data_noti:
+                noties = NotificationCommomModel.objects.all().order_by('-create_at')
+                for noti in noties:
+                    noti.create_at = add_hours_to_time(noti.create_at, 7) 
+                data = {
+                    'noties':noties
+                }
+                cache.set(cache_key_noti, data)
+            else:
+                noties = cache_data_noti['noties']
             ## user
             user = cache_data_user['user']
             username = cache_data_user['username']

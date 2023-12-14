@@ -14,6 +14,18 @@ button {
     border: none;
 }
 
+
+.color-red {
+    color: red
+}
+.color-green {
+    color: green
+}
+.post-container-comment .btn-submit-post {
+    padding: 6px 16px ;
+    border-radius: 7px;
+    margin: 7px;
+}
 .container-loading {
     height: 100%;
     width: 100%;

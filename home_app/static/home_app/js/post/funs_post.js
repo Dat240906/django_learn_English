@@ -240,3 +240,36 @@ btns.forEach(btn => {
         }
     })
 });
+
+
+
+// like post
+const like_click_allbutton = document.querySelectorAll('.click-like-js')
+
+for (const item_click of like_click_allbutton) {
+    item_click.addEventListener('click', async () => {
+        
+        const post_id = item_click.id
+        try {
+            
+            const response = await fetch(`/post/api/v1/add-like/?post_id=${post_id}`, {
+                method: "GET",
+            }) 
+
+            if (!response.ok) {return}
+            
+            data = await response.json()
+            if (data.message === 'liked') {
+                item_click.classList.add('color-red')
+            }else {
+                item_click.classList.remove('color-red')
+
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+        
+
+    })}
+

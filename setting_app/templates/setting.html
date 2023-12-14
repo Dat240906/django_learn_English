@@ -19,7 +19,11 @@
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
-        <div class="fullscreen-noti width-100pt"></div>
+        <div class="container-loading">
+    
+            <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
+        </div>
+        <div class="fullscreen-noti h-100vh width-100pt"></div>
         <div id="header" class="mg-8-16  row ">
             <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
             <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
@@ -32,46 +36,17 @@
                     
                     <div class="triangle box_shadow display-none-noti"></div>
                     <div class="container-noti br-7 box_shadow display-none-noti">
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                           <p>mày vừa được Tạ Dũng like</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>ban 3 day</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
+                        {% for noti in noties%}
+                            <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+
+                                <p  style="color: rgb(32, 167, 167);">{{noti.create_at.time|date:"H:i"}} - {{noti.create_at.date}}: </p>
+                                <p class="pd-6">{{noti.content}}</p>
+                            </div>
+                        {% endfor%}
                     </div>
                 </i>
-                <div class="coin row"> <i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
-                <p class="name-user  ">Phùng Thành Đạt</p>
+                <div class="coin row"> <i class="fa-solid fa-dollar-sign"></i><b> {{money}}</b></div>
+                <p class="name-user  ">{{username}}</p>
                 <img src="{%static 'home_app\img\logo.png'%}" alt="">
             </div>
         </div>
@@ -128,21 +103,21 @@
                                 <p>Tên đăng nhập:</p>
                                 <div class="container-info">
 
-                                    <p>Your Name</p>
+                                    <p>{{username}}</p>
                                 </div>
                             </div>
                             <div class="coin">
                                 <p>Hiện có:</p>
                                 <div class="container-info">
 
-                                    <p><i class="fa-solid fa-dollar-sign"></i> 20000</p>
+                                    <p><i class="fa-solid fa-dollar-sign"></i> {{money}}</p>
                                 </div>
                             </div>
                             <div class="access_token">
                                 <p>Access_token: (không được chia sẻ với ai)</p>
                                 <div class="container-info">
 
-                                    <p>âcjcjjjjjjjjjjjjjjjjjjjj</p>
+                                    <p>{{access_token}}</p>
                                 </div>
                             </div>
                         </div>
@@ -164,24 +139,86 @@
                 <div class="change-pw">
                     <div class="header"><h4>Đổi mật khẩu</h4></div>
                     <div class="content">
-                        <div>
-                            <p>Mật khẩu cũ</p>
-                            <input type="password" placeholder="******">
-                        </div>
-                        <div>
-                            <p>Mật khẩu mới</p>
-                            <input type="password" placeholder="******">
-                        </div>
-                        <div>
-                            <p>Nhập lại mật khẩu mới</p>
-                            <input type="password" placeholder="******">
-                        </div>
-                        <button type="submit">Đổi mật khẩu</button>
+                        <form action="">
+
+                            {% csrf_token %}
+                            <div>
+                                <p>Mật khẩu cũ</p>
+                                <input type="password" class="current-password-js" required placeholder="******">
+                            </div>
+                            <div>
+                                <p>Mật khẩu mới</p>
+                                <input type="password" class="new-password-js" required placeholder="******">
+                            </div>
+                            <div>
+                                <p>Nhập lại mật khẩu mới</p>
+                                <input type="password" class="re-new-password-js" required placeholder="******">
+                            </div>
+                            <p class="error-changepass color-red display-none-noti">Mật khẩu mới không khớp!</p>
+                            <button type="submit " class="btn-changepass-js">Đổi mật khẩu</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
+    <script>
+        document.querySelector('.btn-changepass-js').addEventListener('click', async (e) => {
+            e.preventDefault()
+            const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            const current_password = document.querySelector('.current-password-js').value
+            const new_password = document.querySelector('.new-password-js').value
+            const re_new_password = document.querySelector('.re-new-password-js').value
+            const err = document.querySelector('.error-changepass')
+
+            if (current_password == '' ||new_password == '' || re_new_password =='') {
+                err.textContent = 'Chưa có dữ liệu'
+                err.classList.remove('display-none-noti')
+                return 
+            }
+            if (new_password !== re_new_password){
+                err.textContent = 'Mật khẩu không trùng khớp'
+                err.classList.remove('display-none-noti')
+                return 
+            }else {
+                err.classList.add('display-none-noti')
+            }
+            
+            const fData = new FormData()
+            fData.append('password', current_password)
+            fData.append('newpassword', re_new_password)
+            try {
+                const response = await fetch('api/v1/change-password/', {
+                    method: 'POST',
+                    body: fData,
+                    headers: {
+                        'X-CSRFToken': csrf_token,
+                    }
+                })
+
+                if (!response.ok){
+                    return alert(response.error)
+                }
+
+                const data = await response.json()
+                if (!data.success) {
+                    err.textContent = data.message
+                    err.classList.remove('display-none-noti')
+                    return 
+                }
+                
+                err.textContent = data.message
+                err.classList.add('color-green')
+                err.classList.remove('color-red', 'display-none-noti')
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            } catch (error) {
+                
+            }
+        })
+    </script>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>

@@ -150,8 +150,9 @@ class AddLike(APIView):
             })
         
 
-        data = cache_data_user.get('list_post_liked', None)
-        data.remove(post_id)
+        data = cache_data_user.get('list_post_liked', [])
+        if data:
+            data.remove(post_id)
         cache_data_user['list_post_liked'] = data
         cache.set(cache_key_user, cache_data_user)
 

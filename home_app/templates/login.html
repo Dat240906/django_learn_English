@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
     <title>Exam Relax</title>
     <link rel="stylesheet" href="{%static 'home_app/css/login.css'%}">
+    <link rel="stylesheet" href="{%static 'home_app/css/home.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
 </head>
 
@@ -16,7 +17,11 @@
 
 
     <div id="main">
-        
+        <div class="container-loading">
+    
+            <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-xl" style="color: #16eadb;"></i>
+        </div>
+        <div class="fullscreen-noti h-100vh width-100pt"></div>
         <div class="logo-text-container">
             <img src="{%static 'home_app\img\logo.png'%}" alt="Logo">
             <p class="slogan">Test yourself!</p>
@@ -41,6 +46,8 @@
     </div>
     <script src="{% static 'home_app\js\login\login_API.js'%}"></script>
     <script src="{% static 'home_app\js\commom.js'%}"></script>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

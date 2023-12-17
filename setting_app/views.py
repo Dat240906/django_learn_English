@@ -31,7 +31,8 @@ class SettingSite(View):
                 'username':username,
                 'money':money,
                 'access_token':access_token,
-                'noties':noties
+                'noties':noties,
+                'avatar':cache_data_user['user'].avatar
             }
             return render(request, 'setting.html', context=context)
 

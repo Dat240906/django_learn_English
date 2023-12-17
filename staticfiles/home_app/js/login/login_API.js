@@ -32,6 +32,7 @@ function changeRespondSuccess(message_change) {
 }
 
 try {
+    loading.style.display = 'block'
     const response = await fetch('/login/', {
         method: "POST",
         body: JSON.stringify(data_input),
@@ -42,6 +43,8 @@ try {
     });
     
     if (response.ok) {
+        loading.style.display = 'none'
+
         const data = await response.json();
 
         if ('success' in data) {
@@ -55,9 +58,12 @@ try {
             console.log('Không tìm thấy "success" trong dữ liệu phản hồi');
         }
     } else {
+        loading.style.display = 'none'
+
         changeRespondFail('error here');
     }
 } catch (error) {
+    loading.style.display = 'none'
     console.log(error);
     changeRespondFail(error.message);
 }

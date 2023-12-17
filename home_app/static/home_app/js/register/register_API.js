@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const comfirm_password = document.querySelector('.confirm-password-js').value
         const password = document.querySelector('.password-js').value
     
+        loading.style.display = 'block'
+        
         try {
             const response = await fetch('/register/', {
                 method: "POST",
@@ -42,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             
             if (response.ok) {
+                loading.style.display = 'none'
+
                 const data = await response.json();
                 if (password != comfirm_password) {
                     
@@ -55,12 +59,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         changeRespondFail(data.message);
                     }
                 } else {
+                    loading.style.display = 'none'
+
                     console.log('Không tìm thấy "success" trong dữ liệu phản hồi');
                 }
             } else {
+                loading.style.display = 'none'
+
                 changeRespondFail('error here');
             }
         } catch (error) {
+            loading.style.display = 'none'
             console.log(error);
             changeRespondFail(error.message);
         }

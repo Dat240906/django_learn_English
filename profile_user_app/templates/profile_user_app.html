@@ -8,12 +8,17 @@
     <title>Home - Exam Relax</title>
     <link rel="stylesheet" href="{% static 'home_app\css\home.css'%}">
     <link rel="stylesheet" href="{% static 'profile_user_app\css\profile_user_app.css'%}">
+    <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
 
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
-        <div class="fullscreen-noti width-100pt"></div>
+        <div class="container-loading">
+    
+            <i class=" loading fa-solid fa-spinner fa-spin-pulse fa-2xl" style="color: #16eadb;"></i>
+        </div>
+        <div class="fullscreen-noti h-100vh width-100pt"></div>
         <div id="header" class="mg-8-16  row ">
             <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
             <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
@@ -26,47 +31,18 @@
                     
                     <div class="triangle box_shadow display-none-noti"></div>
                     <div class="container-noti br-7 box_shadow display-none-noti">
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                           <p>mày vừa được Tạ Dũng like</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>ban 3 day</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
+                        {% for noti in noties%}
+                            <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
+
+                                <p  style="color: rgb(32, 167, 167);">{{noti.create_at.time|date:"H:i"}} - {{noti.create_at.date}}: </p>
+                                <p class="pd-6">{{noti.content}}</p>
+                            </div>
+                        {% endfor%}
                     </div>
                 </i>
-                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
-                <p class="name-user  ">Phùng Thành Đạt</p>
-                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> {{money}}</b></div>
+                <p class="name-user  ">{{username}}</p>
+                <img class="w-50 pd-lr-8" src="{{avatar.url}}" alt="">
             </div>
         </div>
         <div id="nav">
@@ -108,20 +84,20 @@
                     <div class="base-info">
                         <div class="info">
                             <div class="container_img_user">
-                                <img class="img-user" src="{%static 'home_app\img\logo.png'%}" alt="avt">
+                                <img class="img-user" src="{{avatar.url}}" alt="avt">
     
                             </div>
                             <div class="sub-name">
-                                <h3 class="username hover-color-xanh transition-color">PTD Gaming</h3>
-                                <p class="email color-gray hover-color-xanh transition-color"><i class="fa-solid fa-envelope-circle-check mail_checked_icon"></i>phungthanhdat001@gmail.com</p>
+                                <h3 class="username hover-color-xanh transition-color">{{username}}</h3>
+                                <p class="email color-gray hover-color-xanh transition-color"><i class="fa-solid fa-envelope-circle-check mail_checked_icon"></i>{{email}}</p>
                                 <div class="container_coin">
                                     <div class="coin pd-7-10 bd br-7">
-                                        <h4 class="coin "><i class="fa-solid fa-dollar-sign"></i> 50000</h4>
+                                        <h4 class="coin "><i class="fa-solid fa-dollar-sign"></i> {{money}}</h4>
                                         <p class="sub_decs color-gray hover-color-xanh transition-color">Thu nhập chính</p>
                                     </div>
 
                                     <div class="coin pd-7-10 bd br-7">
-                                        <h4 class="coin "><i class="fa-solid fa-dollar-sign"></i> 3000</h4>
+                                        <h4 class="coin "><i class="fa-solid fa-dollar-sign"></i> 0</h4>
                                         <p class="sub_decs color-gray transition-color hover-color-xanh">Thu Nhập Giới Thiệu</p>
                                     </div>
                                 </div>
@@ -133,7 +109,7 @@
                             <ul class="nav_items">
                                 <label for="nav_base_info"><li class="cursor-pointer nav_item pd-7-10">Thông tin cơ bản </li></label>
                                 <label for="nav_pay_info"><li class="cursor-pointer nav_item pd-7-10">Thông tin thanh toán</li></label>
-                                <label for="nav_post"><li class="cursor-pointer nav_item pd-7-10">Bài đăng</li></label>
+                                <label for="nav_post"><li class="cursor-pointer nav_item pd-7-10 check-click-post-js">Bài đăng</li></label>
                                 <label for="nav_login_log"><li class="cursor-pointer nav_item pd-7-10">Nhật ký đăng nhập</li></label>
                             </ul>
                         </div>
@@ -150,23 +126,26 @@
 
                             <h3 class="">Thông tin cơ bản</h3>
                             <div class="change-flex pd-7-10">
-
-                                <div class="item_con">
-    
-    
-                                    <p class="info-fields-title">Name </p>
-                                    <input value="PTĐ vipzz" type="text" class="input-base">
-                                    <p class="info-fields">Email</p>
-                                    <input value="phungthanhdat001@gmail.com" type="email" class="input-base">
-                                </div>
-                                <div class="item_con">
-                                    <p class="info-fields">Số điện thoại </p>
-                                    <input value="0366820837" type="text" class="input-base">
-                                    <p class="info-fields">Địa chỉ</p>
-                                    <input value="Đông Hải Quỳnh Phụ Thái Bình" type="text" class="input-base">
-    
-                                </div>
-                                <button type="submit" class="btn_submit  bg-color_color_btn cursor-pointer">Xác nhận</button>
+                                <form action="">
+                                    {% csrf_token %}
+                                    <div class="item_con">
+        
+        
+                                        <p class="info-fields-title"> Name</p>
+                                        <input value="{{username}}" readonly type="text" class="input-base username-in-editinfo-js">
+                                        <p class="info-fields">Email</p>
+                                        <input value="{{email}}" required type="email" class="input-base email-in-editinfo-js">
+                                    </div>
+                                    <div class="item_con">
+                                        <p class="info-fields">Số điện thoại </p>
+                                        <input value="{{number_phone}}" required type="text" class="input-base numberphone-in-editinfo-js">
+                                        <p class="info-fields">Địa chỉ</p>
+                                        <input value="{{address}}" required type="text" class="input-base address-in-editinfo-js">
+        
+                                    </div>
+                                    <p class="display-none-noti info-js"></p>
+                                    <button type="submit" class="btn_submit btn-edit-info-js  bg-color_color_btn cursor-pointer">Xác nhận</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -180,44 +159,47 @@
                         <div class="container">
 
                             <div class="update_method_pay">
-                                <div class="container_header">
+                                <form action="">
+                                    {% csrf_token %}
+                                    <div class="container_header">
 
-                                    <p class="info-fields">Phương thức thanh toán</p>
-                                    <select name="" id="choose_method" class="input-base">
-                                        <option value="none">Chọn phương pháp</option>
-                                        <option value="momo">MoMo</option>
-                                        <option value="bank">Bank Transfer</option>
-                                        <option value="paypal">Paypal</option>
-                                    </select>
-                                    
-                                </div>
-                                <div id="method_momo" style="display: none;">
-                                    <p class="title_input">Số điện thoại MoMo</p>
-                                    <input class="input-base" type="text" class="input" placeholder="MoMo Phone Number">
-                                </div>
-     
-                                 <div id="method_bank" style="display: none;">
-                                     <p class="title_input ">Tên ngân hàng</p>
-                                     <select name="" id="" class="input-base">
-                                         <option value="vtb">VietinBank</option>
-                                         <option value="vcb">Vietcombank</option>
-                                         <option value="bidv">BIDV</option>
-                                         <option value="agb">Agribank</option>
-                                         <option value="mbb">MBBank</option>
-                                         <option value="vpb">VPBank</option>
-                                     </select>
-                                     <p class="title_input">Tên tài khoản ngân hàng</p>
-                                     <input type="text" class="input input-base" placeholder="Back Account Name">
-                                     <p class="title_input">Số tài khoản ngân hàng</p>
-                                     <input type="text" class="input input-base" placeholder="Back Account Number">
-                                 </div>
-                                 <div id="method_paypal" style="display: none;" >
-                                     <p class="title_input">Paypal Email</p>
-                                     <input class="input-base" type="text" class="input" placeholder="Paypal Email">
-     
-                                 </div>
-     
-                                 <button type="submit" class="btn_submit bg-color_color_btn">Xác nhận</button>
+                                        <p class="info-fields">Phương thức thanh toán</p>
+                                        <select required name="" id="choose_method" class="input-base method-pay-js">
+                                            <option value="none">Lựa chọn</option>
+                                            <option value="momo">MoMo</option>
+                                            <option value="bank">Bank Transfer</option>
+                                            <option value="paypal">Paypal</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div id="method_momo" style="display: none;">
+                                        <p class="title_input">Số điện thoại MoMo</p>
+                                        <input required  type="text" class=" input-base input phone-number-momo-js" placeholder="MoMo Phone Number">
+                                    </div>
+         
+                                    <div id="method_bank" style="display: none;">
+                                        <p class="title_input ">Tên ngân hàng</p>
+                                        <select required name="" id="" class="input-base name-bank-js">
+                                            <option value="vtb">VietinBank</option>
+                                            <option value="vcb">Vietcombank</option>
+                                            <option value="bidv">BIDV</option>
+                                            <option value="agb">Agribank</option>
+                                            <option value="mbb">MBBank</option>
+                                            <option value="vpb">VPBank</option>
+                                        </select>
+                                        <p class="title_input">Tên tài khoản ngân hàng</p>
+                                        <input required type="text" class="input input-base name-acc-bank-js" placeholder="Back Account Name">
+                                        <p class="title_input">Số tài khoản ngân hàng</p>
+                                        <input required type="text" class="input input-base stk-bank-js" placeholder="Back Account Number">
+                                    </div>
+                                    <div id="method_paypal" style="display: none;" >
+                                        <p class="title_input">Paypal Email</p>
+                                        <input required  type="text" class="email-paypal-js input-base" placeholder="Paypal Email">
+        
+                                    </div>
+                                    <p style="display: none;" class="color-red info-addbank-js background-user pd-6">cccccccccccc</p>
+                                    <button type="submit" class="btn_submit bg-color_color_btn btn-addbank-js">Xác nhận</button>
+                                </form>
                             </div>
                         
 
@@ -262,82 +244,9 @@
                     <!-- thông tin các bài viết -->
                     <div class="post" >
                         <h3 class="pd-20">Bài đăng</h3>
-                        <div class="container_post pd-20">
+                        <div class="container_post container-post-js pd-20">
                             <!-- các post của user -->
-                            <div class="post-child">
-                                <div class="post-header">
-                                    <img class="img-50" src="{%static 'home_app\img\logo.png'%}" alt="" class="avatar">
-                                    <div class="info">
-                                        <p class="username">Admin <i style="color: #0866FF;" class="fa-solid fa-circle-check tick"></i></p>
-                                        <p class="time">11:00 <i class="fa-solid fa-globe"></i></p>
-                                    </div>
-                                </div>
-                                <div class="post-content">
-                                    <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
-                                </div>
-                
-                                <div class="total-emotions">
-                                    <div class="heart"><i class="fa-solid fa-heart"> 1,2K</i></div>
-                                    <div class="comment-share">
-                                        <p style="margin-right: 20px;" class="opctncm">30 bình luận</p>
-                                        <p>6 lượt chia sẻ</p>
-                                    
-                                    </div>
-                                </div>
-                                <div class="post-emotions">
-                                    <div class="emotion-item">
-                                        <i class="fa-solid fa-heart"></i>Like
-                                    </div>
-                                    <label for="on-comment" class ="emotion-item">
-                                        <i class="fa-solid fa-comment"></i>Comment
-                                    </label>
-                                    <div class="emotion-item">
-                                        <i class="fa-solid fa-share"></i>Share
-                                    </div>
-                                </div>
-                
-                                <input type="checkbox" name="" hidden id="on-comment" class="on-comment-class">
-                                <div class="post-container-comment">
-                                    <i class="fa-solid fa-check comment-next"></i>
-                                    <input type="text" class="input-comment" placeholder="Viết bình luận...">
-                                    <img src="{%static 'home_app\img\logo.png'%}" alt="user" class="img-user-comment img-50">
-                                </div>
-                            </div>
-                            <!-- end post -->
-                            <!-- container comment  -->
-                            <input type="checkbox" name="" hidden id="on-comment1" class="on-comment-class">
-                            <div class="post-container-comment">
-                                <i class="fa-solid fa-check comment-next"></i>
-                                <input type="text" class="input-base" placeholder="Viết bình luận...">
-                                <img src="{%static 'home_app\img\logo.png'%}" alt="user" class="img-user-comment img-50">
-                            </div>
-                            <div class="container-total-comment">
-                                <div class="cuon">
-                                    <i class="fa-solid fa-xmark clctncm"></i>
-                                    <div class="post-child-comment">
-                                        <div class="post-header">
-                                            <img class="img-50" src="{% static 'home_app\img\logo.png' %}" alt="" class="avatar">
-                                            <div class="info">
-                                                <p class="username">Admin <i class="fa-solid fa-circle-check tick"></i></p>
-                                                <p class="time">11:00 <i class="fa-solid fa-globe"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="post-content">
-                                            <p class="content-text">Vui lòng cập nhật avatar tiktok trước khi thêm vào làm nhiệm vụ, những tài khoản không có avatar sẽ không thể thêm được</p>
-                                        </div>
-    
-                                    <div style="margin-top: 10px;"></div>
-                                    </div>
-                                    <div class="user-comment mg-8-16">
-                                        <img src="{% static 'home_app\img\logo.png'%}" alt="" class="img-user">
-                                        <div class="info-user pd-7-10 br-7" style="background-color: #F0F2F5;">
-                                            <p class="name-user-comment"><b>Minh Quang</b></p>
-                                            <p class="content-user">Không còn điều dì để mà diễn tả tôi cái bài viết này, phải nói là một kiệt tác của nhân loại luôn á quý dị.s</p>
-                                        </div>
-                                    </div>
-            
-                                </div>
-                            </div>
+                            
                             <!-- end container-comment  -->
                         </div>
                     </div>
@@ -359,10 +268,10 @@
                                     <th>Thời gian đăng nhập</th>
                                 </tr>
                                 <tr>
-                                    <td>1</td>
-                                    <td>102.007.007</td>
-                                    <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)</td>
-                                    <td>26/10/2023 18:44</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
                                 </tr>
                     
                             </table>
@@ -374,6 +283,127 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Hàm để tạo và hiển thị bài viết
+        function renderPost(post, index) {
+            const postsContainer = document.querySelector('.container-post-js');
+
+            // Tạo phần tử div chứa bài viết
+            const postElement = document.createElement('div');
+            postElement.classList.add('post-child');
+
+            // Xây dựng nội dung bài viết từ dữ liệu
+            postElement.innerHTML = `
+           
+                <div class="post-content">
+                    <h3 style="color: rgb(42, 177, 181);word-wrap: break-word;" class="content-text" >${post.fields.title}</h3>
+                </div>
+
+                <div class="post-content">
+                    <p class="content-text" style="word-wrap: break-word;">${post.fields.content}</p>
+                </div>
+
+                ${ post.fields.img ? `<div class="post-img br-7"><img style="display: block; height: auto;" class="br-7 width-100pt" src="/media/${post.fields.img}" alt="image_tus"></div>`:''}
+                <div class="total-emotions">
+                    <div class="heart heart-js"><i class="fa-solid fa-heart mg-6"></i>${post.fields.num_like}</div>
+                    <div class="comment-share">
+                        <p style="margin-right: 20px;" class="opctncm " id="${post.fields.post_id}">${post.fields.num_comment} bình luận</p>
+                        <p>${post.fields.num_share} lượt chia sẻ</p>
+                    
+                    </div>
+                </div>
+                <div class="post-emotions">
+                
+                   
+                
+                    <div class="emotion-item click-like-js" id="${post.fields.post_id}">
+                        <i class="fa-solid fa-heart"></i>Like
+                    </div>
+
+                    <label for="${index} ${post.fields.post_id}" class ="emotion-item">
+                        <i class="fa-solid fa-comment"></i>Comment
+                    </label>
+                    <div class="emotion-item">
+                        <i class="fa-solid fa-share"></i>Share
+                    </div>
+                </div>
+
+                <input type="checkbox"  hidden id="${index} ${post.fields.post_id}" class="on-comment-class">
+                <div class="post-container-comment">
+                    <form class="form-addcomment-js" content>
+                        {% csrf_token %}
+                        <input type="text" class="input-comment ${post.fields.post_id}" name="" required placeholder="Viết bình luận...">
+                        <button type="submit" id="${post.fields.post_id}" class="btn-submit-post button-add-comment-js"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+        
+    
+
+            <div class="container-total-comment">
+
+                <div class="cuon mg-6 container-comment-js">
+                    
+                    <i class="fa-solid fa-xmark clctncm"></i>
+                    <div class="post-child-comment">
+                  
+                        <div class="post-content">
+                            <h3 style="color: rgb(42, 177, 181);" class="content-text title-js">${post.fields.title}</h3>
+                        </div>
+                        <div class="post-content">
+                            <p class="content-text content-js">${post.fields.content}</p>
+                        </div>
+                        <div class="post-img br-7">
+                            <img style="display: block; height: auto;" class="br-7 width-100pt post-img-js" src="" >
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+                    </div>
+                        
+                    <p class="nobody-comment-js" style="display: none;color: rgb(157, 35, 35);">Không có comment</p>
+                    
+                    <!-- <p style="color: rgb(172, 56, 56);" class="pd-6">không có bình luận</p> -->
+
+                </div>`;
+
+            // Thêm bài viết vào container
+            postsContainer.appendChild(postElement);
+        }
+
+    
+        document.querySelector('.check-click-post-js').addEventListener('click',async () => {
+            
+            // xem đã có bài viết chưa, chưa có mới gọi API
+            post_check = document.querySelector('.post-child')
+            if (post_check) {
+                return
+            }
+            try {
+                const response = await fetch('api/v1/get-post/', {
+                    method:'GET'
+                })
+
+                if (!response.ok) {
+                    return alert(response.error)
+                }
+
+                const data = await response.json()
+
+                //posts là list dạng [post1, post2, post3] được gửi lên từ views.py của python
+                // Hiển thị dữ liệu từ server
+                
+                data.posts.forEach((postData, index) => {
+                    renderPost(postData, index)
+                });
+            } catch (error) {
+                return alert(response.error)
+            }
+
+        })
+
+    </script>
+
     <script src="{%static 'profile_user_app\js\profile_user_app.js'%}"></script>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
     <script src="{%static 'home_app\js\post\container-comment\container_comment.js'%}"></script>

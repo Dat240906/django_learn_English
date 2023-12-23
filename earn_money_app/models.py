@@ -11,6 +11,19 @@ class EarnMoneyModel(models.Model):
     def __str__(self) -> str:
         return self.user.username
 
+class SiteRewardTempModel(models.Model):
+    endpoint = models.CharField(max_length= 50)
+    is_completed = models.BooleanField(default = False)
+
+    def __str__(self):
+        return self.endpoint
+
+class GiftCodeModel(models.Model):
+    code = models.CharField(default = '', max_length=30, unique =True)
+    value = models.FloatField(default= float(0))
+    def __str__(self) -> str:
+        return self.code
+
 
 class EarnMoneyWeb1sModel(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
@@ -19,7 +32,7 @@ class EarnMoneyWeb1sModel(models.Model):
     def __str__(self) -> str:
         return self.user.username
     
-
+    
 class EarnMoneyFacebookModel(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
     money_of_job = models.FloatField(default=0)

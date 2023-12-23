@@ -1,0 +1,136 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>TEST - Nhận tiền </title>
+    <style>
+        .main {
+            padding: 10px;
+        }
+     
+        body {
+            background-color: #162231;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #00224D;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-get-money {
+            background-color: #168571;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-get-money:hover {
+            background-color: #0F5F50;
+        }
+
+        /* Responsive Styles */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
+        <br>
+        <div class="container">
+            <h2>Nhận tiền <i class="fa-solid fa-hand-holding-dollar"></i></h2>
+            <form>
+                {% csrf_token %}
+                <label for="code">Mã nhận:</label>
+                <input type="text" id="code" name="code" required>
+                <label for="access_token">Access Token:</label>
+                <input type="password" id="access_token" name="access_token" required>
+                <p class="info" style="display: none; color: red;"></p>
+                <button class = 'btn-get-money' type="submit">Nhận</button>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        document.querySelector('.btn-get-money').addEventListener('click', async(e) => {
+            e.preventDefault()
+            const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
+            const code = document.querySelector('#code').value
+            const access_token = document.querySelector('#access_token').value
+            const info = document.querySelector('.info')
+            info.style.display = 'none'
+
+            formData = new FormData()
+            formData.append('code', code)
+            formData.append('access_token', access_token)
+
+            try {
+                const response = await fetch(window.location.href, {
+                    method:'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': csrf_token,
+                    }
+
+                })
+
+                if (!response.ok){return alert(response.error)}
+
+                const data = await response.json()
+                if (data.status == 'error') {
+                    info.textContent = data.message
+                    info.style.color ='red'
+                    info.style.display = 'block'
+                    return 
+                }
+                
+                info.textContent = data.message
+                info.style.color ='green'
+                info.style.display = 'block'
+                return 
+            } catch (error) {
+                return alert(error)
+                
+            }
+
+        })
+    </script>
+    <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
+    
+</body>
+</html>

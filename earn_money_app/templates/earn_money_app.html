@@ -10,6 +10,20 @@
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_app.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
  
+    <style>
+        .giftcode {
+            background-color: #00D27A;
+            color: rgb(236, 230, 230);
+            padding: 7px 10px 7px 10px;
+            margin: 6px;
+            border-radius: 7px;
+            width:fit-content;
+        }
+        .giftcode:hover {
+            background-color: #00a05d;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
@@ -17,10 +31,7 @@
         <div id="header" class="mg-8-16  row ">
             <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
             <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
-            <div class="header-container-search row child-ct-col">
-                <i class="fa-solid fa-magnifying-glass icon-search pd-lr-8"></i>
-                <input class="search-input" type="text" placeholder="Tìm kiếm bài học, bài viết, video, ..."></input>
-            </div>
+      
             <div class="header-user row ">
                 <i class="fa-solid fa-bell header-notification">
                     
@@ -29,39 +40,7 @@
                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
                            <p>mày vừa được Tạ Dũng like</p>
                         </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>ban 3 day</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
+              
                     </div>
                 </i>
                 <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
@@ -102,23 +81,20 @@
         </div>
         <div id="content">
             <div class="container width-100pt pd-20">
-
+                <p class="giftcode"><i class="fa-solid fa-sack-dollar"></i> Nhập code</p>
                 <div class="header pd-20 br-7 mg-top-bottom-16 bgc-container">
+
                     <div class="info"><h3>Thông tin thu nhập </h3></div>
                     <div class="container pd-20 dp-flex">
                         <div class="earn_money_day  bd-1 mg-8-16 width-33pt pd-20 br-7">
-                            <h4 class="color-blue mg-top-bottom-16"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
+                            <h4 class="color-blue mg-top-bottom-16"><i class="fa-solid fa-dollar-sign"></i> {{coin_in_day}}</h4>
                             <p class="color-gray">Thu nhập trong ngày</p>
     
                         </div>
     
-                        <div class="earn_money_month bd-1 mg-8-16 width-33pt pd-20 br-7">
-                            <h4 class="color-blue mg-top-bottom-16"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
-                            <p class="color-gray">Thu nhập trong tháng</p>
-                        </div>
-    
+
                         <div class="earn_money_total bd-1 mg-8-16 width-33pt pd-20 br-7">
-                            <h4 class="color-blue mg-top-bottom-16"><i class="fa-solid fa-dollar-sign"></i> 5000</h4>
+                            <h4 class="color-blue mg-top-bottom-16"><i class="fa-solid fa-dollar-sign"></i> {{coin_total}}</h4>
                             <p class="color-gray">Tồng thu nhập</p>
                         </div>
     
@@ -169,7 +145,9 @@
         </div>
     </div>
     <script>
-
+        document.querySelector('.giftcode').addEventListener('click', () => {
+            window.location.href = 'get-money/' 
+        })
     </script>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
     <script src="{%static 'earn_money_app\js\redirect.js'%}"></script>

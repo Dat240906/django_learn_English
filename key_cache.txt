@@ -1,0 +1,5 @@
+key User: "test{ip_user}"
+key posts: "allpost"
+key notification: "noti"
+key comments: "allcomment"
+kay earn coin in day: "earn_coin_in_day"

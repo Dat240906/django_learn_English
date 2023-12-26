@@ -12,6 +12,17 @@
     <link rel="stylesheet" href="{% static 'earn_money_app\css\earn_money_youtube.css'%}">
     <link rel="icon" type="image/png" href="{%static 'home_app/img/logo.png'%}">
 
+    <style>
+        .container-job a {
+            color: #2C7BE5;
+            text-decoration: none;
+            opacity: 1;
+
+        }
+        .container-job a:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <div id="main" class="ct-80-lr-20">
@@ -19,53 +30,25 @@
         <div id="header" class="mg-8-16  row ">
             <img class="header-logo" src="{%static 'home_app\img\logo.png'%}" alt="logo">
             <img class= 'header-logo-text' src="{%static 'home_app\img\logo-text.png'%}" alt="logo">
-
+      
             <div class="header-user row ">
                 <i class="fa-solid fa-bell header-notification">
                     
                     <div class="triangle box_shadow display-none-noti"></div>
                     <div class="container-noti br-7 box_shadow display-none-noti">
+                        {% for noti in noties%}
                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                           <p>mày vừa được Tạ Dũng like</p>
+
+                            <p  style="color: rgb(32, 167, 167);">{{noti.create_at.time|date:"H:i"}} - {{noti.create_at.date}}: </p>
+                            <p class="pd-6">{{noti.content}}</p>
                         </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>ban 3 day</p>
-                        </div>
-                        <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                            <p>mày vừa được Tạ Dũng like</p>
-                         </div>
-                         <div class="container-content bd-1 bgc_in_container br-7 mg-8-16 pd-6">
-                             <p>ban 3 day</p>
-                         </div>
+                        {% endfor%}
+              
                     </div>
                 </i>
-                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> 50000</b></div>
-                <p class="name-user  ">Phùng Thành Đạt</p>
-                <img src="{%static 'home_app\img\logo.png'%}" alt="">
+                <div class="coin row"><i class="fa-solid fa-dollar-sign"></i><b> {{money}}</b></div>
+                <p class="name-user  ">{{username}}</p>
+                <img class="pd-lr-8" src="{{avatar.url}}" alt="">
             </div>
         </div>
         <div id="nav">
@@ -132,16 +115,16 @@
                     </div>
                     <div class="contaier-job pd-20 bgc-container">
                         <div class="container-job  pd-6 br-7 bd-1 mg-12 cl-green">
-                            <h4>Web1s-thekjd27</h4>
+                            <a target="_blank"  href="https://web1s.com/member">JobWeb1s_test4u</a>
                         </div>
                         <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
-                            <h4>Web1s-thekjd27</h4>
+                            <a target="_blank" href="https://web1s.com/member">JobWeb1s_test4u</a>
                         </div>
                         <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
-                            <h4>Web1s-thekjd27</h4>
+                            <a target="_blank" href="https://web1s.com/member">JobWeb1s_test4u</a>
                         </div>
                         <div class="container-job container-job pd-6 br-7 cl-green bd-1 mg-12">
-                            <h4>Web1s-thekjd27</h4>
+                            <a target="_blank" href="https://web1s.com/member">JobWeb1s_test4u</a>
                         </div>
                     </div>
                 </div>
@@ -154,6 +137,21 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        //gọi API lấy nhiệm vụ mỗi lần reload 
+        async function getJobAPI() {
+            const response = await fetch('/earn_money/get-job-web1s/', {
+                method: "GET"
+            })
+
+            if (!response.ok){return alert(response.error)}
+            const data = response.json()
+            console.log(data.jobs)
+        }
+
+        setInterval(getJobAPI(), 2000)
+    </script>
     <script src="https://kit.fontawesome.com/0d2d64e695.js" crossorigin="anonymous"></script>
     <script src="{%static 'home_app\js\commom.js'%}"></script>
 </body>

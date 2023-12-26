@@ -25,8 +25,9 @@ def get_user_ip(request) -> str:
 
 class CreatePostApi(APIView):
     def post(self, request):
-        ip_user = get_user_ip(request)
-        form = CreatePostForm(request.POST, request.FILES, user_cache = cache.get(f'test{ip_user}')) 
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+        form = CreatePostForm(request.POST, request.FILES, user_cache = cache.get(f'test{access_token}')) 
         if not form.is_valid():
             return JsonResponse({
                 'success':False,
@@ -54,8 +55,9 @@ class AddComment(APIView):
 
         content = request.POST["content"]
         post_id = request.POST["post_id"]
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
         
 
@@ -92,8 +94,9 @@ class AddComment(APIView):
 class AddLike(APIView):
     def get(self, request):
         
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        access_token = request.session['userModel']['access_token']
+        # ip_user = get_user_ip(request)
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         cache_key_post = 'allpost'

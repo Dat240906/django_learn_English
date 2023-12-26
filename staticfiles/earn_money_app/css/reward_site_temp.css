@@ -1,0 +1,120 @@
+.main {
+    padding: 10px;
+}
+
+body {
+    background-color: #162231;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+}
+
+
+.header-logo-text {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.completed-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #00224D;
+    border-radius: 10px;
+    margin-top: 10px;
+
+}
+
+.style-btn {
+    background-color: #168571;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.style-btn:hover {
+    background-color: #0F5F50;
+}
+
+        
+.container-create-giftcode {
+    background-color: rgb(27 29 30);
+    box-shadow:0px -2px 9px 0px rgb(255, 255, 255);
+    width: 42%;
+    height: 45%;
+    position: fixed;
+    top: 77%;
+    flex-direction: column ;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    border-radius: 7px;
+    animation: inSite .3s;
+    display: none;
+    overflow: auto;
+
+}
+.close-container-create-giftcode {
+    position: absolute;
+    right: 0;
+    padding: 10px;
+    top: 0;
+    opacity: 0.6;
+    color: white;
+}
+.close-container-create-giftcode:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.container-info {
+    background-color: #442D23;
+    color: #F9964B;
+    border-radius: 7px;
+    margin: 10px;
+}
+.container-info .note {
+    margin: 6px 0 6px 0;
+}
+.input-base {
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #152d66;
+    margin: 10px;
+    color: white;
+}
+#check-create-giftcode:checked ~ .container-create-giftcode {
+    display: flex;
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    text-align: center;
+    align-items: center;
+}
+@keyframes inSite {
+    from {
+        top: 124%;
+    }
+    to {
+        top: 77%;
+    }
+
+    
+}
+@media screen and (max-width:740px) {
+    .container-create-giftcode {
+        width: 80%;
+    }
+}

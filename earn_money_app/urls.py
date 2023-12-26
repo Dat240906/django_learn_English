@@ -9,6 +9,9 @@ urlpatterns = [
     path('create-giftcode/', views.CreateGiftcode.as_view(), name='create_giftcode'),
     path('delete-endpoint/', views.DeleteRewardSiteTemp.as_view(), name='delete_endpoint'),
     path('get-money/', views.EarnMoneyGetCoin.as_view(), name='get_money'),
+    path('get-job-web1s/', views.getJobWeb1sAPI.as_view(), name='get_job_web1s'),
+
+
     path('youtube/', views.EarnMoneyYoutube.as_view(), name='youtube'),
     path('web1s/', views.EarnMoneyWeb1s.as_view(), name='web_1s'),
     path('tiktok/', views.EarnMoneyTiktok.as_view(), name='tiktok'),

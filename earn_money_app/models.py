@@ -31,7 +31,11 @@ class EarnMoneyWeb1sModel(models.Model):
     number_job = models.IntegerField(default=0)
     def __str__(self) -> str:
         return self.user.username
-    
+class linkWeb1sStorage(models.Model):
+    link = models.CharField(max_length=30)
+    list_access_token_user_retrieved = models.JSONField(blank =True) 
+    def __str__(self):
+        return self.link
     
 class EarnMoneyFacebookModel(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)

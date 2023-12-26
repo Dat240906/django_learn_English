@@ -15,9 +15,11 @@ from .models import PayByBankModel, PayByMoMoModel, PayByPaypalModel
 class ProfileSite(View):
     def get(self, request):
         try:
-            ip_user = get_user_ip(request)
+            # ip_user = get_user_ip(request)
+            access_token = request.session['userModel']['access_token']
 
-            cache_key_user = f'test{ip_user}'
+
+            cache_key_user = f'test{access_token}'
             cache_data_user = cache.get(cache_key_user)
 
             cache_key_noti = 'noti'
@@ -52,8 +54,10 @@ class ProfileSite(View):
 class UpdateDataUserAPI(APIView):
     def post(self, request):
 
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         #nhận từ client
@@ -74,7 +78,7 @@ class UpdateDataUserAPI(APIView):
             }) 
         #save DB
 
-        user_db = UserModel.objects.get(ip_address = ip_user, username = cache_data_user['username'])
+        user_db = UserModel.objects.get(access_token = access_token)
         
         user_db.email = email
         user_db.number_phone = number_phone
@@ -100,8 +104,10 @@ class UpdateDataUserAPI(APIView):
 
 class AddMethodAPI(APIView):
     def post(self, request):
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         method_pay = request.POST['method_pay']
@@ -183,8 +189,10 @@ class GetPostsAPI(APIView):
 
         list_post_of_user = []
 
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         cache_key_post = 'allpost'

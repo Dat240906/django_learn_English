@@ -13,9 +13,10 @@ from rest_framework.views import APIView
 class SettingSite(View):
     def get(self, request):
         try:
-            ip_user = get_user_ip(request)
+            # ip_user = get_user_ip(request)
+            access_token = request.session['userModel']['access_token']
 
-            cache_key_user = f'test{ip_user}'
+            cache_key_user = f'test{access_token}'
             cache_data_user = cache.get(cache_key_user)
 
             cache_key_noti = 'noti'
@@ -40,9 +41,10 @@ class SettingSite(View):
             return redirect('login')
 class ChangePasswordAPI(APIView):
     def post(self, request):
-        
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        access_token = request.session['userModel']['access_token']
+
+        # ip_user = get_user_ip(request)
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         password_in_db = cache_data_user['user'].password
@@ -59,7 +61,7 @@ class ChangePasswordAPI(APIView):
             cache.set(cache_key_user, cache_data_user)
 
 
-            user_model = UserModel.objects.get(ip_address = ip_user, username = cache_data_user['username']) 
+            user_model = UserModel.objects.get(access_token = access_token) 
             user_model.password = new_password_to_client
             user_model.save()
 

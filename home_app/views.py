@@ -116,8 +116,10 @@ class Home(APIView):
     def get(self, request):
 
         #xử lí login gần đây, nếu không có sẽ chuyển về login
-        ip_user = get_user_ip(request)
-        cache_key_user = f'test{ip_user}'
+        # ip_user = get_user_ip(request)
+        access_token = request.session['userModel']['access_token']
+
+        cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
 
         cache_post_key = 'allpost'
@@ -190,7 +192,6 @@ class Home(APIView):
             return render(request, 'home.html', context=context)
 
         cache_data_user={
-            'ip_address':ip_user,
             'active':False
         }
         cache.set(cache_key_user, cache_data_user, timeout=60*60*24)
@@ -224,11 +225,14 @@ class Login(APIView):
                 return JsonResponse(data_response)
             user.save()
             # đăng nhập thành công thì sẽ lưu active để lưu cache login
-            ip_user = get_user_ip(request)
-            cache_key = f'test{ip_user}'
+            # ip_user = get_user_ip(request)
+            access_token = user.access_token
+            request.session['userModel'] = {
+                'access_token':access_token
+            }
+            cache_key = f'test{access_token}'
             cache_data = {
                 'user':user,
-                'ip_address':ip_user,
                 'username':username,
                 'active':True
             }
@@ -248,12 +252,12 @@ class Login(APIView):
                     "message":'Sai mật khẩu hoặc tài khoản',
                 }
             return JsonResponse(data_response)
-        except:
-            data_response = {
-                    'success':False,
-                    "message":'Lỗi không xác định',
-                }
-            return JsonResponse(data_response)
+        # except:
+        #     data_response = {
+        #             'success':False,
+        #             "message":'Lỗi không xác định',
+        #         }
+        #     return JsonResponse(data_response)
 
 
 
@@ -281,12 +285,14 @@ class Register(APIView):
             return JsonResponse(data_response)
 
         
-        UserModel.objects.create(username=username, password= password, ip_address = ip_user)
+        user_new_create = UserModel.objects.create(username=username, password= password, ip_address = ip_user)
         # đăng nhập thành công thì sẽ lưu active để lưu cache login
-        ip_user = get_user_ip(request)
+        # ip_user = get_user_ip(request)
+        
 
-        user = UserModel.objects.get(ip_address = ip_user, username=username)
-        cache_key = f'test{ip_user}'
+        access_token = user_new_create.access_token
+        user = UserModel.objects.get(access_token = access_token)
+        cache_key = f'test{access_token}'
         cache_data = {
             'user':user,
             'ip_address':ip_user,

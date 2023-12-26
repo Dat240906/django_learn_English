@@ -1,3 +1,4 @@
+
 {%load static%}
 
 <!DOCTYPE html>
@@ -63,6 +64,9 @@
                 <a href='{% url "earn_money"%}' class="nav-child"><i class="fa-solid fa-circle-dollar-to-slot"></i>Kiếm tiền</a>
                 <a href='{% url "pay"%}' class="nav-child"><i class="fa-solid fa-credit-card"></i>Thanh toán</a>
                 <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-user"></i>Trang cá nhân</a>
+                {% if username == 'admin'%}
+                <a href='{% url "profile_user"%}' class="nav-child"><i class="fa-solid fa-link"></i>Create site reward</a>
+                {% endif %}
                 <a href='{% url "setting"%}' class="nav-child"><i class="fa-solid fa-gear"></i>Cài đặt</a>
                 <div class="accout-out">
                     <button>Đăng xuất</button>

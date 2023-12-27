@@ -10,6 +10,7 @@ urlpatterns = [
     path('delete-endpoint/', views.DeleteRewardSiteTemp.as_view(), name='delete_endpoint'),
     path('get-money/', views.EarnMoneyGetCoin.as_view(), name='get_money'),
     path('get-job-web1s/', views.getJobWeb1sAPI.as_view(), name='get_job_web1s'),
+    path('create-link-web1s/', views.CreatelinkWeb1s.as_view(), name='create_link_web1s'),
 
 
     path('youtube/', views.EarnMoneyYoutube.as_view(), name='youtube'),

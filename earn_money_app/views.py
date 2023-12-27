@@ -1,3 +1,4 @@
+from math import e
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from rest_framework.views import APIView
@@ -9,6 +10,7 @@ from .models import GiftCodeModel,linkWeb1sStorage, SiteRewardTempModel, SiteRew
 from home_app.views import get_user_ip
 from django.core.cache import cache
 import time
+import socket
 
 # Create your views here.
 
@@ -230,12 +232,34 @@ class EarnMoneyGetCoin(APIView):
 
 class HandleRewardSiteTemp(APIView):
     def get(self, request, endpoint):
-
+        
         try:
-            end_point_DB = SiteRewardTempModel.objects.get(endpoint = endpoint)
+            access_token = request.session['userModel']['access_token']
+            site_reward = SiteRewardTempModel.objects.get(endpoint = endpoint)
+            
+            user_joined = site_reward.list_access_token_user_retrieved
+
+            #nếu chưa có ai vào web thì chấp nhận user này vào và thêm accesstoken
+            if not user_joined:
+                user_joined[access_token] = access_token
+                site_reward.list_access_token_user_retrieved = user_joined
+                site_reward.save()
+            #nếu có người vào rổi thì xem phải là user cũ không, kh phải sẽ không cho vào 
+            else:
+                try:
+                    #nếu lấy phải accestoken lạ sẽ lỗi keyerror
+                    user_joined[access_token]
+                except KeyError:
+                    return HttpResponse('<h1>Not Found</h1>') 
+
+                
+
         except SiteRewardTempModel.DoesNotExist:
             return HttpResponse('<h1>Not Found</h1>')
         
+        #xử lí lỗi không lấy đươc accestoken
+        except TypeError:
+            return redirect('login')
         return render(request, 'reward_site_temp.html')
     
 @method_decorator(csrf_exempt, name='dispatch')
@@ -243,9 +267,14 @@ class DeleteRewardSiteTemp(APIView):
     def delete(self, request):
 
         endpoint = request.data.get('endpoint')
-
+        #xóa web reward
         site_cover_endpoint = SiteRewardTempModel.objects.get(endpoint= endpoint)
         site_cover_endpoint.delete()
+
+        # thêm accesstoken user vào link để chỉ rằng người này đã vào link này rồi
+
+
+
         try:
             site_cover_endpoint = SiteRewardTempModel.objects.get(endpoint=endpoint)
             site_cover_endpoint.delete()
@@ -288,7 +317,7 @@ class HandlePlusMoneyByAccessToken(APIView):
 
                 cache_key_user = f'test{access_token}'
                 cache_data_user = cache.get(cache_key_user)
-                cache_data_user['user'].money += 0.1
+                cache_data_user['user'].money += float(0.1)
                 cache.set(cache_key_user, cache_data_user)
                 
             except TypeError:
@@ -343,5 +372,18 @@ class getJobWeb1sAPI(APIView):
         jobs = [job.link for job in list_job_of_user]
         
         return JsonResponse({
-            'jobs':jobs
+            'jobs':jobs # jobs = [oj1, oj2]
+        })
+    
+
+
+class CreatelinkWeb1s(APIView):
+
+
+    def get(self, request):
+        # Lấy địa chỉ IP của máy chủ từ yêu cầu HTTP
+        server_ip = request.get_host().split(":")[0]
+
+        return JsonResponse({
+            'ip': server_ip
         })

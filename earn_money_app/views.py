@@ -379,10 +379,15 @@ class getJobWeb1sAPI(APIView):
 
 class CreatelinkWeb1s(APIView):
 
-
     def get(self, request):
-        # Lấy địa chỉ IP của máy chủ từ yêu cầu HTTP
-        server_ip = request.get_host().split(":")[0]
+        # Lấy tên miền từ request.get_host()
+        domain = request.get_host().split(":")[0]
+
+        try:
+            # Lấy địa chỉ IP từ tên miền
+            server_ip = socket.gethostbyname(domain)
+        except socket.error:
+            server_ip = "Unknown"
 
         return JsonResponse({
             'ip': server_ip

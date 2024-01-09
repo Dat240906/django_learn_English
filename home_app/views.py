@@ -117,7 +117,10 @@ class Home(APIView):
 
         #xử lí login gần đây, nếu không có sẽ chuyển về login
         # ip_user = get_user_ip(request)
-        access_token = request.session['userModel']['access_token']
+        try:
+            access_token = request.session['userModel']['access_token']
+        except KeyError:
+            redirect('login')
 
         cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)

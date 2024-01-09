@@ -120,7 +120,7 @@ class Home(APIView):
         try:
             access_token = request.session['userModel']['access_token']
         except KeyError:
-            redirect('login')
+            return redirect('login')
 
         cache_key_user = f'test{access_token}'
         cache_data_user = cache.get(cache_key_user)
